@@ -29,6 +29,8 @@ public class ExampleCommand extends CommandBase {
   public void initialize() {
     
     SmartDashboard.putBoolean("Running Command",true);
+//    SmartDashboard.putNumber("motorSpeed", 0.0);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -36,15 +38,21 @@ public class ExampleCommand extends CommandBase {
   public void execute() {
     
     // This method will be called once per scheduler run
-    double speed = SmartDashboard.getNumber("Speed",1.0);
-    m_subsystem.drive(speed * -1);
+    double power = SmartDashboard.getNumber("power",1.0);
+    SmartDashboard.putNumber("powerOut", power);
+    m_subsystem.drive(power);
+    
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    
     SmartDashboard.putBoolean("Running Command",false);
+    SmartDashboard.putNumber("powerOut", 0);
     m_subsystem.drive(0);
+    SmartDashboard.putNumber("motorSpeed", m_subsystem.motorSpeed());
   }
 
   // Returns true when the command should end.

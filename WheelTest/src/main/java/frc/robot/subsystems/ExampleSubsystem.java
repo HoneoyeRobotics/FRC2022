@@ -13,11 +13,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ExampleSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
   public ExampleSubsystem() {}
-
-private TalonSRX talon = new TalonSRX(24);
-public void drive(double speed){
+  public double speed1;
+private TalonSRX talon = new TalonSRX(31);
+public void drive(double drivePower){
+    talon.set(ControlMode.PercentOutput, drivePower );
+}
+public double motorSpeed(){
   
-    talon.set(ControlMode.PercentOutput, speed );
+  return ( talon.getSelectedSensorVelocity() );
+  
 }
 
   @Override
