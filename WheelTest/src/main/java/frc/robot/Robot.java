@@ -7,6 +7,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -81,7 +85,23 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    
+    double test;
+    double testx;
+    double encoderDivisor;
+
+    TalonSRX talon = new TalonSRX(31);
+
+//    encoderDivisor = 768;
+//    SmartDashboard.putNumber("encoderDivisor", 1);
+    test = talon.getSelectedSensorVelocity();
+    encoderDivisor = SmartDashboard.getNumber("encoderDivisor", 768);
+    testx = Math.abs(test) / encoderDivisor;
+    
+    SmartDashboard.putNumber("motorSpeed", test);
+    SmartDashboard.putNumber("encoderValue", testx);
+  }
 
   @Override
   public void testInit() {
