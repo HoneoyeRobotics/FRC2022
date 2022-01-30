@@ -14,6 +14,8 @@ public class Ball extends SubsystemBase {
   public void runFeeder(double speed) {}
   public void runPickUp(double speed) {}
   
+  public void runShooter() {}
+  public void stopShooter() {}
 
   @Override
   public void periodic() {
