@@ -36,8 +36,6 @@ public class DefaultClimb extends CommandBase {
     climber.moveArms(movementValue.getAsDouble());
     climber.runInnerArms(innerHeight.getAsDouble());
     climber.runOuterArms(outerHeight.getAsDouble());
-
-
   }
 
   // Called once the command ends or is interrupted.
