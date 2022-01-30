@@ -5,9 +5,12 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.DriveRobot;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.*;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Ball;
 import frc.robot.subsystems.DriveTrain;
@@ -24,7 +27,11 @@ public class RobotContainer {
   private DriveTrain driveTrain;
   private Climber climber;
   private Ball ball;
-
+  Joystick driverJoystick = new Joystick(0);
+  Joystick coDriverJoystick = new Joystick(1);
+  
+  private SendableChooser<Command> m_chooser = new SendableChooser<>();
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
@@ -33,9 +40,26 @@ public class RobotContainer {
     climber = new Climber();
     ball = new Ball();
 
+    
+    //Default commands
+      DriveRobot driveRobot = new DriveRobot (driveTrain,
+      () -> driverJoystick.getRawAxis(3),
+      () -> driverJoystick.getRawAxis(2),
+      () -> driverJoystick.getRawAxis(0));
+      driveTrain.setDefaultCommand(driveRobot);
+
+      DefaultClimb defaultClimb = new DefaultClimb (climber,
+      () -> coDriverJoystick.getRawAxis(5),
+      () -> coDriverJoystick.getRawAxis(1),
+      () -> coDriverJoystick.getRawAxis(0));
+      climber.setDefaultCommand(defaultClimb);
 
     // Configure the button bindings
     configureButtonBindings();
+    
+
+
+
   }
 
   /**
@@ -44,7 +68,43 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+    private void configureDriverJoystick() {
+
+      JoystickButton buttonA = new JoystickButton(driverJoystick, 1);
+      JoystickButton buttonB = new JoystickButton(driverJoystick, 2);
+      JoystickButton buttonX = new JoystickButton(driverJoystick, 3);
+      JoystickButton buttonY = new JoystickButton(driverJoystick, 4);
+
+      
+
+
+
+    }
+
+    private void configureCoDriverJoystick() {
+      
+
+      JoystickButton buttonA = new JoystickButton(coDriverJoystick, 1);
+      JoystickButton buttonB = new JoystickButton(coDriverJoystick, 2);
+      JoystickButton buttonX = new JoystickButton(coDriverJoystick, 3);
+      JoystickButton buttonY = new JoystickButton(coDriverJoystick, 4);
+      JoystickButton leftBumper = new JoystickButton(coDriverJoystick, 5);
+      JoystickButton rightBumper = new JoystickButton(coDriverJoystick, 6);
+
+      buttonA.whileHeld(new ShootBall(ball)); 
+      leftBumper.whileHeld(new FeedBalls(ball));
+      rightBumper.whileHeld(new PickUpBalls(ball));
+
+    }
+
+  private void configureButtonBindings() {
+    configureDriverJoystick();
+    configureCoDriverJoystick();
+    
+    
+
+
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -53,6 +113,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new DriveRobot(driveTrain);
+    return m_chooser.getSelected();
   }
 }

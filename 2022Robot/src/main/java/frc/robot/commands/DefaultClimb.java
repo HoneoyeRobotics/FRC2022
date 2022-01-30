@@ -4,18 +4,25 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
-public class RaiseRearArms extends CommandBase {
+public class DefaultClimb extends CommandBase {
 
   private Climber climber;
-  /** Creates a new RaiseRearArm. */
-  public RaiseRearArms(Climber climber) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(climber);
-    this.climber = climber;
-
+  private DoubleSupplier innerHeight;
+  private DoubleSupplier outerHeight;
+  private DoubleSupplier movementValue;
+  
+  /** Creates a new MoveArms. */
+  public DefaultClimb(Climber climber, DoubleSupplier innerHeight, DoubleSupplier outerHeight, DoubleSupplier movementValue) {
+    
+  addRequirements(climber);
+  this.climber = climber;
+  this.innerHeight = innerHeight;
+  this.outerHeight = outerHeight;
+  this.movementValue = movementValue;
   }
 
   // Called when the command is initially scheduled.
@@ -25,15 +32,18 @@ public class RaiseRearArms extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //TODO assign control here
-    climber.runRearArms(0.0);
+
+    climber.moveArms(movementValue.getAsDouble());
+    climber.runInnerArms(innerHeight.getAsDouble());
+    climber.runOuterArms(outerHeight.getAsDouble());
+
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    climber.runRearArms(0.0);
+    climber.moveArms(0);
   }
 
   // Returns true when the command should end.

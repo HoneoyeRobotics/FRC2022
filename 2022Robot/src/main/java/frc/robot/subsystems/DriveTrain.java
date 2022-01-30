@@ -10,7 +10,6 @@ import frc.robot.commands.DriveRobot;
 public class DriveTrain extends SubsystemBase {
   /** Creates a new DriveTrain. */
   public DriveTrain() {
-      setDefaultCommand(new DriveRobot(this));
 
   }
 

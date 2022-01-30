@@ -10,10 +10,10 @@ public class Climber extends SubsystemBase {
   /** Creates a new Climber. */
   public Climber() {}
   
-  public void runFrontArms(double frontArmsSpeed) {}
-  public void runRearArms(double rearArmsSpeed) {}
+  public void runInnerArms(double innerArmsSpeed) {}
+  public void runOuterArms(double outerArmsSpeed) {}
+  public void moveArms(double armMovementSpeed){}
 
-  public void moveArms(double speed){}
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
