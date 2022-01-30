@@ -5,16 +5,22 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Ball;
 
 public class DeployBallPickup extends CommandBase {
+  private Ball ball;
   /** Creates a new DeployBallPickup. */
-  public DeployBallPickup() {
+  public DeployBallPickup(Ball ball) {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(ball);
+    this.ball = ball;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    ball.deployBallPickup();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -27,6 +33,6 @@ public class DeployBallPickup extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

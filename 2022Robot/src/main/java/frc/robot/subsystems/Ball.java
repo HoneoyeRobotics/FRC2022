@@ -10,6 +10,10 @@ public class Ball extends SubsystemBase {
   /** Creates a new Ball. */
   public Ball() {}
 
+  public void deployBallPickup() {}
+  public void runFeeder(double speed) {}
+  public void runPickUp(double speed) {}
+  
   public void runShooter() {}
   public void stopShooter() {}
 
