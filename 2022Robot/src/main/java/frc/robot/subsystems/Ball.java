@@ -10,6 +10,9 @@ public class Ball extends SubsystemBase {
   /** Creates a new Ball. */
   public Ball() {}
 
+  public void runShooter() {}
+  public void stopShooter() {}
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

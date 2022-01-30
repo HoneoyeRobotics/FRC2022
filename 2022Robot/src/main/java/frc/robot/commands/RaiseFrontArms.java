@@ -5,11 +5,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Climber;
 
 public class RaiseFrontArms extends CommandBase {
+
+  private Climber climber;
   /** Creates a new RaiseFrontRearArms. */
-  public RaiseFrontArms() {
+  public RaiseFrontArms(Climber climber) {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(climber);
+    this.climber = climber;
   }
 
   // Called when the command is initially scheduled.
