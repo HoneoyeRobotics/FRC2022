@@ -12,7 +12,6 @@ public class Ball extends SubsystemBase {
 
   public void runShooter() {}
   public void stopShooter() {}
-  
 
   @Override
   public void periodic() {

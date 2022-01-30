@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Climber extends SubsystemBase {
   /** Creates a new Climber. */
   public Climber() {}
+  
+  public void runFrontArms(double frontArmsSpeed) {}
+  public void runRearArms(double rearArmsSpeed) {}
 
   @Override
   public void periodic() {
