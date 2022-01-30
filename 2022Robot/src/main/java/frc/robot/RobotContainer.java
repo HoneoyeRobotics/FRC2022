@@ -8,7 +8,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.DriveRobot;
+<<<<<<< HEAD
 import frc.robot.subsystems.Climber;
+=======
+import frc.robot.subsystems.Ball;
+>>>>>>> d0019f9985fc774018988859422484a84da6d1b2
 import frc.robot.subsystems.DriveTrain;
 
 /**
@@ -21,14 +25,23 @@ public class RobotContainer {
 
   //declare subsystems
   private DriveTrain driveTrain;
+<<<<<<< HEAD
   private Climber climber;
+=======
+  private Ball ball;
+>>>>>>> d0019f9985fc774018988859422484a84da6d1b2
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
     //initialize subsystems
     driveTrain = new DriveTrain();
+<<<<<<< HEAD
     climber = new Climber();
+=======
+    ball = new Ball();
+
+>>>>>>> d0019f9985fc774018988859422484a84da6d1b2
 
     // Configure the button bindings
     configureButtonBindings();
