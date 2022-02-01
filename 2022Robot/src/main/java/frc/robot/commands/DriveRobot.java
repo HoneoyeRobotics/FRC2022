@@ -20,7 +20,7 @@ public class DriveRobot extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
     this.forwardSupplier = forwardSupplier;
-    this. backwardSupplier = backwardSupplier;
+    this.backwardSupplier = backwardSupplier;
     this.turnSupplier = turnSupplier;
     this.drivetrain = drivetrain;
   }
