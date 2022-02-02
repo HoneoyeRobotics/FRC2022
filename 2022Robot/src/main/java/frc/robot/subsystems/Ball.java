@@ -16,11 +16,13 @@ public class Ball extends SubsystemBase {
   //declare motors
   private VictorSPX shooterMotor;
   private VictorSPX feederMotor;
+  private VictorSPX pickupMotor;
 
   /** Creates a new Ball. */
   public Ball() {
     shooterMotor = new VictorSPX(Constants.CANID_ShooterMotor);
     feederMotor = new VictorSPX(Constants.CANID_FeederMotor);
+    pickupMotor = new VictorSPX(Constants.CANID_PickupMotor);
   }
 
   public void deployBallPickup() {}
@@ -28,7 +30,9 @@ public class Ball extends SubsystemBase {
     
     shooterMotor.set(ControlMode.PercentOutput, speed);
   }
-  public void runPickUp(double speed) {}
+  public void runPickUp(double speed) {
+    pickupMotor.set(ControlMode.PercentOutput, speed);
+  }
   
   public void runShooter() {
     shooterMotor.set(ControlMode.PercentOutput, 0.60);

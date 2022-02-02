@@ -13,14 +13,14 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final int CANID_LeftFrontDriveMotor = 13;
-    public static final int CANID_LeftRearDriveMotor = 14;
-    public static final int CANID_RightFrontDriveMotor = 15;
-    public static final int CANID_RightRearDriveMotor = 16;
-    public static final int CANID_LeftInnerClimberMotor = 21;
-    public static final int CANID_LeftOuterClimberMotor = 22;
-    public static final int CANID_RightInnerClimberMotor = 23;
-    public static final int CANID_RightOuterClimberMotor = 24;
+    public static final int CANID_DriveLeftFrontMotor = 13;
+    public static final int CANID_DriveLeftRearMotor = 14;
+    public static final int CANID_DriveRightFrontMotor = 15;
+    public static final int CANID_DriveRightRearMotor = 16;
+    public static final int CANID_ClimberLeftInnerMotor = 21;
+    public static final int CANID_ClimberLeftOuterMotor = 22;
+    public static final int CANID_ClimberRightInnerMotor = 23;
+    public static final int CANID_ClimberRightOuterMotor = 24;
     public static final int CANID_LeadScrewMotor = 9;
     public static final int CANID_ShooterMotor = 10;
     public static final int CANID_PickupMotor = 11;
