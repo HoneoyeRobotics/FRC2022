@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Ball extends SubsystemBase {
-  //declare motors
+  // declare motors
   private VictorSPX shooterMotor;
   private VictorSPX feederMotor;
   private VictorSPX pickupMotor;
@@ -25,18 +25,22 @@ public class Ball extends SubsystemBase {
     pickupMotor = new VictorSPX(Constants.CANID_PickupMotor);
   }
 
-  public void deployBallPickup() {}
+  public void deployBallPickup() {
+  }
+
   public void runFeeder(double speed) {
-    
+
     shooterMotor.set(ControlMode.PercentOutput, speed);
   }
+
   public void runPickUp(double speed) {
     pickupMotor.set(ControlMode.PercentOutput, speed);
   }
-  
+
   public void runShooter() {
     shooterMotor.set(ControlMode.PercentOutput, 0.60);
   }
+
   public void stopShooter() {
     shooterMotor.set(ControlMode.PercentOutput, 0);
   }

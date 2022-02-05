@@ -15,8 +15,10 @@ public class DriveRobot extends CommandBase {
   private DoubleSupplier forwardSupplier;
   private DoubleSupplier backwardSupplier;
   private DoubleSupplier turnSupplier;
+
   /** Creates a new DriveRobot. */
-  public DriveRobot(DriveTrain drivetrain, DoubleSupplier forwardSupplier, DoubleSupplier backwardSupplier, DoubleSupplier turnSupplier) {
+  public DriveRobot(DriveTrain drivetrain, DoubleSupplier forwardSupplier, DoubleSupplier backwardSupplier,
+      DoubleSupplier turnSupplier) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
     this.forwardSupplier = forwardSupplier;
@@ -27,12 +29,13 @@ public class DriveRobot extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //TODO: get speed values from the joystick
+    // TODO: get speed values from the joystick
 
     double xSpeed = 0;
     double zRotation = 0;

@@ -9,6 +9,7 @@ import frc.robot.subsystems.Ball;
 
 public class ReverseBallPickUp extends CommandBase {
   private Ball ball;
+
   /** Creates a new ReverseBallPickUp. */
   public ReverseBallPickUp(Ball ball) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -18,7 +19,8 @@ public class ReverseBallPickUp extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

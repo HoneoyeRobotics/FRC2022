@@ -100,7 +100,7 @@ public class Robot extends TimedRobot {
     testx = Math.abs(test) / encoderDivisor;
     
     SmartDashboard.putNumber("motorSpeed", test);
-    SmartDashboard.putNumber("encoderValue", testx);
+    SmartDashboard.putNumber("talonEncoder", testx);
   }
 
   @Override

@@ -18,7 +18,7 @@ import frc.robot.Constants;
 import frc.robot.commands.DriveRobot;
 
 public class DriveTrain extends SubsystemBase {
-  //declare motors for drivetrain
+  // declare motors for drivetrain
   private WPI_TalonSRX driveLeftFrontMotor;
   private WPI_VictorSPX driveLeftRearMotor;
   private WPI_TalonSRX driveRightFrontMotor;
@@ -30,10 +30,10 @@ public class DriveTrain extends SubsystemBase {
 
   /** Creates a new DriveTrain. */
   public DriveTrain() {
-    driveLeftFrontMotor = new WPI_TalonSRX(Constants.CANID_DriveLeftFrontMotor);    
+    driveLeftFrontMotor = new WPI_TalonSRX(Constants.CANID_DriveLeftFrontMotor);
     driveLeftRearMotor = new WPI_VictorSPX(Constants.CANID_DriveLeftRearMotor);
-    
-    driveRightFrontMotor = new WPI_TalonSRX(Constants.CANID_DriveRightFrontMotor);    
+
+    driveRightFrontMotor = new WPI_TalonSRX(Constants.CANID_DriveRightFrontMotor);
     driveRightRearMotor = new WPI_VictorSPX(Constants.CANID_DriveRightRearMotor);
 
     driveLeftMotorGroup = new MotorControllerGroup(driveLeftFrontMotor, driveLeftRearMotor);
@@ -42,8 +42,7 @@ public class DriveTrain extends SubsystemBase {
     driveMotors = new DifferentialDrive(driveLeftMotorGroup, driveRightMotorGroup);
   }
 
-
-  public void drive(double xSpeed, double zRotation){
+  public void drive(double xSpeed, double zRotation) {
     driveMotors.arcadeDrive(xSpeed, zRotation);
   }
 

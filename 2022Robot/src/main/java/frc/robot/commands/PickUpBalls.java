@@ -9,6 +9,7 @@ import frc.robot.subsystems.Ball;
 
 public class PickUpBalls extends CommandBase {
   private Ball ball;
+
   /** Creates a new PickUpBalls. */
   public PickUpBalls(Ball ball) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -24,7 +25,8 @@ public class PickUpBalls extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+  }
 
   // Called once the command ends or is interrupted.
   @Override

@@ -4,41 +4,57 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
+import frc.robot.subsystems.TalonSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final TalonSubsystem talonSubsystem = new TalonSubsystem();
+  private final SparkSubsystem sparkSubsystem = new SparkSubsystem();
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final TalonCommand m_autoCommand = new TalonCommand(talonSubsystem);
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
   public RobotContainer() {
+    CameraServer.startAutomaticCapture();
     // Configure the button bindings
-    
-   //  SmartDashboard.putNumber("Speed", 0.0);
+
+    double TalonPower = SmartDashboard.getNumber("TalonPower", 0.0);
+    SmartDashboard.putNumber("TalonPower", TalonPower);
+
+    double SparkPower = SmartDashboard.getNumber("SparkPower", 0.0);
+    SmartDashboard.putNumber("SparkPower", SparkPower);
     configureButtonBindings();
+
+    SmartDashboard.putData(new ResetSparkEncoder(sparkSubsystem));
   }
 
   /**
-   * Use this method to define your button->command mappings. Buttons can be created by
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
+   * it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
     Joystick driverJoystick = new Joystick(0);
-    
-JoystickButton shootButton = new JoystickButton(driverJoystick, 1);
-shootButton.whileHeld(new ExampleCommand(m_exampleSubsystem));
+
+    JoystickButton TalonButton = new JoystickButton(driverJoystick, 1);
+    JoystickButton SparkButton = new JoystickButton(driverJoystick, 2);
+    TalonButton.whileHeld(new TalonCommand(talonSubsystem));
+    SparkButton.whileHeld(new SparkCommand(sparkSubsystem));
   }
 
   /**

@@ -4,21 +4,21 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.TalonSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class ExampleCommand extends CommandBase {
+public class TalonCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ExampleSubsystem m_subsystem;
+  private final TalonSubsystem m_subsystem;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ExampleCommand(ExampleSubsystem subsystem) {
+  public TalonCommand(TalonSubsystem subsystem) {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -28,7 +28,7 @@ public class ExampleCommand extends CommandBase {
   @Override
   public void initialize() {
     
-    SmartDashboard.putBoolean("Running Command",true);
+    SmartDashboard.putBoolean("Talon Running", true);
 //    SmartDashboard.putNumber("motorSpeed", 0.0);
 
   }
@@ -38,9 +38,9 @@ public class ExampleCommand extends CommandBase {
   public void execute() {
     
     // This method will be called once per scheduler run
-    double power = SmartDashboard.getNumber("power",1.0);
-    SmartDashboard.putNumber("powerOut", power);
-    m_subsystem.drive(power);
+    double talonPower = SmartDashboard.getNumber("TalonPower", 1.0);
+    SmartDashboard.putNumber("powerOut", talonPower);
+    m_subsystem.drive(talonPower);
     
     
   }

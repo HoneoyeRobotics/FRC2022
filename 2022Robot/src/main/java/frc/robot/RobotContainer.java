@@ -11,10 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
-import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.Ball;
-import frc.robot.subsystems.DriveTrain;
-
+import frc.robot.subsystems.*;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -25,7 +22,8 @@ public class RobotContainer {
 
   //declare subsystems
   private DriveTrain driveTrain;
-  private Climber climber;
+  private OuterClimber outerClimber;
+  private InnerClimber innerClimber;
   private Ball ball;
   Joystick driverJoystick = new Joystick(0);
   Joystick coDriverJoystick = new Joystick(1);
@@ -37,9 +35,9 @@ public class RobotContainer {
 
     //initialize subsystems
     driveTrain = new DriveTrain();
-    climber = new Climber();
+    outerClimber = new OuterClimber();
     ball = new Ball();
-
+    innerClimber = new InnerClimber();
     
     //Default commands
       DriveRobot driveRobot = new DriveRobot (driveTrain,
@@ -48,11 +46,11 @@ public class RobotContainer {
       () -> driverJoystick.getRawAxis(0));
       driveTrain.setDefaultCommand(driveRobot);
 
-      DefaultClimb defaultClimb = new DefaultClimb (climber,
+      DefaultClimb defaultClimb = new DefaultClimb (outerClimber, innerClimber,
       () -> coDriverJoystick.getRawAxis(5),
       () -> coDriverJoystick.getRawAxis(1),
       () -> coDriverJoystick.getRawAxis(0));
-      climber.setDefaultCommand(defaultClimb);
+      outerClimber.setDefaultCommand(defaultClimb);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -75,15 +73,10 @@ public class RobotContainer {
       JoystickButton buttonX = new JoystickButton(driverJoystick, 3);
       JoystickButton buttonY = new JoystickButton(driverJoystick, 4);
 
-      
-
-
-
     }
 
     private void configureCoDriverJoystick() {
       
-
       JoystickButton buttonA = new JoystickButton(coDriverJoystick, 1);
       JoystickButton buttonB = new JoystickButton(coDriverJoystick, 2);
       JoystickButton buttonX = new JoystickButton(coDriverJoystick, 3);
@@ -101,9 +94,6 @@ public class RobotContainer {
     configureDriverJoystick();
     configureCoDriverJoystick();
     
-    
-
-
   }
 
   /**

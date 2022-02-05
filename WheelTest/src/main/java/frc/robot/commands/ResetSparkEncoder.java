@@ -5,39 +5,34 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.OuterClimber;
+import frc.robot.subsystems.SparkSubsystem;
 
-public class MoveArmsForward extends CommandBase {
-
-  private OuterClimber climber;
-
-  /** Creates a new MoveArmsForward. */
-  public MoveArmsForward(OuterClimber climber) {
+public class ResetSparkEncoder extends CommandBase {
+  /** Creates a new ResetSparkEncoder. */
+  private SparkSubsystem sparkSubsystem;
+  public ResetSparkEncoder(SparkSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(climber);
-    this.climber = climber;
+    sparkSubsystem = subsystem;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    
+sparkSubsystem.resetEncoders();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    climber.setPosition(0);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    climber.moveArms(0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

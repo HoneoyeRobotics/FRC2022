@@ -10,17 +10,17 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ExampleSubsystem extends SubsystemBase {
+public class TalonSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
-  public ExampleSubsystem() {}
+  public TalonSubsystem() {}
   public double speed1;
-private TalonSRX talon = new TalonSRX(31);
-public void drive(double drivePower){
+  private TalonSRX talon = new TalonSRX(24);
+  public void drive(double drivePower){
     talon.set(ControlMode.PercentOutput, drivePower );
 }
 public double motorSpeed(){
   
-  return ( talon.getSelectedSensorVelocity() );
+  return (talon.getSelectedSensorVelocity() );
   
 }
 
