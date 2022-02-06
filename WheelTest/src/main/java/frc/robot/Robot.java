@@ -93,14 +93,13 @@ public class Robot extends TimedRobot {
 
     TalonSRX talon = new TalonSRX(31);
 
-//    encoderDivisor = 768;
-//    SmartDashboard.putNumber("encoderDivisor", 1);
+    SmartDashboard.putNumber("EncoderDivisor", 1);
     test = talon.getSelectedSensorVelocity();
-    encoderDivisor = SmartDashboard.getNumber("encoderDivisor", 768);
+    encoderDivisor = SmartDashboard.getNumber("EncoderDivisor", 768);
     testx = Math.abs(test) / encoderDivisor;
-    
-    SmartDashboard.putNumber("motorSpeed", test);
-    SmartDashboard.putNumber("talonEncoder", testx);
+  
+    SmartDashboard.putNumber("TalonEncoder", test);
+    SmartDashboard.putNumber("TalonRotations", testx);
   }
 
   @Override

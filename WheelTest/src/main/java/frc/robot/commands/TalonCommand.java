@@ -38,9 +38,9 @@ public class TalonCommand extends CommandBase {
   public void execute() {
     
     // This method will be called once per scheduler run
-    double talonPower = SmartDashboard.getNumber("TalonPower", 1.0);
-    SmartDashboard.putNumber("powerOut", talonPower);
-    m_subsystem.drive(talonPower);
+    double power = SmartDashboard.getNumber("TalonPower", 1.0);
+    SmartDashboard.putNumber("TalonPowerOut", power);
+    m_subsystem.drive(power);
     
     
   }
