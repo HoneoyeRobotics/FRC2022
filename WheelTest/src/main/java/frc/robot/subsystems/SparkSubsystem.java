@@ -14,18 +14,22 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class SparkSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
   public SparkSubsystem() {}
-  public double speed1;
-  private CANSparkMax spark = new CANSparkMax(22, MotorType.kBrushless);
+  private CANSparkMax spark1 = new CANSparkMax(22, MotorType.kBrushless);
+  private CANSparkMax spark2 = new CANSparkMax(21, MotorType.kBrushless);
   public void drive(double drivePower){
-    spark.set(drivePower);
-}
+  spark1.set(drivePower);
+  spark2.set(-drivePower);
+  
+  }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("SparkEncoder", spark.getEncoder().getPosition());
+    double sparkAvgEncoder = (spark1.getEncoder().getPosition() + spark2.getEncoder().getPosition()) / 2;
+    SmartDashboard.putNumber("SparkAvgEncoder", sparkAvgEncoder);
   }
 public void resetEncoders(){
-  spark.getEncoder().setPosition(0);
+  spark1.getEncoder().setPosition(0);
+  spark2.getEncoder().setPosition(0);
 }
   @Override
   public void simulationPeriodic() {

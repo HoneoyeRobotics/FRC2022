@@ -53,6 +53,8 @@ public class RobotContainer {
 
     JoystickButton TalonButton = new JoystickButton(driverJoystick, 1);
     JoystickButton SparkButton = new JoystickButton(driverJoystick, 2);
+    JoystickButton SparkButtonReverse = new JoystickButton(driverJoystick, 3);
+    
     TalonButton.whileHeld(new TalonCommand(talonSubsystem));
     SparkButton.whileHeld(new SparkCommand(sparkSubsystem));
   }
