@@ -28,12 +28,14 @@ public final class Constants {
     public static final int CANID_LeadScrewMotor = 9;
     public static final int CANID_ShooterMotor = 10;
     public static final int CANID_PickupMotor = 11;
-    public static final int CANID_FeederMotor = 12;
+
+    public static final int DIO_FeederRelay = 0;
 
     public static final double ArmVerticalEncoderMaxValue = 140;
     public static final double ArmVerticalEncoderDeadband = 5;
     public static final double ArmVerticalJoystickEncoderMovement = 10;
 
     public static final double ArmHorizontalEncoderMaxValue = 200;
+    public static final double ArmHorizantalEncoderCenter = 100;
     public static final double ArmHorizontalEncoderDeadband = 10;
 }

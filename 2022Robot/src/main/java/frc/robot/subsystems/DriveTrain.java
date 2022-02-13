@@ -6,11 +6,18 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.motorcontrol.Victor;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.*;
+import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -28,6 +35,22 @@ public class DriveTrain extends SubsystemBase {
 
   private DifferentialDrive driveMotors;
 
+
+
+	public UsbCamera frontCamera;
+
+	public UsbCamera rearCamera;
+// private MjpegServer frontCameraServer;
+//private MjpegServer cameraServer;
+private VideoSink server;
+	// public CvSink frontCameraCvSink;
+
+	// public CvSink rearCameraCvSink;
+//public CvSource cameraSource;
+// public CvSink cameraSink;
+	public volatile boolean UseFrontCamera = true;
+  //private NetworkTableEntry cameraSelection;
+
   /** Creates a new DriveTrain. */
   public DriveTrain() {
     driveLeftFrontMotor = new WPI_TalonSRX(Constants.CANID_DriveLeftFrontMotor);
@@ -40,6 +63,31 @@ public class DriveTrain extends SubsystemBase {
     driveRightMotorGroup = new MotorControllerGroup(driveRightFrontMotor, driveRightRearMotor);
 
     driveMotors = new DifferentialDrive(driveLeftMotorGroup, driveRightMotorGroup);
+
+
+    SmartDashboard.putBoolean("Front Camera", UseFrontCamera);
+    
+    frontCamera = CameraServer.startAutomaticCapture("front", 0);
+    frontCamera.setFPS(30);
+
+    rearCamera = new UsbCamera("rear", 1);
+    rearCamera.setFPS(15);
+    server = CameraServer.getServer();
+
+    frontCamera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+    rearCamera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+  }
+
+  public void switchCamera(){
+    if(UseFrontCamera){
+      UseFrontCamera = false;
+            server.setSource(rearCamera);
+    }
+    else{
+      UseFrontCamera = true;
+      server.setSource(frontCamera);
+    }
+    SmartDashboard.putBoolean("Front Camera", UseFrontCamera);
   }
 
   public void drive(double xSpeed, double zRotation) {

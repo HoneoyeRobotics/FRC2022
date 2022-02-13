@@ -19,6 +19,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final TalonSubsystem talonSubsystem = new TalonSubsystem();
   private final SparkSubsystem sparkSubsystem = new SparkSubsystem();
+  private final SpikeRelay spikeRelay = new SpikeRelay();
 
   private final TalonCommand m_autoCommand = new TalonCommand(talonSubsystem);
 
@@ -28,6 +29,10 @@ public class RobotContainer {
   public RobotContainer() {
     CameraServer.startAutomaticCapture();
     // Configure the button bindings
+
+    boolean mySpikeIsRunning = SmartDashboard.getBoolean("RunSpike", false);
+    SmartDashboard.putBoolean("RunSpike", mySpikeIsRunning);
+  
 
     double TalonPower = SmartDashboard.getNumber("TalonPower", 0.0);
     SmartDashboard.putNumber("TalonPower", TalonPower);
@@ -53,9 +58,11 @@ public class RobotContainer {
     JoystickButton TalonButton = new JoystickButton(driverJoystick, 1);
     JoystickButton SparkButton = new JoystickButton(driverJoystick, 2);
     JoystickButton SparkButtonReverse = new JoystickButton(driverJoystick, 3);
-    
+    JoystickButton RunSpikeButton = new JoystickButton(driverJoystick, 4);
+
     TalonButton.whileHeld(new TalonCommand(talonSubsystem));
     SparkButton.whileHeld(new SparkCommand(sparkSubsystem));
+    RunSpikeButton.whileHeld(new SpikeRelayPower(spikeRelay));
   }
 
   /**

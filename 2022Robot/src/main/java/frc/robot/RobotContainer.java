@@ -6,8 +6,14 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.WidgetType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
@@ -24,21 +30,25 @@ public class RobotContainer {
   private DriveTrain driveTrain;
   private OuterClimber outerClimber;
   private InnerClimber innerClimber;
+  private LeadScrew leadScrew;
   private Ball ball;
   Joystick driverJoystick = new Joystick(0);
   Joystick coDriverJoystick = new Joystick(1);
-  
+  private PowerDistribution pdp;
   private SendableChooser<Command> m_chooser = new SendableChooser<>();
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-
     //initialize subsystems
     driveTrain = new DriveTrain();
     outerClimber = new OuterClimber();
-    ball = new Ball();
     innerClimber = new InnerClimber();
-    
+    leadScrew = new LeadScrew();
+    ball = new Ball();
+    pdp = new PowerDistribution(2, ModuleType.kCTRE);
+
+    Shuffleboard.getTab("Diagnostics").add("PDP", pdp).withWidget(BuiltInWidgets.kPowerDistribution).withPosition(0, 0).withSize(6,    3);
+
     //Default commands
       DriveRobot driveRobot = new DriveRobot (driveTrain,
       () -> driverJoystick.getRawAxis(3),
@@ -46,7 +56,7 @@ public class RobotContainer {
       () -> driverJoystick.getRawAxis(0));
       driveTrain.setDefaultCommand(driveRobot);
 
-      DefaultClimb defaultClimb = new DefaultClimb (outerClimber, innerClimber,
+      DefaultClimb defaultClimb = new DefaultClimb (outerClimber, innerClimber, leadScrew,
       () -> coDriverJoystick.getRawAxis(5),
       () -> coDriverJoystick.getRawAxis(1),
       () -> coDriverJoystick.getRawAxis(0));
@@ -55,6 +65,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     
+    SmartDashboard.putData(new SwitchCamera(driveTrain));
 
 
 

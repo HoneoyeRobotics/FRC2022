@@ -7,32 +7,32 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.OuterClimber;
-import frc.robot.subsystems.InnerClimber;
+import frc.robot.subsystems.*;
 
 public class DefaultClimb extends CommandBase {
 
   private OuterClimber outerClimber;
   private InnerClimber innerClimber;
-  private DoubleSupplier innerHeight;
+  private LeadScrew leadScrew;
   private DoubleSupplier outerHeight;
+  private DoubleSupplier innerHeight;
   private DoubleSupplier movementValue;
-
   private double currentInnerValue = 0;
   private double currentOuterValue = 0;
   private double currentMoveValue = 0;
   private double innerPosition = 0;
   private double outerPosition = 0;
 
-  /** Creates a new MoveArms. */
-  public DefaultClimb(OuterClimber outerClimber, InnerClimber innerClimber, DoubleSupplier innerHeight,
+  /** Creates a new DefaultClimb. */
+  public DefaultClimb(OuterClimber outerClimber, InnerClimber innerClimber, LeadScrew leadScrew, DoubleSupplier innerHeight,
       DoubleSupplier outerHeight, DoubleSupplier movementValue) {
 
-    addRequirements(outerClimber, innerClimber);
+    addRequirements(outerClimber, innerClimber, leadScrew);
     this.outerClimber = outerClimber;
+    this.outerHeight = outerHeight;
     this.innerClimber = innerClimber;
     this.innerHeight = innerHeight;
-    this.outerHeight = outerHeight;
+    this.leadScrew = leadScrew;
     this.movementValue = movementValue;
   }
 
@@ -50,8 +50,7 @@ public class DefaultClimb extends CommandBase {
     currentMoveValue = movementValue.getAsDouble();
     currentInnerValue = innerHeight.getAsDouble();
     currentOuterValue = outerHeight.getAsDouble();
-
-    outerClimber.moveArms(currentMoveValue);
+    leadScrew.moveArms(currentMoveValue);
     innerPosition += (currentInnerValue * Constants.ArmVerticalJoystickEncoderMovement);
     innerClimber.setPosition(innerPosition);
     innerPosition = innerClimber.getSetpoint();
@@ -61,9 +60,9 @@ public class DefaultClimb extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    outerClimber.moveArms(0);
+    leadScrew.moveArms(0);
     innerClimber.setPosition(0);
-    outerClimber.moveArms(0);
+    leadScrew.moveArms(0);
   }
 
   // Returns true when the command should end.

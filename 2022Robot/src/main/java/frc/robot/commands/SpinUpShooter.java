@@ -5,18 +5,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.subsystems.InnerClimber;
+import frc.robot.subsystems.Ball;
 
-public class RaiseInnerArms extends CommandBase {
+public class SpinUpShooter extends CommandBase {
 
-  private InnerClimber climber;
+  private Ball ball;
 
-  /** Creates a new RaiseFrontRearArms. */
-  public RaiseInnerArms(InnerClimber climber) {
+  /** Creates a new ShootBall. */
+  public SpinUpShooter(Ball ball) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(climber);
-    this.climber = climber;
+    addRequirements(ball);
+    this.ball = ball;
+
   }
 
   // Called when the command is initially scheduled.
@@ -27,18 +27,20 @@ public class RaiseInnerArms extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climber.setPosition(Constants.ArmVerticalEncoderMaxValue);
+    ball.runShooter();
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    
+
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return climber.atTop();
+    return false;
   }
 }

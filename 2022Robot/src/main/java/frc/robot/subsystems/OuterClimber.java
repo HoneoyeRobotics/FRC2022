@@ -12,7 +12,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
 
-
 public class OuterClimber extends PIDSubsystem {
   /** Creates a new OuterClimber. */
   public OuterClimber() {
@@ -55,24 +54,24 @@ public class OuterClimber extends PIDSubsystem {
         || (avgPosition - Constants.ArmVerticalEncoderDeadband <= 0);
   }
 
-  public boolean armsFullyIn() {
-    double leadScrewEncoder = leadScrewMotor.getSelectedSensorPosition();
-    return (leadScrewEncoder + Constants.ArmHorizontalEncoderDeadband <= 0)
-        || (leadScrewEncoder - Constants.ArmHorizontalEncoderDeadband <= 0);
-  }
+  // public boolean armsFullyIn() {
+  //   double leadScrewEncoder = leadScrewMotor.getSelectedSensorPosition();
+  //   return (leadScrewEncoder + Constants.ArmHorizontalEncoderDeadband <= 0)
+  //       || (leadScrewEncoder - Constants.ArmHorizontalEncoderDeadband <= 0);
+  // }
 
-  public boolean armsFullyOut() {
-    double leadScrewEncoder = leadScrewMotor.getSelectedSensorPosition();
-    return (leadScrewEncoder + Constants.ArmVerticalEncoderDeadband >= Constants.ArmVerticalEncoderMaxValue)
-        || (leadScrewEncoder - Constants.ArmVerticalEncoderDeadband >= Constants.ArmVerticalEncoderMaxValue);
-  }
+  // public boolean armsFullyOut() {
+  //   double leadScrewEncoder = leadScrewMotor.getSelectedSensorPosition();
+  //   return (leadScrewEncoder + Constants.ArmVerticalEncoderDeadband >= Constants.ArmVerticalEncoderMaxValue)
+  //       || (leadScrewEncoder - Constants.ArmVerticalEncoderDeadband >= Constants.ArmVerticalEncoderMaxValue);
+  // }
 
-  public void moveArms(double speed) {
-    if (speed > 0 && armsFullyOut() || (speed < 0 && armsFullyIn())) {
-      speed = 0;
-    }
-    leadScrewMotor.set(ControlMode.PercentOutput, speed);
-  }
+  // public void moveArms(double speed) {
+  //   if (speed > 0 && armsFullyOut() || (speed < 0 && armsFullyIn())) {
+  //     speed = 0;
+  //   }
+  //   leadScrewMotor.set(ControlMode.PercentOutput, speed);
+  // }
 
   @Override
   public void useOutput(double output, double setpoint) {

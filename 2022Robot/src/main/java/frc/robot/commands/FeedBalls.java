@@ -25,13 +25,13 @@ public class FeedBalls extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    ball.runFeeder(1);
+    ball.runFeeder();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    ball.runFeeder(0);
+    ball.stopFeeder();
   }
 
   // Returns true when the command should end.

@@ -35,7 +35,6 @@ public class DriveRobot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // TODO: get speed values from the joystick
 
     double xSpeed = 0;
     double zRotation = 0;
