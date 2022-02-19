@@ -51,7 +51,6 @@ public class SubOuterArms extends SubsystemBase {
 
   @Override
   public void periodic() {
-    
     SmartDashboard.putNumber("CLOEncoder", climberLeftOuterMotor.getEncoder().getPosition());
     SmartDashboard.putNumber("CROEncoder", climberRightOuterMotor.getEncoder().getPosition());
     // This method will be called once per scheduler run
