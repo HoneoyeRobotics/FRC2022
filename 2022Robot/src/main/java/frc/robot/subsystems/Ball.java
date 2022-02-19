@@ -18,27 +18,25 @@ import frc.robot.Constants;
 public class Ball extends SubsystemBase {
   // declare motors
   private VictorSPX shooterMotor;
-  private Relay feederRelay;
+  private VictorSPX feederMotor;
   private VictorSPX pickupMotor;
 
   /** Creates a new Ball. */
   public Ball() {
     shooterMotor = new VictorSPX(Constants.CANID_ShooterMotor);
-    feederRelay = new Relay(Constants.DIO_FeederRelay);
+    feederMotor = new VictorSPX(Constants.DIO_FeederRelay);
     pickupMotor = new VictorSPX(Constants.CANID_PickupMotor);
   }
 
   public void deployBallPickup() {
   }
-  public void runFeeder() {
-    feederRelay.set(Value.kOn);
-  }
-  public void stopFeeder() {
-    feederRelay.set(Value.kOff);
-  }
 
   public void runPickUp(double speed) {
     pickupMotor.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void runFeeder(double speed) {
+    feederMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void runShooter() {

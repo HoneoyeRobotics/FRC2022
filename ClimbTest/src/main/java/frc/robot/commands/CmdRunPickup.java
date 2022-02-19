@@ -5,34 +5,32 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Ball;
+import frc.robot.subsystems.SubPickup;
 
-public class FeedBalls extends CommandBase {
-  private Ball ball;
+public class CmdRunPickup extends CommandBase {
+  private SubPickup m_pickup;
 
-  /** Creates a new FeedBalls. */
-  public FeedBalls(Ball ball) {
+  /** Creates a new CmdRunPickup. */
+  public CmdRunPickup(SubPickup pickup) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(ball);
-    this.ball = ball;
+    addRequirements(pickup);
+    m_pickup = pickup;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    ball.runFeeder(.50);
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+    m_pickup.runPickup(0.5);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    ball.runFeeder(0.0);
+    m_pickup.runPickup(0.0);
   }
 
   // Returns true when the command should end.

@@ -5,39 +5,38 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Ball;
+import frc.robot.subsystems.SubInnerArms;
+import frc.robot.subsystems.SubOuterArms;
 
-public class FeedBalls extends CommandBase {
-  private Ball ball;
-
-  /** Creates a new FeedBalls. */
-  public FeedBalls(Ball ball) {
+public class ResetEncoder extends CommandBase {
+  private SubInnerArms m_innerArms;
+  private SubOuterArms m_outerArms;
+  /** Creates a new ResetEncoder. */
+  public ResetEncoder(SubOuterArms outerArms, SubInnerArms innerArms) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(ball);
-    this.ball = ball;
+    addRequirements(innerArms);
+    addRequirements(outerArms);
+    m_innerArms = innerArms;
+    m_outerArms = outerArms;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    ball.runFeeder(.50);
-  }
+    m_innerArms.resetEncoders();
+    m_outerArms.resetEncoders();}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    ball.runFeeder(0.0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }
