@@ -18,7 +18,9 @@ public class OuterClimber extends PIDSubsystem {
     super(new PIDController(0, 0, 0));
     climberLeftOuterMotor = new CANSparkMax(Constants.CANID_ClimberLeftOuterMotor, MotorType.kBrushless);
     climberRightOuterMotor = new CANSparkMax(Constants.CANID_ClimberRightOuterMotor, MotorType.kBrushless);
+    climberRightOuterMotor.setInverted(true);
     leadScrewMotor = new TalonSRX(Constants.CANID_LeadScrewMotor);
+    resetEncoders();
   }
 
   public void resetEncoders() {
@@ -33,8 +35,8 @@ public class OuterClimber extends PIDSubsystem {
   public void setPosition(double position) {
     if(position < 0)
       position = 0;
-    else if (position > Constants.ArmVerticalEncoderMaxValue)
-      position = Constants.ArmVerticalEncoderMaxValue;
+    else if (position > Constants.OuterLeftMax)
+      position = Constants.OuterLeftMax;
       setSetpoint(position);
   }
 

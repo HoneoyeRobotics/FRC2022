@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.motorcontrol.Victor;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -26,10 +24,10 @@ import frc.robot.commands.DriveRobot;
 
 public class DriveTrain extends SubsystemBase {
   // declare motors for drivetrain
-  private WPI_TalonSRX driveLeftFrontMotor;
-  private WPI_VictorSPX driveLeftRearMotor;
-  private WPI_TalonSRX driveRightFrontMotor;
-  private WPI_VictorSPX driveRightRearMotor;
+  private WPI_VictorSPX driveLeftFrontMotor;
+  private WPI_TalonSRX driveLeftRearMotor;
+  private WPI_VictorSPX driveRightFrontMotor;
+  private WPI_TalonSRX driveRightRearMotor;
   private MotorControllerGroup driveRightMotorGroup;
   private MotorControllerGroup driveLeftMotorGroup;
 
@@ -37,27 +35,18 @@ public class DriveTrain extends SubsystemBase {
 
 
 
-	public UsbCamera frontCamera;
-
-	public UsbCamera rearCamera;
-// private MjpegServer frontCameraServer;
-//private MjpegServer cameraServer;
-private VideoSink server;
-	// public CvSink frontCameraCvSink;
-
-	// public CvSink rearCameraCvSink;
-//public CvSource cameraSource;
-// public CvSink cameraSink;
+	// public UsbCamera frontCamera
+	// public UsbCamera rearCamera;
+    // private VideoSink server;
 	public volatile boolean UseFrontCamera = true;
-  //private NetworkTableEntry cameraSelection;
 
   /** Creates a new DriveTrain. */
   public DriveTrain() {
-    driveLeftFrontMotor = new WPI_TalonSRX(Constants.CANID_DriveLeftFrontMotor);
-    driveLeftRearMotor = new WPI_VictorSPX(Constants.CANID_DriveLeftRearMotor);
+    driveLeftFrontMotor = new WPI_VictorSPX(Constants.CANID_DriveLeftFrontMotor);
+    driveLeftRearMotor = new WPI_TalonSRX(Constants.CANID_DriveLeftRearMotor);
 
-    driveRightFrontMotor = new WPI_TalonSRX(Constants.CANID_DriveRightFrontMotor);
-    driveRightRearMotor = new WPI_VictorSPX(Constants.CANID_DriveRightRearMotor);
+    driveRightFrontMotor = new WPI_VictorSPX(Constants.CANID_DriveRightFrontMotor);
+    driveRightRearMotor = new WPI_TalonSRX(Constants.CANID_DriveRightRearMotor);
 
     driveLeftMotorGroup = new MotorControllerGroup(driveLeftFrontMotor, driveLeftRearMotor);
     driveRightMotorGroup = new MotorControllerGroup(driveRightFrontMotor, driveRightRearMotor);
@@ -67,31 +56,31 @@ private VideoSink server;
 
     SmartDashboard.putBoolean("Front Camera", UseFrontCamera);
     
-    frontCamera = CameraServer.startAutomaticCapture("front", 0);
-    frontCamera.setFPS(30);
+    // frontCamera = CameraServer.startAutomaticCapture("front", 0);
+    // frontCamera.setFPS(30);
 
-    rearCamera = new UsbCamera("rear", 1);
-    rearCamera.setFPS(15);
-    server = CameraServer.getServer();
+    // rearCamera = new UsbCamera("rear", 1);
+    // rearCamera.setFPS(15);
+    // server = CameraServer.getServer();
 
-    frontCamera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-    rearCamera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+    // frontCamera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+    // rearCamera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
   }
 
   public void switchCamera(){
-    if(UseFrontCamera){
-      UseFrontCamera = false;
-            server.setSource(rearCamera);
-    }
-    else{
-      UseFrontCamera = true;
-      server.setSource(frontCamera);
-    }
-    SmartDashboard.putBoolean("Front Camera", UseFrontCamera);
+    // if(UseFrontCamera){
+    //   UseFrontCamera = false;
+    //         server.setSource(rearCamera);
+    // }
+    // else{
+    //   UseFrontCamera = true;
+    //   server.setSource(frontCamera);
+    // }
+    // SmartDashboard.putBoolean("Front Camera", UseFrontCamera);
   }
 
   public void drive(double xSpeed, double zRotation) {
-    driveMotors.arcadeDrive(xSpeed, zRotation);
+    driveMotors.arcadeDrive( zRotation, xSpeed);
   }
 
   @Override

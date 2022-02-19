@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -27,6 +28,7 @@ public class SubLeadScrew extends SubsystemBase {
 
   public void moveArms(double speed) {
     leadScrewMotor.set(ControlMode.PercentOutput, speed);
+    SmartDashboard.putNumber("Lead Screw Power", speed);
   } 
 
   @Override

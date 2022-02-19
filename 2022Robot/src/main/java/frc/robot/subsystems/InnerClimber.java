@@ -16,6 +16,7 @@ public class InnerClimber extends PIDSubsystem {
     super(new PIDController(1.3, 0.0, 0.7));
     climberLeftInnerMotor = new CANSparkMax(Constants.CANID_ClimberLeftInnerMotor, MotorType.kBrushless);
     climberRightInnerMotor = new CANSparkMax(Constants.CANID_ClimberRightInnerMotor, MotorType.kBrushless);
+    climberRightInnerMotor.setInverted(true);
     resetEncoders();
   }
 
@@ -28,12 +29,24 @@ public class InnerClimber extends PIDSubsystem {
   private CANSparkMax climberRightInnerMotor;
   private CANSparkMax climberLeftInnerMotor;
 
-  public void setPosition(double position) {
+  public void setPosition(int position) {
     if (position < 0)
       position = 0;
-    else if (position > Constants.ArmVerticalEncoderMaxValue)
-      position = Constants.ArmVerticalEncoderMaxValue;
-    setSetpoint(position);
+    else if (position > 1)
+      position = 1;
+
+double setpoint = 0;
+    switch(position){
+     
+      case 1:
+        setpoint = Constants.InnerLeftMax;
+        break;
+        case 0:
+        setpoint = 0;
+        break;
+    }
+      
+    setSetpoint(setpoint);
   }
 
   public boolean atTop() {

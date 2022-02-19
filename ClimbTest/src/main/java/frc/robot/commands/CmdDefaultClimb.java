@@ -23,6 +23,7 @@ public class CmdDefaultClimb extends CommandBase {
   private SubOuterArms outerArms;
   private DoubleSupplier outerAxisDown;
   private DoubleSupplier outerAxisUp;
+  
   /** Creates a new CmdDefaultClimb. */
   public CmdDefaultClimb(SubOuterArms outerArms, SubInnerArms innerArms, SubLeadScrew leadScrew, DoubleSupplier initOuterAxisDown, DoubleSupplier initOuterAxisUp, DoubleSupplier initInnerAxisDown, DoubleSupplier initInnerAxisUp, DoubleSupplier initLeadScrewPower) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -36,11 +37,13 @@ public class CmdDefaultClimb extends CommandBase {
     outerAxisUp = initOuterAxisUp;
     innerAxisDown = initInnerAxisDown;
     innerAxisUp = initInnerAxisUp;
+    this.leadScrewPower = initLeadScrewPower;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    SmartDashboard.putBoolean("Default Mode", true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -56,6 +59,7 @@ public class CmdDefaultClimb extends CommandBase {
     outerSpeedDown = outerAxisDown.getAsDouble();
     outerSpeedUp = outerAxisUp.getAsDouble();
 
+    leadScrew.moveArms(leadScrewPower.getAsDouble());
     innerArms.moveArms(innerSpeedUp - innerSpeedDown);
     outerArms.moveArms(outerSpeedUp - outerSpeedDown);
   }
@@ -65,6 +69,8 @@ public class CmdDefaultClimb extends CommandBase {
   public void end(boolean interrupted) {
     innerArms.moveArms(0.0);
     outerArms.moveArms(0.0);
+    
+    SmartDashboard.putBoolean("Default Mode", false);
   }
 
   // Returns true when the command should end.

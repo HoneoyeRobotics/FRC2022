@@ -21,18 +21,22 @@ public final class Constants {
     public static final int CANID_DriveLeftRearMotor = 14;
     public static final int CANID_DriveRightFrontMotor = 15;
     public static final int CANID_DriveRightRearMotor = 16;
-    public static final int CANID_ClimberLeftInnerMotor = 21;
-    public static final int CANID_ClimberLeftOuterMotor = 22;
+    public static final int CANID_ClimberLeftInnerMotor = 24;
+    public static final int CANID_ClimberLeftOuterMotor = 26;
     public static final int CANID_ClimberRightInnerMotor = 23;
-    public static final int CANID_ClimberRightOuterMotor = 24;
+    public static final int CANID_ClimberRightOuterMotor = 25;
     public static final int CANID_LeadScrewMotor = 9;
     public static final int CANID_ShooterMotor = 10;
+    public static final int CANID_Shooter1Motor = 12;
     public static final int CANID_PickupMotor = 11;
 
-    public static final int DIO_FeederRelay = 0;
+    public static final int CANID_FeederMotor = 8;
 
-    public static final double ArmVerticalEncoderMaxValue = 140;
-    public static final double ArmVerticalEncoderDeadband = 5;
+    public static final double OuterLeftMax = 130;
+    public static final double InnerLeftMax = 108;
+    public static final double InnerRightMax = 109;
+    public static final double OuterRightMax = 137;
+    public static final double ArmVerticalEncoderDeadband = 0;
     public static final double ArmVerticalJoystickEncoderMovement = 10;
 
     public static final double ArmHorizontalEncoderMaxValue = 200;

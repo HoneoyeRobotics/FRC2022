@@ -5,26 +5,25 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
-import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.Relay.Direction;
-import edu.wpi.first.wpilibj.Relay.Value;
-import edu.wpi.first.wpilibj.motorcontrol.Victor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Ball extends SubsystemBase {
   // declare motors
   private VictorSPX shooterMotor;
+  private VictorSPX shooter1Motor;
   private VictorSPX feederMotor;
   private VictorSPX pickupMotor;
 
   /** Creates a new Ball. */
   public Ball() {
     shooterMotor = new VictorSPX(Constants.CANID_ShooterMotor);
-    feederMotor = new VictorSPX(Constants.DIO_FeederRelay);
+    shooter1Motor = new VictorSPX(Constants.CANID_Shooter1Motor);
+    shooter1Motor.setInverted(true);
+    shooterMotor.setInverted(true);
+    feederMotor = new VictorSPX(Constants.CANID_FeederMotor);
     pickupMotor = new VictorSPX(Constants.CANID_PickupMotor);
   }
 
@@ -41,10 +40,12 @@ public class Ball extends SubsystemBase {
 
   public void runShooter() {
     shooterMotor.set(ControlMode.PercentOutput, 0.60);
+    shooter1Motor.set(ControlMode.PercentOutput, 0.60);
   }
 
   public void stopShooter() {
     shooterMotor.set(ControlMode.PercentOutput, 0);
+    shooter1Motor.set(ControlMode.PercentOutput, 0);
   }
 
   @Override

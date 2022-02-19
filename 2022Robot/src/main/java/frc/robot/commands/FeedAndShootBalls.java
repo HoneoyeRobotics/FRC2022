@@ -19,9 +19,10 @@ public class FeedAndShootBalls extends SequentialCommandGroup {
     addCommands(
       new SpinUpShooter(ball).withTimeout(2),
       new FeedBalls(ball).withTimeout(1.5),
-      new SpinUpShooter(ball).withTimeout(2),     
-      new FeedBalls(ball).withTimeout(1.5),
+      //new SpinUpShooter(ball).withTimeout(2),     
+      //new FeedBalls(ball).withTimeout(1.5),
       new ShootBall(ball).withTimeout(2)
+      
     );
   }
 }

@@ -9,6 +9,7 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.CmdDefaultClimb;
 import frc.robot.commands.CmdMoveInnerArm;
 import frc.robot.commands.CmdMoveOuterArm;
@@ -36,8 +37,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  Joystick driverJoystick = new Joystick(1);
-  Joystick coDriverJoystick = new Joystick(0);
+  Joystick driverJoystick = new Joystick(0);
+  Joystick coDriverJoystick = new Joystick(1);
 
   DoubleSupplier junk1;
 
@@ -55,16 +56,8 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
       
-    CmdDefaultClimb defaultClimb = new CmdDefaultClimb(m_subOuterArms, m_subInnerArms, m_subLeadScrew,
-    () -> driverJoystick.getRawAxis(2),
-    () -> driverJoystick.getRawAxis(3),
-    () -> coDriverJoystick.getRawAxis(2),
-    () -> coDriverJoystick.getRawAxis(3),
-    () -> driverJoystick.getRawAxis(5)
-    );
-    m_subOuterArms.setDefaultCommand(defaultClimb);
-
-
+    
+SmartDashboard.putData(new ResetEncoder(m_subOuterArms, m_subInnerArms));
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -83,16 +76,16 @@ public class RobotContainer {
     JoystickButton lBumperButton = new JoystickButton(driverJoystick, 5);
 
 
-    JoystickButton aButton = new JoystickButton(coDriverJoystick, 1);
-    JoystickButton bButton = new JoystickButton(coDriverJoystick, 2);
+    JoystickButton aButton = new JoystickButton(driverJoystick, 1);
+    JoystickButton bButton = new JoystickButton(driverJoystick, 2);
     JoystickButton xButton = new JoystickButton(driverJoystick, 3);
     JoystickButton yButton = new JoystickButton(driverJoystick, 4);
     
-    aButton.whileHeld(new CmdMoveInnerArm(m_subInnerArms, true, -0.1));
-    yButton.whileHeld(new CmdMoveInnerArm(m_subInnerArms, true, 0.1));
-    xButton.whileHeld(new CmdMoveInnerArm(m_subInnerArms, false, -0.1));
-    bButton.whileHeld(new CmdMoveInnerArm(m_subInnerArms, false, 0.1));
-
+    aButton.whileHeld(new CmdMoveOuterArm(m_subOuterArms, true, -0.1));
+    yButton.whileHeld(new CmdMoveOuterArm(m_subOuterArms, true, 0.1));
+    xButton.whileHeld(new CmdMoveOuterArm(m_subOuterArms, false, -0.1));
+    bButton.whileHeld(new CmdMoveOuterArm(m_subOuterArms, false, 0.1));
+    
     rBumperButton.whileHeld(new CmdRunFeeder(m_subFeeder));
     lBumperButton.whileHeld(new CmdRunShooter(m_subShooter));
     backButton.whileHeld(new CmdRunPickup(m_subPickup));
@@ -102,17 +95,31 @@ public class RobotContainer {
   private void configureCoDriverJoystick() {
     JoystickButton aButton = new JoystickButton(coDriverJoystick, 1);
     JoystickButton bButton = new JoystickButton(coDriverJoystick, 2);
-    JoystickButton xButton = new JoystickButton(driverJoystick, 3);
-    JoystickButton yButton = new JoystickButton(driverJoystick, 4);
+    JoystickButton xButton = new JoystickButton(coDriverJoystick, 3);
+    JoystickButton yButton = new JoystickButton(coDriverJoystick, 4);
 
-    aButton.whileHeld(new CmdMoveOuterArm(m_subOuterArms, true, -0.1));
-    yButton.whileHeld(new CmdMoveOuterArm(m_subOuterArms, true, 0.1));
-    xButton.whileHeld(new CmdMoveOuterArm(m_subOuterArms, false, -0.1));
-    bButton.whileHeld(new CmdMoveOuterArm(m_subOuterArms, false, 0.1));
+    aButton.whileHeld(new CmdMoveInnerArm(m_subInnerArms, true, -0.1));
+    yButton.whileHeld(new CmdMoveInnerArm(m_subInnerArms, true, 0.1));
+    xButton.whileHeld(new CmdMoveInnerArm(m_subInnerArms, false, -0.1));
+    bButton.whileHeld(new CmdMoveInnerArm(m_subInnerArms, false, 0.1));
+    
+
+    JoystickButton rBumperButton = new JoystickButton(coDriverJoystick, 6);
+
+
+    rBumperButton.whenPressed(new CmdDefaultClimb(m_subOuterArms, m_subInnerArms, m_subLeadScrew,
+    () -> driverJoystick.getRawAxis(2),
+    () -> driverJoystick.getRawAxis(3),
+    () -> coDriverJoystick.getRawAxis(2),
+    () -> coDriverJoystick.getRawAxis(3),
+    () -> driverJoystick.getRawAxis(5))
+    );
+
   }
    
   private void configureButtonBindings() {
     configureDriverJoystick();
+    configureCoDriverJoystick();
   }
 
   /**

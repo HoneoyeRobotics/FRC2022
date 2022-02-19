@@ -25,6 +25,7 @@ public class SubInnerArms extends SubsystemBase {
   public SubInnerArms() {
     climberLeftInnerMotor = new CANSparkMax(Constants.CANCLIM, MotorType.kBrushless);
     climberRightInnerMotor = new CANSparkMax(Constants.CANCRIM, MotorType.kBrushless);
+    climberRightInnerMotor.setInverted(true);
   }
 
   public void resetEncoders() {
@@ -35,21 +36,24 @@ public class SubInnerArms extends SubsystemBase {
   public void moveArms(double speed) {
     climberLeftInnerMotor.set(speed);
     climberRightInnerMotor.set(speed);
-    SmartDashboard.putNumber("CRIEncoder", climberRightInnerMotor.getEncoder().getPosition());
-    SmartDashboard.putNumber("CLIEncoder", climberLeftInnerMotor.getEncoder().getPosition());
   }
 
   public void moveLeftArm(double speed) {
+    SmartDashboard.putNumber("Inner LeftArmSpeed", speed);
     climberLeftInnerMotor.set(speed);
   }
   
   public void moveRightArm(double speed) {
+    SmartDashboard.putNumber("Inner RightArmSpeed", speed);
     climberRightInnerMotor.set(speed);
   }
 
 
   @Override
   public void periodic() {
+    
+    SmartDashboard.putNumber("CRIEncoder", climberRightInnerMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("CLIEncoder", climberLeftInnerMotor.getEncoder().getPosition());
     // This method will be called once per scheduler run
   }
 }

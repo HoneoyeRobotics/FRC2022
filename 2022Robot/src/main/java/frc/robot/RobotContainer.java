@@ -45,7 +45,7 @@ public class RobotContainer {
     innerClimber = new InnerClimber();
     leadScrew = new LeadScrew();
     ball = new Ball();
-    pdp = new PowerDistribution(2, ModuleType.kCTRE);
+    pdp = new PowerDistribution(0, ModuleType.kCTRE);
 
     Shuffleboard.getTab("Diagnostics").add("PDP", pdp).withWidget(BuiltInWidgets.kPowerDistribution).withPosition(0, 0).withSize(6,    3);
 
@@ -56,11 +56,11 @@ public class RobotContainer {
       () -> driverJoystick.getRawAxis(0));
       driveTrain.setDefaultCommand(driveRobot);
 
-      DefaultClimb defaultClimb = new DefaultClimb (outerClimber, innerClimber, leadScrew,
-      () -> coDriverJoystick.getRawAxis(5),
-      () -> coDriverJoystick.getRawAxis(1),
-      () -> coDriverJoystick.getRawAxis(0));
-      outerClimber.setDefaultCommand(defaultClimb);
+      // DefaultClimb defaultClimb = new DefaultClimb (outerClimber, innerClimber, leadScrew,
+      // () -> coDriverJoystick.getRawAxis(5),
+      // () -> coDriverJoystick.getRawAxis(1),
+      // () -> coDriverJoystick.getRawAxis(0));
+      // outerClimber.setDefaultCommand(defaultClimb);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -84,6 +84,14 @@ public class RobotContainer {
       JoystickButton buttonX = new JoystickButton(driverJoystick, 3);
       JoystickButton buttonY = new JoystickButton(driverJoystick, 4);
 
+      JoystickButton leftBumper = new JoystickButton(driverJoystick, 5);
+      JoystickButton rightBumper = new JoystickButton(driverJoystick, 6);
+      
+      buttonA.whileHeld(new ShootBall(ball)); 
+      leftBumper.whileHeld(new FeedBalls(ball));
+      rightBumper.whileHeld(new PickUpBalls(ball));
+
+buttonB.whenPressed(new FeedAndShootBalls(ball));
     }
 
     private void configureCoDriverJoystick() {
@@ -95,9 +103,13 @@ public class RobotContainer {
       JoystickButton leftBumper = new JoystickButton(coDriverJoystick, 5);
       JoystickButton rightBumper = new JoystickButton(coDriverJoystick, 6);
 
-      buttonA.whileHeld(new ShootBall(ball)); 
-      leftBumper.whileHeld(new FeedBalls(ball));
-      rightBumper.whileHeld(new PickUpBalls(ball));
+      buttonX.whenPressed(new RaiseInnerArms(innerClimber));
+      buttonA.whenPressed(new LowerInnerArms(innerClimber));
+      buttonY.whenPressed(new RaiseOuterArms(outerClimber));
+      buttonB.whenPressed(new LowerOuterArms(outerClimber));
+
+      leftBumper.whileHeld(new MoveArmsForward(leadScrew));
+      rightBumper.whileHeld(new MoveArmsBackward(leadScrew));
 
     }
 

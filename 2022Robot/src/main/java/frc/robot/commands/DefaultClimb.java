@@ -52,7 +52,7 @@ public class DefaultClimb extends CommandBase {
     currentOuterValue = outerHeight.getAsDouble();
     leadScrew.moveArms(currentMoveValue);
     innerPosition += (currentInnerValue * Constants.ArmVerticalJoystickEncoderMovement);
-    innerClimber.setPosition(innerPosition);
+    //innerClimber.setPosition(innerPosition);
     innerPosition = innerClimber.getSetpoint();
     outerClimber.setPosition(outerPosition);
   }

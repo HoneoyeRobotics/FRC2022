@@ -18,12 +18,11 @@ public final class Constants {
     public static int CANCLIM = 24;
     public static int CANCROM = 25;
     public static int CANCLOM = 26;
-
     public static int CANLSM = 9;
 
-    public static int CANFeeder = 0;
-    public static int CANShooter = 0;
-    public static int CANShooter1 = 0;
-    public static int CANPickup = 0;
+    public static int CANFeeder = 8;
+    public static int CANShooter = 10;
+    public static int CANShooter1 = 12;
+    public static int CANPickup = 11;
     
 }

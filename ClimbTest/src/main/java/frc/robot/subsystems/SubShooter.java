@@ -22,6 +22,7 @@ public class SubShooter extends SubsystemBase {
   }
 
   public void runShooter(double speed) {
+    speed = speed * -1;
     shooterMotor.set(ControlMode.PercentOutput, speed);
     shooterMotor1.set(ControlMode.PercentOutput, speed);
   }
