@@ -34,7 +34,7 @@ public class SubOuterArms extends SubsystemBase {
   }
 
   public void moveLeftArm(double speed) {
-    SmartDashboard.putNumber("OuterLeftArmOutput", speed);
+    //SmartDashboard.putNumber("OuterLeftArmOutput", speed);
     climberLeftOuterMotor.set(speed);
   }
   
@@ -43,7 +43,7 @@ public class SubOuterArms extends SubsystemBase {
     //   speed = 0;
     // }
     // else {
-    SmartDashboard.putNumber("OuterRightArmOutput", speed);
+    //SmartDashboard.putNumber("OuterRightArmOutput", speed);
     climberRightOuterMotor.set(speed);
     //}
   }

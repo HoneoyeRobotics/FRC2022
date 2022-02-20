@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.CmdCalibrateNavX;
 import frc.robot.commands.CmdDefaultClimb;
 import frc.robot.commands.CmdMoveInnerArm;
 import frc.robot.commands.CmdMoveOuterArm;
@@ -23,6 +24,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.SubFeeder;
 import frc.robot.subsystems.SubInnerArms;
 import frc.robot.subsystems.SubLeadScrew;
+import frc.robot.subsystems.SubNavX;
 import frc.robot.subsystems.SubOuterArms;
 import frc.robot.subsystems.SubPickup;
 import frc.robot.subsystems.SubShooter;
@@ -50,6 +52,7 @@ public class RobotContainer {
   private final SubFeeder m_subFeeder = new SubFeeder();
   private final SubShooter m_subShooter = new SubShooter();
   private final SubPickup m_subPickup = new SubPickup();
+  private final SubNavX m_subNavX = new SubNavX();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   // private final CmdDefaultClimb m_cmdDefaultClimb = new CmdDefaultClimb(m_subOuterArms, m_subInnerArms, m_subLeadScrew, null, null, null, null, null);
@@ -58,7 +61,8 @@ public class RobotContainer {
   public RobotContainer() {
       
     
-SmartDashboard.putData(new ResetEncoder(m_subOuterArms, m_subInnerArms, m_subLeadScrew));
+    SmartDashboard.putData(new ResetEncoder(m_subOuterArms, m_subInnerArms, m_subLeadScrew));
+    SmartDashboard.putData(new CmdCalibrateNavX(m_subNavX));
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -75,8 +79,6 @@ SmartDashboard.putData(new ResetEncoder(m_subOuterArms, m_subInnerArms, m_subLea
     JoystickButton backButton = new JoystickButton(driverJoystick, 7);
     JoystickButton rBumperButton = new JoystickButton(driverJoystick, 6);
     JoystickButton lBumperButton = new JoystickButton(driverJoystick, 5);
-
-
     JoystickButton aButton = new JoystickButton(driverJoystick, 1);
     JoystickButton bButton = new JoystickButton(driverJoystick, 2);
     JoystickButton xButton = new JoystickButton(driverJoystick, 3);

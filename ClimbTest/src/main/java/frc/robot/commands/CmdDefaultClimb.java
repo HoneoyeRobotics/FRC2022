@@ -49,19 +49,20 @@ public class CmdDefaultClimb extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double innerSpeedDown = 0;
-    double innerSpeedUp = 0;
-    double outerSpeedDown = 0;
-    double outerSpeedUp = 0;
+    double innerSpeed = 0;
+    double outerSpeed = 0;
 
-    innerSpeedDown = innerAxisDown.getAsDouble();
-    innerSpeedUp = innerAxisUp.getAsDouble();
-    outerSpeedDown = outerAxisDown.getAsDouble();
-    outerSpeedUp = outerAxisUp.getAsDouble();
+    innerSpeed = innerAxisUp.getAsDouble() - innerAxisDown.getAsDouble();
+    outerSpeed = outerAxisUp.getAsDouble() - outerAxisDown.getAsDouble();
+
+    innerArms.moveArms(innerSpeed);
+    outerArms.moveArms(outerSpeed);
+    SmartDashboard.putNumber("InnerArmsPower", innerSpeed);
+    SmartDashboard.putNumber("OuterArmsPower", outerSpeed);
 
     leadScrew.moveArms(leadScrewPower.getAsDouble());
-    innerArms.moveArms(innerSpeedUp - innerSpeedDown);
-    outerArms.moveArms(outerSpeedUp - outerSpeedDown);
+
+    
   }
 
   // Called once the command ends or is interrupted.

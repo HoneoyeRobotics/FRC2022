@@ -34,12 +34,12 @@ public class SubInnerArms extends SubsystemBase {
   }
 
   public void moveLeftArm(double speed) {
-    SmartDashboard.putNumber("InnerLeftArmOutput", speed);
+    //SmartDashboard.putNumber("InnerLeftArmOutput", speed);
     climberLeftInnerMotor.set(speed);
   }
   
   public void moveRightArm(double speed) {
-    SmartDashboard.putNumber("InnerRightArmOutput", speed);
+    //SmartDashboard.putNumber("InnerRightArmOutput", speed);
     climberRightInnerMotor.set(speed);
   }
 

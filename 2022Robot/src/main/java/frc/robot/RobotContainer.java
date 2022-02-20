@@ -94,6 +94,23 @@ public class RobotContainer {
 buttonB.whenPressed(new FeedAndShootBalls(ball));
     }
 
+//     private void stephenDriverJoystick() {
+
+//       JoystickButton buttonA = new JoystickButton(driverJoystick, 1);
+//       JoystickButton buttonB = new JoystickButton(driverJoystick, 2);
+//       JoystickButton buttonX = new JoystickButton(driverJoystick, 3);
+//       JoystickButton buttonY = new JoystickButton(driverJoystick, 4);
+
+//       JoystickButton leftBumper = new JoystickButton(driverJoystick, 5);
+//       JoystickButton rightBumper = new JoystickButton(driverJoystick, 6);
+      
+//       buttonA.whileHeld(new ShootBall(ball)); 
+//       buttonY.whileHeld(new FeedBalls(ball));
+//       buttonB.whileHeld(new PickUpBalls(ball));
+
+// buttonB.whenPressed(new FeedAndShootBalls(ball));
+//     }
+
     private void configureCoDriverJoystick() {
       
       JoystickButton buttonA = new JoystickButton(coDriverJoystick, 1);
