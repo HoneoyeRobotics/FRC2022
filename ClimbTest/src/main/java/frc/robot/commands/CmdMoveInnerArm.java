@@ -4,11 +4,8 @@
 
 package frc.robot.commands;
 
-import javax.lang.model.util.ElementScanner6;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.SubInnerArms;
-import frc.robot.subsystems.SubOuterArms;
 
 public class CmdMoveInnerArm extends CommandBase {
 private boolean m_left;

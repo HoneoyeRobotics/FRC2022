@@ -52,7 +52,7 @@ public class RobotContainer {
   private final SubPickup m_subPickup = new SubPickup();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private final CmdDefaultClimb m_cmdDefaultClimb = new CmdDefaultClimb(m_subOuterArms, m_subInnerArms, m_subLeadScrew, null, null, null, null, null);
+  // private final CmdDefaultClimb m_cmdDefaultClimb = new CmdDefaultClimb(m_subOuterArms, m_subInnerArms, m_subLeadScrew, null, null, null, null, null);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
