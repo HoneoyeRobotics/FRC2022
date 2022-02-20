@@ -20,12 +20,7 @@ public class CmdRunPickup extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    int I = 1;
-    if (I == 1) {
-      I = 2 ;
-    }
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

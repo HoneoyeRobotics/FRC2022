@@ -32,7 +32,6 @@ public class CmdRunFeeder extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    
     feeder.runFeeder(0.0);
   }
 
