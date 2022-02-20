@@ -39,13 +39,18 @@ public class SubOuterArms extends SubsystemBase {
   }
 
   public void moveLeftArm(double speed) {
-    SmartDashboard.putNumber("Outer LeftArmSpeed", speed);
+    SmartDashboard.putNumber("OuterLeftArmOutput", speed);
     climberLeftOuterMotor.set(speed);
   }
   
   public void moveRightArm(double speed) {
-    SmartDashboard.putNumber("Outer RightArmSpeed", speed);
+    // if(climberRightOuterMotor.getOutputCurrent() > SmartDashboard.getNumber("MaxCROCurrent", 10)) {
+    //   speed = 0;
+    // }
+    // else {
+    SmartDashboard.putNumber("OuterRightArmOutput", speed);
     climberRightOuterMotor.set(speed);
+    //}
   }
 
 
@@ -53,6 +58,9 @@ public class SubOuterArms extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("CLOEncoder", climberLeftOuterMotor.getEncoder().getPosition());
     SmartDashboard.putNumber("CROEncoder", climberRightOuterMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("CLOCurrent", climberLeftOuterMotor.getOutputCurrent());
+    SmartDashboard.putNumber("CROCurrent", climberRightOuterMotor.getOutputCurrent());
+
     // This method will be called once per scheduler run
   }
 }

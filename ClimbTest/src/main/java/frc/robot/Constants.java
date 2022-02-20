@@ -19,7 +19,6 @@ public final class Constants {
     public static int CANCROM = 25;
     public static int CANCLOM = 26;
     public static int CANLSM = 9;
-
     public static int CANFeeder = 8;
     public static int CANShooter = 10;
     public static int CANShooter1 = 12;

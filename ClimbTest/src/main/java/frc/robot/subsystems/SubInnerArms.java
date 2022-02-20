@@ -39,12 +39,12 @@ public class SubInnerArms extends SubsystemBase {
   }
 
   public void moveLeftArm(double speed) {
-    SmartDashboard.putNumber("Inner LeftArmSpeed", speed);
+    SmartDashboard.putNumber("InnerLeftArmOutput", speed);
     climberLeftInnerMotor.set(speed);
   }
   
   public void moveRightArm(double speed) {
-    SmartDashboard.putNumber("Inner RightArmSpeed", speed);
+    SmartDashboard.putNumber("InnerRightArmOutput", speed);
     climberRightInnerMotor.set(speed);
   }
 
@@ -54,6 +54,9 @@ public class SubInnerArms extends SubsystemBase {
     
     SmartDashboard.putNumber("CRIEncoder", climberRightInnerMotor.getEncoder().getPosition());
     SmartDashboard.putNumber("CLIEncoder", climberLeftInnerMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("CLICurrent", climberLeftInnerMotor.getOutputCurrent());
+    SmartDashboard.putNumber("CRICurrent", climberRightInnerMotor.getOutputCurrent());
+
     // This method will be called once per scheduler run
   }
 }

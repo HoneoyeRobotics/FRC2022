@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.SubPickup;
 
@@ -19,12 +20,18 @@ public class CmdRunPickup extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    int I = 1;
+    if (I == 1) {
+      I = 2 ;
+    }
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_pickup.runPickup(0.6);
+    double pickupSpeed = Preferences.getDouble("PickupSpeed", .6);
+    m_pickup.runPickup(pickupSpeed);
   }
 
   // Called once the command ends or is interrupted.

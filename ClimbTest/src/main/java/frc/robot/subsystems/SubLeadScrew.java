@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -27,12 +28,21 @@ public class SubLeadScrew extends SubsystemBase {
   }
 
   public void moveArms(double speed) {
+    double maxLSMCurrent = Preferences.getDouble("MaxLSMCurrent", 30.0);
+    double statorCurrent = leadScrewMotor.getStatorCurrent();
+    if((statorCurrent > maxLSMCurrent) || (statorCurrent < (-1 * maxLSMCurrent))) {
+      speed = 0;
+    }
+    else {
     leadScrewMotor.set(ControlMode.PercentOutput, speed);
-    SmartDashboard.putNumber("Lead Screw Power", speed);
+    SmartDashboard.putNumber("LeadScrewPower", speed);
+    }
   } 
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("LSMEncoder", leadScrewMotor.getSelectedSensorPosition());
+    SmartDashboard.putNumber("LSMCurrent", leadScrewMotor.getStatorCurrent());
   }
 }

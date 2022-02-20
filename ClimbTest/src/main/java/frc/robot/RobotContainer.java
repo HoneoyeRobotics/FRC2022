@@ -14,6 +14,7 @@ import frc.robot.commands.CmdDefaultClimb;
 import frc.robot.commands.CmdMoveInnerArm;
 import frc.robot.commands.CmdMoveOuterArm;
 import frc.robot.commands.CmdRunFeeder;
+import frc.robot.commands.CmdRunLeadScrew;
 import frc.robot.commands.CmdRunPickup;
 import frc.robot.commands.CmdRunShooter;
 import frc.robot.commands.ExampleCommand;
@@ -57,7 +58,7 @@ public class RobotContainer {
   public RobotContainer() {
       
     
-SmartDashboard.putData(new ResetEncoder(m_subOuterArms, m_subInnerArms));
+SmartDashboard.putData(new ResetEncoder(m_subOuterArms, m_subInnerArms, m_subLeadScrew));
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -89,7 +90,7 @@ SmartDashboard.putData(new ResetEncoder(m_subOuterArms, m_subInnerArms));
     rBumperButton.whileHeld(new CmdRunFeeder(m_subFeeder));
     lBumperButton.whileHeld(new CmdRunShooter(m_subShooter));
     backButton.whileHeld(new CmdRunPickup(m_subPickup));
-    startButton.whenPressed(new ResetEncoder(m_subOuterArms, m_subInnerArms));
+    startButton.whenPressed(new ResetEncoder(m_subOuterArms, m_subInnerArms, m_subLeadScrew));
   }
 
   private void configureCoDriverJoystick() {
@@ -97,22 +98,24 @@ SmartDashboard.putData(new ResetEncoder(m_subOuterArms, m_subInnerArms));
     JoystickButton bButton = new JoystickButton(coDriverJoystick, 2);
     JoystickButton xButton = new JoystickButton(coDriverJoystick, 3);
     JoystickButton yButton = new JoystickButton(coDriverJoystick, 4);
+    JoystickButton rBumperButton = new JoystickButton(coDriverJoystick, 6);
+    JoystickButton lBumperButton = new JoystickButton(coDriverJoystick, 5);
 
     aButton.whileHeld(new CmdMoveInnerArm(m_subInnerArms, true, -0.1));
     yButton.whileHeld(new CmdMoveInnerArm(m_subInnerArms, true, 0.1));
     xButton.whileHeld(new CmdMoveInnerArm(m_subInnerArms, false, -0.1));
     bButton.whileHeld(new CmdMoveInnerArm(m_subInnerArms, false, 0.1));
-    
-
-    JoystickButton rBumperButton = new JoystickButton(coDriverJoystick, 6);
-
-
+  
     rBumperButton.whenPressed(new CmdDefaultClimb(m_subOuterArms, m_subInnerArms, m_subLeadScrew,
     () -> driverJoystick.getRawAxis(2),
     () -> driverJoystick.getRawAxis(3),
     () -> coDriverJoystick.getRawAxis(2),
     () -> coDriverJoystick.getRawAxis(3),
     () -> driverJoystick.getRawAxis(5))
+    );
+
+    lBumperButton.whenPressed(new CmdRunLeadScrew(m_subLeadScrew,
+    () -> coDriverJoystick.getRawAxis(1))
     );
 
   }

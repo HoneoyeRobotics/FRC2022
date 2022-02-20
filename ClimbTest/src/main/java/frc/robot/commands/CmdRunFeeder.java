@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.SubFeeder;
 
@@ -24,12 +25,14 @@ public class CmdRunFeeder extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    feeder.runFeeder(1);
+    double feederSpeed = Preferences.getDouble("FeederSpeed", 1);
+    feeder.runFeeder(feederSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    
     feeder.runFeeder(0.0);
   }
 
