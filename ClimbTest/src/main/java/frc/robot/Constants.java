@@ -23,5 +23,7 @@ public final class Constants {
     public static int CANShooter = 10;
     public static int CANShooter1 = 12;
     public static int CANPickup = 11;
+
+    public static double deadband = 0.1;
     
 }
