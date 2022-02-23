@@ -116,7 +116,9 @@ public class RobotContainer {
     () -> driverJoystick.getRawAxis(5))
     );
 
-    lBumperButton.whenPressed(new CmdRunLeadScrew(m_subLeadScrew,
+   
+    m_subLeadScrew.setDefaultCommand( 
+    new CmdRunLeadScrew(m_subLeadScrew,
     () -> coDriverJoystick.getRawAxis(1))
     );
 

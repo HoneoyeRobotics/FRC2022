@@ -4,20 +4,23 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.OuterClimber;
+import frc.robot.subsystems.*;
 
-public class RaiseOuterArms extends CommandBase {
+public class DefaultLeadScrew extends CommandBase {
 
-  private OuterClimber climber;
+  private LeadScrew leadScrew;
+  private DoubleSupplier movementValue;
+  private double currentMoveValue = 0;
 
-  /** Creates a new RaiseRearArm. */
-  public RaiseOuterArms(OuterClimber climber) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(climber);
-    this.climber = climber;
+  /** Creates a new DefaultClimb. */
+  public DefaultLeadScrew(LeadScrew leadScrew, DoubleSupplier movementValue) {
 
+    addRequirements(leadScrew);
+    this.leadScrew = leadScrew;
+    this.movementValue = movementValue;
   }
 
   // Called when the command is initially scheduled.
@@ -28,17 +31,22 @@ public class RaiseOuterArms extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climber.setPosition(1);
 
+    currentMoveValue = movementValue.getAsDouble();
+   
+    leadScrew.moveArms(currentMoveValue);
+   
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    leadScrew.moveArms(0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

@@ -41,7 +41,7 @@ public class DriveRobot extends CommandBase {
 
     xSpeed = forwardSupplier.getAsDouble() - backwardSupplier.getAsDouble();
 
-    zRotation = turnSupplier.getAsDouble();
+    zRotation = turnSupplier.getAsDouble() * .5;
 
     drivetrain.drive(xSpeed, zRotation);
   }

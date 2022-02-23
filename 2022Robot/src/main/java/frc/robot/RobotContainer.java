@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.WidgetType;
@@ -50,24 +51,29 @@ public class RobotContainer {
     Shuffleboard.getTab("Diagnostics").add("PDP", pdp).withWidget(BuiltInWidgets.kPowerDistribution).withPosition(0, 0).withSize(6,    3);
 
     //Default commands
-      DriveRobot driveRobot = new DriveRobot (driveTrain,
-      () -> driverJoystick.getRawAxis(3),
-      () -> driverJoystick.getRawAxis(2),
-      () -> driverJoystick.getRawAxis(0));
-      driveTrain.setDefaultCommand(driveRobot);
+      driveTrain.setDefaultCommand(new DriveRobot (driveTrain,
+        () -> driverJoystick.getRawAxis(Constants.AXIS_RightTrigger),
+        () -> driverJoystick.getRawAxis(Constants.AXIS_LeftTrigger),
+        () -> driverJoystick.getRawAxis(Constants.AXIS_LeftStickX)));
 
-      // DefaultClimb defaultClimb = new DefaultClimb (outerClimber, innerClimber, leadScrew,
-      // () -> coDriverJoystick.getRawAxis(5),
-      // () -> coDriverJoystick.getRawAxis(1),
-      // () -> coDriverJoystick.getRawAxis(0));
-      // outerClimber.setDefaultCommand(defaultClimb);
+      outerClimber.setDefaultCommand(new DefaultOuterArms(outerClimber, 
+          () -> coDriverJoystick.getRawAxis(Constants.AXIS_RightStickX)));
 
+      innerClimber.setDefaultCommand(new DefaultInnerArms(innerClimber, 
+          () -> coDriverJoystick.getRawAxis(Constants.AXIS_LeftStickY)));
+
+      leadScrew.setDefaultCommand(new DefaultLeadScrew(leadScrew, 
+          () -> coDriverJoystick.getRawAxis(Constants.AXIS_LeftStickX)));
     // Configure the button bindings
     configureButtonBindings();
     
     SmartDashboard.putData(new SwitchCamera(driveTrain));
-
-
+SmartDashboard.putData(new RaiseOuterArms(outerClimber));
+SmartDashboard.putData(new LowerOuterArms(outerClimber));
+SmartDashboard.putData(new RaiseInnerArms(innerClimber));
+SmartDashboard.putData(new LowerInnerArms(innerClimber));
+SmartDashboard.putData(new TogglePIDs(innerClimber, outerClimber));
+SmartDashboard.putData(new FinalClimb(outerClimber, innerClimber, leadScrew));
 
   }
 

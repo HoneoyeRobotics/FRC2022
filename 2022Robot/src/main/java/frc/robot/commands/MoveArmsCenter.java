@@ -25,14 +25,14 @@ public class MoveArmsCenter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(leadScrew.armsCentered() == false) {
-      if(leadScrew.armsGreaterThanCenter() == true) {
-        leadScrew.moveArms(-.75);
-      }
-      else {
-        leadScrew.moveArms(.75);
-      }
-    }
+    // if(leadScrew.armsCentered() == false) {
+    //   if(leadScrew.armsGreaterThanCenter() == true) {
+    //     leadScrew.moveArms(-.75);
+    //   }
+    //   else {
+    //     leadScrew.moveArms(.75);
+    //   }
+    // }
   }
   // Called once the command ends or is interrupted.
   @Override
@@ -43,6 +43,7 @@ public class MoveArmsCenter extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return leadScrew.armsCentered();
+    // return leadScrew.armsCentered();
+    return true;
   }
 }
