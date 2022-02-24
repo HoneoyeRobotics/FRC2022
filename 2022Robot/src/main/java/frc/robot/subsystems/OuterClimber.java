@@ -104,9 +104,11 @@ public class OuterClimber extends PIDSubsystem {
     SmartDashboard.putNumber("OC setpoint", setpoint);
   }
 
-  public void runMotor(double speed){
-    climberLeftOuterMotor.set(speed);
-    climberRightOuterMotor.set(speed);
+  public void runMotor(double speed, boolean runLeft, boolean runRight){
+    if(runLeft == true)
+      climberLeftOuterMotor.set(speed);
+    if(runRight  == true)
+      climberRightOuterMotor.set(speed);
   }
   @Override
   public double getMeasurement() {

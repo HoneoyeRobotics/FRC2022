@@ -86,8 +86,10 @@ public class InnerClimber extends PIDSubsystem {
         climberRightInnerMotor.getEncoder().getPosition()) / 2;
 
   }
-  public void runMotor(double speed){
-    climberLeftInnerMotor.set(speed);
-    climberRightInnerMotor.set(speed);
+  public void runMotor(double speed, boolean runLeft, boolean runRight){
+    if(runLeft == true)
+      climberLeftInnerMotor.set(speed);
+    if(runRight == true)
+      climberRightInnerMotor.set(speed);
   }
 }

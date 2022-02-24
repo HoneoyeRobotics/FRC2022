@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,13 +18,17 @@ public class DefaultOuterArms extends CommandBase {
   private DoubleSupplier outerHeight;
   private double currentOuterValue = 0;
   private double outerPosition = 0;
+  private BooleanSupplier leftOnly;
+private BooleanSupplier rightOnly;
 
   /** Creates a new DefaultClimb. */
-  public DefaultOuterArms(OuterClimber outerClimber,  DoubleSupplier outerHeight) {
+  public DefaultOuterArms(OuterClimber outerClimber,  DoubleSupplier outerHeight, BooleanSupplier leftOnly, BooleanSupplier rightOnly) {
 
     addRequirements(outerClimber);
     this.outerClimber = outerClimber;
     this.outerHeight = outerHeight;
+    this.leftOnly = leftOnly;
+    this.rightOnly = rightOnly;
   }
 
   // Called when the command is initially scheduled.
@@ -36,7 +41,12 @@ public class DefaultOuterArms extends CommandBase {
   @Override
   public void execute() {
     if(outerClimber.isEnabled() == false)
-    outerClimber.runMotor(outerHeight.getAsDouble());
+    {
+      
+      boolean runLeft = rightOnly.getAsBoolean() ? false : true;
+        boolean runRight = leftOnly.getAsBoolean() ? false : true;
+        outerClimber.runMotor(outerHeight.getAsDouble(), runLeft, runRight);
+    }
       
   }
 
@@ -44,7 +54,7 @@ public class DefaultOuterArms extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     if(outerClimber.isEnabled() == false)
-      outerClimber.runMotor(0);
+      outerClimber.runMotor(0, true, true);
   }
 
   // Returns true when the command should end.

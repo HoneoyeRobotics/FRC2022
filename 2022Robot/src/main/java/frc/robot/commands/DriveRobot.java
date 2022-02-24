@@ -43,7 +43,9 @@ public class DriveRobot extends CommandBase {
 
     zRotation = turnSupplier.getAsDouble() * .5;
 
-    drivetrain.drive(xSpeed, zRotation);
+
+    //not sure why it needs to be inverted?????
+    drivetrain.drive(zRotation, xSpeed); 
   }
 
   // Called once the command ends or is interrupted.
