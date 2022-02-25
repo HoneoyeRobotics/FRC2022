@@ -21,6 +21,7 @@ public class LowerInnerArms extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    climber.enable();
     climber.setPosition(0);
   }
 

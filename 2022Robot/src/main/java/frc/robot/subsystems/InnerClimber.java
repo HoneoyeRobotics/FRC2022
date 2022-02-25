@@ -5,18 +5,24 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
 
 public class InnerClimber extends PIDSubsystem {
   /** Creates a new InnerClimber. */
   public InnerClimber() {
-    super(new PIDController(1.3, 0.0, 0.7));
+    super(new PIDController(0.25, 0, 0));
     climberLeftInnerMotor = new CANSparkMax(Constants.CANID_ClimberLeftInnerMotor, MotorType.kBrushless);
     climberRightInnerMotor = new CANSparkMax(Constants.CANID_ClimberRightInnerMotor, MotorType.kBrushless);
     climberRightInnerMotor.setInverted(true);
+
+    climberLeftInnerMotor.setIdleMode(IdleMode.kBrake);
+    climberRightInnerMotor.setIdleMode(IdleMode.kBrake);
     resetEncoders();
   }
 
@@ -35,14 +41,13 @@ public class InnerClimber extends PIDSubsystem {
     else if (position > 1)
       position = 1;
 
-double setpoint = 0;
+    double setpoint = 0;
     switch(position){
      
       case 1:
-        setpoint = Constants.InnerLeftMax;
+        setpoint = Preferences.getDouble("InnerMax", 108);
         break;
-        case 0:
-        setpoint = 0;
+        case 0:setpoint = Preferences.getDouble("InnerMin", 0);
         break;
     }
       
@@ -70,13 +75,40 @@ double setpoint = 0;
     // Use the output here
     climberLeftInnerMotor.set(output);
     climberRightInnerMotor.set(output);
+    SmartDashboard.putNumber("IC setpoint", output);
+    SmartDashboard.putNumber("IC setpoint", setpoint);
   }
 
   @Override
   public double getMeasurement() {
     // Return the process variable measurement here
+    SmartDashboard.putNumber("CLIEncoder", climberLeftInnerMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("CRIEncoder", climberRightInnerMotor.getEncoder().getPosition());
+
+    SmartDashboard.putNumber("CLICurrent", climberLeftInnerMotor.getOutputCurrent());
+    SmartDashboard.putNumber("CRICurrent", climberRightInnerMotor.getOutputCurrent());
+
     return (climberLeftInnerMotor.getEncoder().getPosition() +
         climberRightInnerMotor.getEncoder().getPosition()) / 2;
 
+  }
+  public void runMotor(double speed, boolean runLeft, boolean runRight){
+    SmartDashboard.putBoolean("Inner Run Left", runLeft);
+    SmartDashboard.putBoolean("Inner Run Right", runRight);
+    
+    if(runLeft == true)
+      climberLeftInnerMotor.set(speed);
+    if(runRight == true)
+      climberRightInnerMotor.set(speed);
+
+    SmartDashboard.putNumber("InnerArmsPower", speed);
+  }
+
+  public boolean leftAtBottomCurrent() {
+    return(climberLeftInnerMotor.getOutputCurrent() > Constants.MaxCurrent);
+  }
+
+  public boolean rightAtBottomCurrent() {
+    return (climberRightInnerMotor.getOutputCurrent() > Constants.MaxCurrent);
   }
 }

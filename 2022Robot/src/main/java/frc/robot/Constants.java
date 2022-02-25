@@ -29,17 +29,32 @@ public final class Constants {
     public static final int CANID_ShooterMotor = 10;
     public static final int CANID_Shooter1Motor = 12;
     public static final int CANID_PickupMotor = 11;
-
     public static final int CANID_FeederMotor = 8;
+
+    public static final int DIO_FrontLimitSwitch = 0;
+    public static final int DIO_RearLimitSwitch = 1;
+
+    public static final int AXIS_LeftStickX  = 0;
+    public static final int AXIS_LeftStickY = 1;
+    public static final int AXIS_LeftTrigger = 2;    
+    public static final int AXIS_RightTrigger = 3;
+    public static final int AXIS_RightStickX = 4;
+    public static final int AXIS_RightStickY =  5;
+
+    public static final double MaxClimberOutput = 0.75;
+    public static final double ArmVerticalEncoderDeadband = 0;
+    public static final double ArmVerticalJoystickEncoderMovement = 1;
+
+    public static final double ArmHorizontalEncoderMaxValue = 200;
+    public static final double ArmHorizantalEncoderCenter = 100;
+    public static final double ArmHorizontalEncoderDeadband = 10;
 
     public static final double OuterLeftMax = 130;
     public static final double InnerLeftMax = 108;
     public static final double InnerRightMax = 109;
     public static final double OuterRightMax = 137;
-    public static final double ArmVerticalEncoderDeadband = 0;
-    public static final double ArmVerticalJoystickEncoderMovement = 10;
 
-    public static final double ArmHorizontalEncoderMaxValue = 200;
-    public static final double ArmHorizantalEncoderCenter = 100;
-    public static final double ArmHorizontalEncoderDeadband = 10;
+    public static final double JoystickDeadband = .1;
+
+    public static final double MaxCurrent = 10;
 }

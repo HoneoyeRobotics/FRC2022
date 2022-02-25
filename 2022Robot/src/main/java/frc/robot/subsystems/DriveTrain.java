@@ -32,12 +32,9 @@ public class DriveTrain extends SubsystemBase {
   private MotorControllerGroup driveLeftMotorGroup;
 
   private DifferentialDrive driveMotors;
-
-
-
-	// public UsbCamera frontCamera
-	// public UsbCamera rearCamera;
-    // private VideoSink server;
+	public UsbCamera frontCamera;
+	public UsbCamera rearCamera;
+  private VideoSink server;
 	public volatile boolean UseFrontCamera = true;
 
   /** Creates a new DriveTrain. */
@@ -56,31 +53,31 @@ public class DriveTrain extends SubsystemBase {
 
     SmartDashboard.putBoolean("Front Camera", UseFrontCamera);
     
-    // frontCamera = CameraServer.startAutomaticCapture("front", 0);
-    // frontCamera.setFPS(30);
+    frontCamera = CameraServer.startAutomaticCapture("front", 0);
+    frontCamera.setFPS(15);
 
-    // rearCamera = new UsbCamera("rear", 1);
-    // rearCamera.setFPS(15);
-    // server = CameraServer.getServer();
+    rearCamera = new UsbCamera("rear", 1);
+    rearCamera.setFPS(15);
+    server = CameraServer.getServer();
 
-    // frontCamera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-    // rearCamera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+    frontCamera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+    rearCamera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
   }
 
   public void switchCamera(){
-    // if(UseFrontCamera){
-    //   UseFrontCamera = false;
-    //         server.setSource(rearCamera);
-    // }
-    // else{
-    //   UseFrontCamera = true;
-    //   server.setSource(frontCamera);
-    // }
-    // SmartDashboard.putBoolean("Front Camera", UseFrontCamera);
+    if(UseFrontCamera){
+      UseFrontCamera = false;
+            server.setSource(rearCamera);
+    }
+    else{
+      UseFrontCamera = true;
+      server.setSource(frontCamera);
+    }
+    SmartDashboard.putBoolean("Front Camera", UseFrontCamera);
   }
 
   public void drive(double xSpeed, double zRotation) {
-    driveMotors.arcadeDrive( zRotation, xSpeed);
+    driveMotors.arcadeDrive( xSpeed, zRotation);
   }
 
   @Override

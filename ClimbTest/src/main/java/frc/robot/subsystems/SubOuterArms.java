@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,6 +22,9 @@ public class SubOuterArms extends SubsystemBase {
     climberLeftOuterMotor = new CANSparkMax(Constants.CANCLOM, MotorType.kBrushless);
     climberRightOuterMotor = new CANSparkMax(Constants.CANCROM, MotorType.kBrushless);
     climberRightOuterMotor.setInverted(true);
+
+    climberLeftOuterMotor.setIdleMode(IdleMode.kBrake);
+    climberRightOuterMotor.setIdleMode(IdleMode.kBrake);
   }
 
   public void resetEncoders() {

@@ -23,12 +23,13 @@ public class RaiseOuterArms extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    climber.enable();
+    climber.setPosition(1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climber.setPosition(Constants.OuterLeftMax);
 
   }
 
@@ -39,6 +40,6 @@ public class RaiseOuterArms extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return climber.atTop();
+    return true;
   }
 }

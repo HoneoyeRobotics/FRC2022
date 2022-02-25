@@ -5,21 +5,27 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
 
 public class OuterClimber extends PIDSubsystem {
   /** Creates a new OuterClimber. */
   public OuterClimber() {
-    super(new PIDController(0, 0, 0));
+    super(new PIDController(0.25, 0, 0));
     climberLeftOuterMotor = new CANSparkMax(Constants.CANID_ClimberLeftOuterMotor, MotorType.kBrushless);
     climberRightOuterMotor = new CANSparkMax(Constants.CANID_ClimberRightOuterMotor, MotorType.kBrushless);
     climberRightOuterMotor.setInverted(true);
     leadScrewMotor = new TalonSRX(Constants.CANID_LeadScrewMotor);
+    
+    climberLeftOuterMotor.setIdleMode(IdleMode.kBrake);
+    climberRightOuterMotor.setIdleMode(IdleMode.kBrake);
     resetEncoders();
   }
 
@@ -32,12 +38,23 @@ public class OuterClimber extends PIDSubsystem {
   private CANSparkMax climberRightOuterMotor;
   private TalonSRX leadScrewMotor;
 
-  public void setPosition(double position) {
-    if(position < 0)
+  public void setPosition(int position) {
+    if (position < 0)
       position = 0;
-    else if (position > Constants.OuterLeftMax)
-      position = Constants.OuterLeftMax;
-      setSetpoint(position);
+    else if (position > 1)
+      position = 1;
+
+    double setpoint = 0;
+    switch(position){
+     
+      case 1:
+        setpoint = Preferences.getDouble("OuterMax", 130);
+        break;
+        case 0:setpoint = Preferences.getDouble("OuterMin", 0);
+        break;
+    }
+    SmartDashboard.putNumber("OC Set to", setpoint);
+    setSetpoint(setpoint);
   }
 
   public boolean atTop() {
@@ -77,15 +94,53 @@ public class OuterClimber extends PIDSubsystem {
 
   @Override
   public void useOutput(double output, double setpoint) {
+    if (output > Constants.MaxClimberOutput)
+      output = Constants.MaxClimberOutput;
     // Use the output here
     climberLeftOuterMotor.set(output);
     climberRightOuterMotor.set(output);
+    
+    SmartDashboard.putNumber("OC output", output);
+    SmartDashboard.putNumber("OC setpoint", setpoint);
   }
 
+  public void runMotor(double speed, boolean runLeft, boolean runRight){
+    SmartDashboard.putBoolean("Outer Run Left", runLeft);
+    SmartDashboard.putBoolean("Outer Run Right", runRight);
+    
+    if(runLeft == true)
+      climberLeftOuterMotor.set(speed);
+    if(runRight  == true)
+      climberRightOuterMotor.set(speed);
+
+    
+      SmartDashboard.putNumber("OuterArmsPower", speed);
+  }
   @Override
   public double getMeasurement() {
     // Return the process variable measurement here
+    SmartDashboard.putNumber("CLOEncoder", climberLeftOuterMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("CROEncoder", climberRightOuterMotor.getEncoder().getPosition());
+
+    SmartDashboard.putNumber("CLOCurrent", climberLeftOuterMotor.getOutputCurrent());
+    SmartDashboard.putNumber("CROCurrent", climberRightOuterMotor.getOutputCurrent());
+
     return (climberLeftOuterMotor.getEncoder().getPosition() +
     climberRightOuterMotor.getEncoder().getPosition()) / 2;
   }
+
+  public boolean leftAtBottomCurrent() {
+    return(climberLeftOuterMotor.getOutputCurrent() > Constants.MaxCurrent);
+  }
+  public boolean rightAtBottomCurrent() {
+      return (climberRightOuterMotor.getOutputCurrent() > Constants.MaxCurrent);
+  }
+  
 }
+
+// if (climberleftOuterMotor.getEncoder() > climberRight.OuterMotor.getEncoder()) {
+//   climerleftOuterMotor.set(output * .9);
+// }
+// else if (climberRightOuterMotor.getEncoder() > climberleftOuterMotor.getEncoder()) {
+//   climberRightOuterMotor.set(output * .9);
+// }

@@ -4,36 +4,42 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.LeadScrew;
+import frc.robot.Constants;
+import frc.robot.subsystems.*;
 
-public class MoveArmsCenter extends CommandBase {
-  
+public class DefaultLeadScrew extends CommandBase {
+
   private LeadScrew leadScrew;
+  private DoubleSupplier movementValue;
+  private double currentMoveValue = 0;
 
-  /** Creates a new MoveArmsCenter. */
-  public MoveArmsCenter(LeadScrew leadScrew) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  /** Creates a new DefaultClimb. */
+  public DefaultLeadScrew(LeadScrew leadScrew, DoubleSupplier movementValue) {
+
     addRequirements(leadScrew);
     this.leadScrew = leadScrew;
+    this.movementValue = movementValue;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // if(leadScrew.armsCentered() == false) {
-    //   if(leadScrew.armsGreaterThanCenter() == true) {
-    //     leadScrew.moveArms(-.75);
-    //   }
-    //   else {
-    //     leadScrew.moveArms(.75);
-    //   }
-    // }
+
+    currentMoveValue = movementValue.getAsDouble();
+    if((currentMoveValue > (Constants.JoystickDeadband * -1)) && (currentMoveValue < Constants.JoystickDeadband)) {
+      currentMoveValue = 0;
+    }
+    leadScrew.moveArms(currentMoveValue);
+   
   }
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
@@ -43,7 +49,6 @@ public class MoveArmsCenter extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return leadScrew.armsCentered();
-    return true;
+    return false;
   }
 }

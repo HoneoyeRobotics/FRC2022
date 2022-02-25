@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -32,6 +33,7 @@ public class RobotContainer {
   private InnerClimber innerClimber;
   private LeadScrew leadScrew;
   private Ball ball;
+  private CamerasAndNavX camerasAndNavX;
   Joystick driverJoystick = new Joystick(0);
   Joystick coDriverJoystick = new Joystick(1);
   private PowerDistribution pdp;
@@ -45,29 +47,41 @@ public class RobotContainer {
     innerClimber = new InnerClimber();
     leadScrew = new LeadScrew();
     ball = new Ball();
+    camerasAndNavX = new CamerasAndNavX();
     pdp = new PowerDistribution(0, ModuleType.kCTRE);
 
     Shuffleboard.getTab("Diagnostics").add("PDP", pdp).withWidget(BuiltInWidgets.kPowerDistribution).withPosition(0, 0).withSize(6,    3);
 
     //Default commands
-      DriveRobot driveRobot = new DriveRobot (driveTrain,
-      () -> driverJoystick.getRawAxis(3),
-      () -> driverJoystick.getRawAxis(2),
-      () -> driverJoystick.getRawAxis(0));
-      driveTrain.setDefaultCommand(driveRobot);
+      driveTrain.setDefaultCommand(new DriveRobot (driveTrain,
+        () -> driverJoystick.getRawAxis(Constants.AXIS_RightTrigger),
+        () -> driverJoystick.getRawAxis(Constants.AXIS_LeftTrigger),
+        () -> driverJoystick.getRawAxis(Constants.AXIS_LeftStickX)));
 
-      // DefaultClimb defaultClimb = new DefaultClimb (outerClimber, innerClimber, leadScrew,
-      // () -> coDriverJoystick.getRawAxis(5),
-      // () -> coDriverJoystick.getRawAxis(1),
-      // () -> coDriverJoystick.getRawAxis(0));
-      // outerClimber.setDefaultCommand(defaultClimb);
+      outerClimber.setDefaultCommand(new DefaultOuterArms(outerClimber, 
+          () -> coDriverJoystick.getRawAxis(Constants.AXIS_RightStickY) * -1,
+          () -> coDriverJoystick.getRawButton(7),
+          () -> coDriverJoystick.getRawButton(8)));
 
+      innerClimber.setDefaultCommand(new DefaultInnerArms(innerClimber, 
+          () -> coDriverJoystick.getRawAxis(Constants.AXIS_LeftStickY) * -1,
+          () -> coDriverJoystick.getRawButton(7),
+          () -> coDriverJoystick.getRawButton(8)));
+
+      leadScrew.setDefaultCommand(new DefaultLeadScrew(leadScrew, 
+          () -> coDriverJoystick.getRawAxis(Constants.AXIS_LeftStickX)));
     // Configure the button bindings
     configureButtonBindings();
     
     SmartDashboard.putData(new SwitchCamera(driveTrain));
-
-
+    SmartDashboard.putData(new RaiseOuterArms(outerClimber));
+    SmartDashboard.putData(new LowerOuterArms(outerClimber));
+    SmartDashboard.putData(new RaiseInnerArms(innerClimber));
+    SmartDashboard.putData(new LowerInnerArms(innerClimber));
+    SmartDashboard.putData(new TogglePIDs(innerClimber, outerClimber));
+    SmartDashboard.putData(new FinalClimb(outerClimber, innerClimber, leadScrew));
+    SmartDashboard.putData(new ResetArms(innerClimber, outerClimber));
+    SmartDashboard.putData(new ResetEncoder(outerClimber, innerClimber));
 
   }
 
@@ -91,7 +105,7 @@ public class RobotContainer {
       leftBumper.whileHeld(new FeedBalls(ball));
       rightBumper.whileHeld(new PickUpBalls(ball));
 
-buttonB.whenPressed(new FeedAndShootBalls(ball));
+      buttonB.whenPressed(new FeedAndShootBalls(ball));
     }
 
 //     private void stephenDriverJoystick() {
