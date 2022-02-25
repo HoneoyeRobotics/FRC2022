@@ -14,8 +14,8 @@ public class DefaultInnerArms extends CommandBase {
 
   private InnerClimber innerClimber;
   private DoubleSupplier innerHeight;
-  private double currentInnerValue = 0;
-  private double outerPosition = 0;
+  //private double currentInnerValue = 0;
+  //private double outerPosition = 0;
   private BooleanSupplier leftOnly;
 private BooleanSupplier rightOnly;
   /** Creates a new DefaultClimb. */

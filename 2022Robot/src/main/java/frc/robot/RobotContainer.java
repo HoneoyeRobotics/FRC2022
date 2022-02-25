@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -12,7 +11,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.WidgetType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -73,7 +71,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     
-    SmartDashboard.putData(new SwitchCamera(driveTrain));
+    SmartDashboard.putData(new SwitchCamera(camerasAndNavX));
     SmartDashboard.putData(new RaiseOuterArms(outerClimber));
     SmartDashboard.putData(new LowerOuterArms(outerClimber));
     SmartDashboard.putData(new RaiseInnerArms(innerClimber));
@@ -95,8 +93,8 @@ public class RobotContainer {
 
       JoystickButton buttonA = new JoystickButton(driverJoystick, 1);
       JoystickButton buttonB = new JoystickButton(driverJoystick, 2);
-      JoystickButton buttonX = new JoystickButton(driverJoystick, 3);
-      JoystickButton buttonY = new JoystickButton(driverJoystick, 4);
+      //JoystickButton buttonX = new JoystickButton(driverJoystick, 3);
+      //JoystickButton buttonY = new JoystickButton(driverJoystick, 4);
 
       JoystickButton leftBumper = new JoystickButton(driverJoystick, 5);
       JoystickButton rightBumper = new JoystickButton(driverJoystick, 6);

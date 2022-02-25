@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -43,11 +44,9 @@ public class InnerClimber extends PIDSubsystem {
 
     double setpoint = 0;
     switch(position){
-     
-      case 1:
-        setpoint = Preferences.getDouble("InnerMax", 108);
+      case 1:setpoint = Preferences.getDouble("InnerMax", 108);
         break;
-        case 0:setpoint = Preferences.getDouble("InnerMin", 0);
+      case 0:setpoint = Preferences.getDouble("InnerMin", 0);
         break;
     }
       

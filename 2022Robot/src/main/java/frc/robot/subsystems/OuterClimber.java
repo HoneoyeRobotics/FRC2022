@@ -6,8 +6,6 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Preferences;
@@ -16,13 +14,14 @@ import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
 
 public class OuterClimber extends PIDSubsystem {
+  private CANSparkMax climberLeftOuterMotor;
+  private CANSparkMax climberRightOuterMotor;
   /** Creates a new OuterClimber. */
   public OuterClimber() {
     super(new PIDController(0.25, 0, 0));
     climberLeftOuterMotor = new CANSparkMax(Constants.CANID_ClimberLeftOuterMotor, MotorType.kBrushless);
     climberRightOuterMotor = new CANSparkMax(Constants.CANID_ClimberRightOuterMotor, MotorType.kBrushless);
     climberRightOuterMotor.setInverted(true);
-    leadScrewMotor = new TalonSRX(Constants.CANID_LeadScrewMotor);
     
     climberLeftOuterMotor.setIdleMode(IdleMode.kBrake);
     climberRightOuterMotor.setIdleMode(IdleMode.kBrake);
@@ -32,11 +31,7 @@ public class OuterClimber extends PIDSubsystem {
   public void resetEncoders() {
     climberLeftOuterMotor.getEncoder().setPosition(0);
     climberRightOuterMotor.getEncoder().setPosition(0);
-    leadScrewMotor.setSelectedSensorPosition(0);
   }
-  private CANSparkMax climberLeftOuterMotor;
-  private CANSparkMax climberRightOuterMotor;
-  private TalonSRX leadScrewMotor;
 
   public void setPosition(int position) {
     if (position < 0)
@@ -46,11 +41,9 @@ public class OuterClimber extends PIDSubsystem {
 
     double setpoint = 0;
     switch(position){
-     
-      case 1:
-        setpoint = Preferences.getDouble("OuterMax", 130);
+      case 1:setpoint = Preferences.getDouble("OuterMax", 130);
         break;
-        case 0:setpoint = Preferences.getDouble("OuterMin", 0);
+      case 0:setpoint = Preferences.getDouble("OuterMin", 0);
         break;
     }
     SmartDashboard.putNumber("OC Set to", setpoint);

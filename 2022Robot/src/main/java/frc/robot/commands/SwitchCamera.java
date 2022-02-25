@@ -4,24 +4,23 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.CamerasAndNavX;
 
 public class SwitchCamera extends InstantCommand {
   /** Creates a new SwitchCamera. */
-  private DriveTrain driveTrain;
-  public SwitchCamera(DriveTrain driveTrain) {
+  private CamerasAndNavX camerasAndNavX;
+  public SwitchCamera(CamerasAndNavX camerasAndNavX) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(driveTrain);
-    this.driveTrain = driveTrain;
+    addRequirements(camerasAndNavX);
+    this.camerasAndNavX = camerasAndNavX;
 
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    driveTrain.switchCamera();
+    camerasAndNavX.switchCamera();
   }
 
   

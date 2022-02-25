@@ -6,8 +6,6 @@ package frc.robot.commands;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.*;
@@ -16,8 +14,8 @@ public class DefaultOuterArms extends CommandBase {
 
   private OuterClimber outerClimber;
   private DoubleSupplier outerHeight;
-  private double currentOuterValue = 0;
-  private double outerPosition = 0;
+  //private double currentOuterValue = 0;
+  //private double outerPosition = 0;
   private BooleanSupplier leftOnly;
 private BooleanSupplier rightOnly;
 
@@ -34,14 +32,13 @@ private BooleanSupplier rightOnly;
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    outerPosition = outerClimber.getSetpoint();
+    //outerPosition = outerClimber.getSetpoint();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(outerClimber.isEnabled() == false)
-    {
+    if(outerClimber.isEnabled() == false) {
       double speed = outerHeight.getAsDouble();
       boolean runLeft = rightOnly.getAsBoolean() ? false : true;
       boolean runRight = leftOnly.getAsBoolean() ? false : true;

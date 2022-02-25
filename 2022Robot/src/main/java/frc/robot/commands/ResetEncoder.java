@@ -10,21 +10,21 @@ import frc.robot.subsystems.OuterClimber;
 
 public class ResetEncoder extends CommandBase {
   private InnerClimber innerClimber;
-  private OuterClimber outerclimber;
+  private OuterClimber outerClimber;
   /** Creates a new ResetEncoder. */
   public ResetEncoder(OuterClimber outerClimber, InnerClimber innerClimber) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(innerClimber);
     addRequirements(outerClimber);
     this.innerClimber = innerClimber;
-    this.outerclimber = outerclimber;
+    this.outerClimber = outerClimber;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     innerClimber.resetEncoders();
-    outerclimber.resetEncoders();
+    outerClimber.resetEncoders();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
