@@ -12,6 +12,7 @@ import frc.robot.subsystems.OuterClimber;
 public class ResetArms extends CommandBase {
   private InnerClimber innerClimber;
   private OuterClimber outerClimber;
+  private static int counter = 0;
 
   /** Creates a new ResetArms. */
   public ResetArms(InnerClimber innerClimber, OuterClimber outerClimber) {
@@ -24,9 +25,10 @@ public class ResetArms extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
-  //Called every time the scheduler runs while the command is scheduled.
+  // Called every time the scheduler runs while the command is scheduled.
 
   @Override
   public void execute() {
@@ -35,46 +37,63 @@ public class ResetArms extends CommandBase {
     double LISpeed = 0;
     double ROSpeed = 0;
     double LOSpeed = 0;
-    if(innerClimber.leftAtBottomCurrent() == false) {
-      LISpeed = speed;
-    }
-    else  LISpeed = 0;
 
-    if(innerClimber.rightAtBottomCurrent() == true) {
+    if (counter >= 10) {
+      if (innerClimber.leftAtBottomCurrent() == false) {
+        LISpeed = speed;
+      } 
+      else LISpeed = 0;
+
+      if (innerClimber.rightAtBottomCurrent() == true) {
+        RISpeed = speed;
+      } 
+      else RISpeed = 0;
+
+      if (outerClimber.leftAtBottomCurrent() == true) {
+        LOSpeed = speed;
+      } 
+      else LOSpeed = 0;
+
+      if (outerClimber.rightAtBottomCurrent() == true) {
+        ROSpeed = speed;
+      } 
+      else ROSpeed = 0;
+    } 
+    else {
       RISpeed = speed;
-    }
-    else RISpeed = 0;
-
-    if(outerClimber.leftAtBottomCurrent() == true) {
+      LISpeed = speed;
+      ROSpeed = speed;
       LOSpeed = speed;
     }
-    else LOSpeed = 0;
 
-    if(outerClimber.rightAtBottomCurrent() == true) {
-      ROSpeed = speed;
-    }
-    else ROSpeed = 0;
-    
     outerClimber.runMotor(ROSpeed, false, true);
     outerClimber.runMotor(LOSpeed, true, false);
     innerClimber.runMotor(RISpeed, false, true);
-    innerClimber.runMotor(ROSpeed, true, false);
+    innerClimber.runMotor(LISpeed, true, false);
+
+    // counter is increased by 1 every time execute is called i.e. every 20ms
+    counter += counter;
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-  
-
+    // counter is reset to 0 so the next time command is called it will be 0
+    counter = 0;
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     boolean temp = false;
-    temp = innerClimber.leftAtBottomCurrent() & innerClimber.rightAtBottomCurrent() & outerClimber.leftAtBottomCurrent() & outerClimber.rightAtBottomCurrent();
-    return temp;
+    temp = innerClimber.leftAtBottomCurrent() & innerClimber.rightAtBottomCurrent() & outerClimber.leftAtBottomCurrent()
+        & outerClimber.rightAtBottomCurrent();
+    // once counter reaches 10 and temp is true, meaning all the arms have reached
+    // the bottom, the command will end
+    if (counter >= 10) {
+      return temp;
+    } 
+    else return false;
   }
-
 
 }
