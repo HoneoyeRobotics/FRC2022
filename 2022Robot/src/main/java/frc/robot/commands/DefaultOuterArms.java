@@ -42,10 +42,13 @@ private BooleanSupplier rightOnly;
   public void execute() {
     if(outerClimber.isEnabled() == false)
     {
-      
+      double speed = outerHeight.getAsDouble();
       boolean runLeft = rightOnly.getAsBoolean() ? false : true;
-        boolean runRight = leftOnly.getAsBoolean() ? false : true;
-        outerClimber.runMotor(outerHeight.getAsDouble(), runLeft, runRight);
+      boolean runRight = leftOnly.getAsBoolean() ? false : true;
+      if((speed > (Constants.JoystickDeadband * -1)) && (speed < Constants.JoystickDeadband)) {
+        speed = 0;
+      }
+        outerClimber.runMotor(speed, runLeft, runRight);
     }
       
   }

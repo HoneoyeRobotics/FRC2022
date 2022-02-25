@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -34,6 +35,7 @@ public class LeadScrew extends SubsystemBase {
   }
 
   public boolean armsFullyIn() {
+    SmartDashboard.putBoolean("AtRear", rearLimitSwitch.get());
     return rearLimitSwitch.get();
     // double leadScrewEncoder = leadScrewMotor.getSelectedSensorPosition();
     // return (leadScrewEncoder + Constants.ArmHorizontalEncoderDeadband <= 0)
@@ -41,6 +43,7 @@ public class LeadScrew extends SubsystemBase {
   }
 
   public boolean armsFullyOut() {
+    SmartDashboard.putBoolean("AtFront", frontLimitSwitch.get());
     return frontLimitSwitch.get();
     // double leadScrewEncoder = leadScrewMotor.getSelectedSensorPosition();
     // return (Constants.ArmHorizontalEncoderMaxValue <= leadScrewEncoder + Constants.ArmHorizontalEncoderDeadband)
@@ -62,10 +65,12 @@ public class LeadScrew extends SubsystemBase {
       speed = 0;
     }
     leadScrewMotor.set(ControlMode.PercentOutput, speed);
+    SmartDashboard.putNumber("LeadScrewPower", speed);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("LSMCurrent", leadScrewMotor.getStatorCurrent());
   }
 }

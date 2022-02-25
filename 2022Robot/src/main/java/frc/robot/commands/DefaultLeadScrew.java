@@ -33,7 +33,9 @@ public class DefaultLeadScrew extends CommandBase {
   public void execute() {
 
     currentMoveValue = movementValue.getAsDouble();
-   
+    if((currentMoveValue > (Constants.JoystickDeadband * -1)) && (currentMoveValue < Constants.JoystickDeadband)) {
+      currentMoveValue = 0;
+    }
     leadScrew.moveArms(currentMoveValue);
    
   }

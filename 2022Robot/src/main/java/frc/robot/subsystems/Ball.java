@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -39,8 +40,10 @@ public class Ball extends SubsystemBase {
   }
 
   public void runShooter() {
-    shooterMotor.set(ControlMode.PercentOutput, 0.60);
-    shooter1Motor.set(ControlMode.PercentOutput, 0.60);
+    double motorSpeed = Preferences.getDouble("ShooterMotorSpeed", 0);
+    double motor1Speed = Preferences.getDouble("ShooterMotor1Speed", 0);
+    shooterMotor.set(ControlMode.PercentOutput, motorSpeed);
+    shooter1Motor.set(ControlMode.PercentOutput, motor1Speed);
   }
 
   public void stopShooter() {

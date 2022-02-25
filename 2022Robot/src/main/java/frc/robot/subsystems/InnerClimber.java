@@ -82,14 +82,33 @@ public class InnerClimber extends PIDSubsystem {
   @Override
   public double getMeasurement() {
     // Return the process variable measurement here
+    SmartDashboard.putNumber("CLIEncoder", climberLeftInnerMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("CRIEncoder", climberRightInnerMotor.getEncoder().getPosition());
+
+    SmartDashboard.putNumber("CLICurrent", climberLeftInnerMotor.getOutputCurrent());
+    SmartDashboard.putNumber("CRICurrent", climberRightInnerMotor.getOutputCurrent());
+
     return (climberLeftInnerMotor.getEncoder().getPosition() +
         climberRightInnerMotor.getEncoder().getPosition()) / 2;
 
   }
   public void runMotor(double speed, boolean runLeft, boolean runRight){
+    SmartDashboard.putBoolean("Inner Run Left", runLeft);
+    SmartDashboard.putBoolean("Inner Run Right", runRight);
+    
     if(runLeft == true)
       climberLeftInnerMotor.set(speed);
     if(runRight == true)
       climberRightInnerMotor.set(speed);
+
+    SmartDashboard.putNumber("InnerArmsPower", speed);
+  }
+
+  public boolean leftAtBottomCurrent() {
+    return(climberLeftInnerMotor.getOutputCurrent() > Constants.MaxCurrent);
+  }
+
+  public boolean rightAtBottomCurrent() {
+    return (climberRightInnerMotor.getOutputCurrent() > Constants.MaxCurrent);
   }
 }

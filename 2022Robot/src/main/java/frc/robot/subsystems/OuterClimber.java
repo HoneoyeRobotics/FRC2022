@@ -53,7 +53,7 @@ public class OuterClimber extends PIDSubsystem {
         case 0:setpoint = Preferences.getDouble("OuterMin", 0);
         break;
     }
-      
+    SmartDashboard.putNumber("OC Set to", setpoint);
     setSetpoint(setpoint);
   }
 
@@ -105,17 +105,37 @@ public class OuterClimber extends PIDSubsystem {
   }
 
   public void runMotor(double speed, boolean runLeft, boolean runRight){
+    SmartDashboard.putBoolean("Outer Run Left", runLeft);
+    SmartDashboard.putBoolean("Outer Run Right", runRight);
+    
     if(runLeft == true)
       climberLeftOuterMotor.set(speed);
     if(runRight  == true)
       climberRightOuterMotor.set(speed);
+
+    
+      SmartDashboard.putNumber("OuterArmsPower", speed);
   }
   @Override
   public double getMeasurement() {
     // Return the process variable measurement here
+    SmartDashboard.putNumber("CLOEncoder", climberLeftOuterMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("CROEncoder", climberRightOuterMotor.getEncoder().getPosition());
+
+    SmartDashboard.putNumber("CLOCurrent", climberLeftOuterMotor.getOutputCurrent());
+    SmartDashboard.putNumber("CROCurrent", climberRightOuterMotor.getOutputCurrent());
+
     return (climberLeftOuterMotor.getEncoder().getPosition() +
     climberRightOuterMotor.getEncoder().getPosition()) / 2;
   }
+
+  public boolean leftAtBottomCurrent() {
+    return(climberLeftOuterMotor.getOutputCurrent() > Constants.MaxCurrent);
+  }
+  public boolean rightAtBottomCurrent() {
+      return (climberRightOuterMotor.getOutputCurrent() > Constants.MaxCurrent);
+  }
+  
 }
 
 // if (climberleftOuterMotor.getEncoder() > climberRight.OuterMotor.getEncoder()) {

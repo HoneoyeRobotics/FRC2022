@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -32,6 +33,7 @@ public class RobotContainer {
   private InnerClimber innerClimber;
   private LeadScrew leadScrew;
   private Ball ball;
+  private CamerasAndNavX camerasAndNavX;
   Joystick driverJoystick = new Joystick(0);
   Joystick coDriverJoystick = new Joystick(1);
   private PowerDistribution pdp;
@@ -45,6 +47,7 @@ public class RobotContainer {
     innerClimber = new InnerClimber();
     leadScrew = new LeadScrew();
     ball = new Ball();
+    camerasAndNavX = new CamerasAndNavX();
     pdp = new PowerDistribution(0, ModuleType.kCTRE);
 
     Shuffleboard.getTab("Diagnostics").add("PDP", pdp).withWidget(BuiltInWidgets.kPowerDistribution).withPosition(0, 0).withSize(6,    3);
@@ -56,12 +59,12 @@ public class RobotContainer {
         () -> driverJoystick.getRawAxis(Constants.AXIS_LeftStickX)));
 
       outerClimber.setDefaultCommand(new DefaultOuterArms(outerClimber, 
-          () -> coDriverJoystick.getRawAxis(Constants.AXIS_RightStickX),
+          () -> coDriverJoystick.getRawAxis(Constants.AXIS_RightStickY) * -1,
           () -> coDriverJoystick.getRawButton(7),
           () -> coDriverJoystick.getRawButton(8)));
 
       innerClimber.setDefaultCommand(new DefaultInnerArms(innerClimber, 
-          () -> coDriverJoystick.getRawAxis(Constants.AXIS_LeftStickY),
+          () -> coDriverJoystick.getRawAxis(Constants.AXIS_LeftStickY) * -1,
           () -> coDriverJoystick.getRawButton(7),
           () -> coDriverJoystick.getRawButton(8)));
 
@@ -77,6 +80,8 @@ public class RobotContainer {
     SmartDashboard.putData(new LowerInnerArms(innerClimber));
     SmartDashboard.putData(new TogglePIDs(innerClimber, outerClimber));
     SmartDashboard.putData(new FinalClimb(outerClimber, innerClimber, leadScrew));
+    SmartDashboard.putData(new ResetArms(innerClimber, outerClimber));
+    SmartDashboard.putData(new ResetEncoder(outerClimber, innerClimber));
 
   }
 
@@ -100,7 +105,7 @@ public class RobotContainer {
       leftBumper.whileHeld(new FeedBalls(ball));
       rightBumper.whileHeld(new PickUpBalls(ball));
 
-buttonB.whenPressed(new FeedAndShootBalls(ball));
+      buttonB.whenPressed(new FeedAndShootBalls(ball));
     }
 
 //     private void stephenDriverJoystick() {

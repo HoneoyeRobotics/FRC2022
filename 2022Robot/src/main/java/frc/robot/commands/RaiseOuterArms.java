@@ -23,12 +23,13 @@ public class RaiseOuterArms extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    climber.enable();
+    climber.setPosition(1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climber.setPosition(1);
 
   }
 
