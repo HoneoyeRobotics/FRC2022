@@ -22,15 +22,15 @@ public class EnablePID extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    innerClimber.resetAbortRaise();
-    innerClimber.enable();
-    outerClimber.enable();
-    SmartDashboard.putBoolean("PIDsEnabled", true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    innerClimber.resetAbortRaise();
+    innerClimber.enable();
+    outerClimber.enable();
+    SmartDashboard.putBoolean("PIDsEnabled", true);}
 
   // Called once the command ends or is interrupted.
   @Override

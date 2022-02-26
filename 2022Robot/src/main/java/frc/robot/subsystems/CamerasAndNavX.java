@@ -15,7 +15,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CamerasAndNavX extends SubsystemBase {
   private AHRS navX;
+  public double g_xAxis = 0;
+  public double g_yAxis = 0;
+  public double g_zAxis = 0;
 
+  private double m_xAxisOffset = 0;
+  private double m_yAxisOffset = 0;
+  private double m_zAxisOffset = 0;
   
 	public UsbCamera frontCamera;
 	public UsbCamera rearCamera;
@@ -28,8 +34,7 @@ public class CamerasAndNavX extends SubsystemBase {
   public CamerasAndNavX() {
     navX = new AHRS(Port.kUSB);
 
-    
-    SmartDashboard.putBoolean("Front Camera", UseFrontCamera);
+    normalizeAxis();
     
     frontCamera = CameraServer.startAutomaticCapture("front", 0);
     frontCamera.setFPS(15);
@@ -45,11 +50,23 @@ public class CamerasAndNavX extends SubsystemBase {
     rearCamera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
     climbCamera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
 
-
+    navX.calibrate();
   }
 
   public void calibrate() {
     navX.calibrate();
+  }
+
+  public void normalizeAxis() {
+    m_xAxisOffset = navX.getPitch();
+    m_yAxisOffset = navX.getRoll();
+    m_zAxisOffset = navX.getYaw();
+  }
+
+  public void updateAxis(){
+    g_xAxis = Math.round(navX.getPitch() - m_xAxisOffset);
+    g_yAxis = Math.round(navX.getRoll() - m_yAxisOffset);
+    g_zAxis = Math.round(navX.getYaw() - m_zAxisOffset);
   }
 
   
@@ -87,8 +104,9 @@ public class CamerasAndNavX extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("NavX X Pitch", navX.getPitch());
-    SmartDashboard.putNumber("NavX Y Roll", navX.getRoll());
-    SmartDashboard.putNumber("NavX Z Yaw", navX.getYaw());
+    // updateAxis();
+    // SmartDashboard.putNumber("NavX X Pitch", g_xAxis);
+    // SmartDashboard.putNumber("NavX Y Roll", g_yAxis);
+    // SmartDashboard.putNumber("NavX Z Yaw", g_zAxis);
   }
 }

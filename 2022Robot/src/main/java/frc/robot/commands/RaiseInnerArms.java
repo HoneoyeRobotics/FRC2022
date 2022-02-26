@@ -6,12 +6,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.InnerClimber;
 
 public class RaiseInnerArms extends CommandBase {
   private boolean bombout = false;
   private InnerClimber climber;
-  private static int counter = 0;
+  private int counter = 0;
   /** Creates a new RaiseFrontRearArms. */
   public RaiseInnerArms(InnerClimber climber) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -22,6 +23,7 @@ public class RaiseInnerArms extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    SmartDashboard.putBoolean("?", false);
     climber.enable();
     climber.setPosition(1);
     counter = 0;
@@ -31,17 +33,20 @@ public class RaiseInnerArms extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(counter++ >= 50) {
+    counter++;
+    if(counter >= Constants.CounterValue) {
       if(climber.raiseCurrentBad()) {
        bombout = true;
       }
     }
-    SmartDashboard.putBoolean("BombOut", bombout);
+    SmartDashboard.putBoolean("BomboutInner", bombout);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    
+    SmartDashboard.putBoolean("qq", false);
     if(bombout){
       climber.disable();
       climber.runMotor(0, true, true);
@@ -52,7 +57,7 @@ public class RaiseInnerArms extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return bombout;
-    //|| climber.atTop();
+    return true;
+    ///return bombout || climber.atSetPoint(true);
   }
 }

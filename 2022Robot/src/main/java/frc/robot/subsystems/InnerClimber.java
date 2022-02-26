@@ -33,7 +33,6 @@ public class InnerClimber extends PIDSubsystem {
   }
 
   public void resetEncoders() {
-
     climberLeftInnerMotor.getEncoder().setPosition(0);
     climberRightInnerMotor.getEncoder().setPosition(0);
   }
@@ -56,23 +55,28 @@ public class InnerClimber extends PIDSubsystem {
     setSetpoint(setpoint);
   }
 
-  //public boolean atTop() {
-    //Preferences.getDouble("InnerMax", 120.0) =< climerleftOuterMotor.getPosition || Preferences.getDouble("InnerMax", 120.0) =< climerOuterMotor.getPosition
-
-    // double avgPosition = (climberLeftInnerMotor.getEncoder().getPosition() +
-    //     climberRightInnerMotor.getEncoder().getPosition()) / 2;
-
-    // return (avgPosition + Constants.ArmHorizontalEncoderDeadband >= Constants.ArmHorizontalEncoderMaxValue)
-    //     || (avgPosition - Constants.ArmHorizontalEncoderDeadband >= Constants.ArmHorizontalEncoderMaxValue);
-  //}
-
-  public boolean atBottom() {
-    double avgPosition = (climberLeftInnerMotor.getEncoder().getPosition() +
-        climberRightInnerMotor.getEncoder().getPosition()) / 2;
-
-    return (avgPosition + Constants.ArmVerticalEncoderDeadband <= 0)
-        || (avgPosition - Constants.ArmVerticalEncoderDeadband <= 0);
+  public boolean atSetPoint(boolean movingUp) {
+    String direction = "hello";
+    boolean retVal = false;
+    if(movingUp){
+      direction = "MovingUp";
+      if(getSetpoint() <= getMeasurement()){
+        direction = "AtTop";
+        retVal = true;
+      }
+    }
+    else {
+      direction = "MovingDown";
+      if(getSetpoint() >= getMeasurement()){
+        direction = "AtBottom";
+        retVal = true;
+      }
+    }
+    SmartDashboard.putString("InnerArmsLocation", direction);
+    return retVal;
   }
+
+ 
 
   public void resetAbortRaise() {
     abortRaise = false;

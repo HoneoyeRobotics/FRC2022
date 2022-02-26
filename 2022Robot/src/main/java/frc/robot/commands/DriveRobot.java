@@ -40,9 +40,9 @@ public class DriveRobot extends CommandBase {
     double zRotation = 0;
 
     xSpeed = forwardSupplier.getAsDouble() - backwardSupplier.getAsDouble();
-
-    zRotation = turnSupplier.getAsDouble() * .5;
-
+    double turnRate = turnSupplier.getAsDouble();
+    zRotation = turnRate * turnRate * (turnRate < 0 ? -1 : 1);
+    //TODO see if squaring value is useful
 
     //not sure why it needs to be inverted?????
     drivetrain.drive(zRotation, xSpeed); 

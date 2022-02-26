@@ -6,16 +6,21 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.CamerasAndNavX;
 
-public class CalibrateNavX extends CommandBase {
+public class ResetNavX extends CommandBase {
+  private CamerasAndNavX m_navX;
   /** Creates a new CalibrateNavX. */
-  public CalibrateNavX() {
+  public ResetNavX(CamerasAndNavX navX) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_navX = navX;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_navX.normalizeAxis();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -28,6 +33,6 @@ public class CalibrateNavX extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

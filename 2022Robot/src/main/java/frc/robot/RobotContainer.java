@@ -57,18 +57,18 @@ public class RobotContainer {
         () -> driverJoystick.getRawAxis(Constants.AXIS_LeftTrigger),
         () -> driverJoystick.getRawAxis(Constants.AXIS_LeftStickX)));
 
-      outerClimber.setDefaultCommand(new DefaultOuterArms(outerClimber, 
-          () -> coDriverJoystick.getRawAxis(Constants.AXIS_RightStickY) * -1,
-          () -> coDriverJoystick.getRawButton(7),
-          () -> coDriverJoystick.getRawButton(8)));
+      // outerClimber.setDefaultCommand(new DefaultOuterArms(outerClimber, 
+      //     () -> coDriverJoystick.getRawAxis(Constants.AXIS_RightStickY) * -1,
+      //     () -> coDriverJoystick.getRawButton(7),
+      //     () -> coDriverJoystick.getRawButton(8)));
 
-      innerClimber.setDefaultCommand(new DefaultInnerArms(innerClimber, 
-          () -> coDriverJoystick.getRawAxis(Constants.AXIS_LeftStickY) * -1,
-          () -> coDriverJoystick.getRawButton(7),
-          () -> coDriverJoystick.getRawButton(8)));
+      // innerClimber.setDefaultCommand(new DefaultInnerArms(innerClimber, 
+      //     () -> coDriverJoystick.getRawAxis(Constants.AXIS_LeftStickY) * -1,
+      //     () -> coDriverJoystick.getRawButton(7),
+      //     () -> coDriverJoystick.getRawButton(8)));
 
-      leadScrew.setDefaultCommand(new DefaultLeadScrew(leadScrew, 
-          () -> coDriverJoystick.getRawAxis(Constants.AXIS_LeftStickX)));
+      // leadScrew.setDefaultCommand(new DefaultLeadScrew(leadScrew, 
+      //     () -> coDriverJoystick.getRawAxis(Constants.AXIS_LeftStickX)));
       
     // Configure the button bindings
     configureButtonBindings();
@@ -86,6 +86,12 @@ public class RobotContainer {
     SmartDashboard.putData(new UseFrontCamera(camerasAndNavX));
     SmartDashboard.putData(new UseRearCamera(camerasAndNavX));
     SmartDashboard.putData(new UseClimbCamera(camerasAndNavX));
+    SmartDashboard.putData(new ResetNavX(camerasAndNavX));
+
+    SmartDashboard.putData(innerClimber);
+    SmartDashboard.putData(outerClimber);
+    SmartDashboard.putData(leadScrew);
+    SmartDashboard.putData(driveTrain);
 
   }
 

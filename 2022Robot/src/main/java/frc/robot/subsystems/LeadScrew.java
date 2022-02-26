@@ -72,8 +72,8 @@ public class LeadScrew extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("LSMCurrent", leadScrewMotor.getStatorCurrent());
-    armsFullyIn();
-    armsFullyOut();
+    // SmartDashboard.putNumber("LSMCurrent", leadScrewMotor.getStatorCurrent());
+    // armsFullyIn();
+    // armsFullyOut();
   }
 }

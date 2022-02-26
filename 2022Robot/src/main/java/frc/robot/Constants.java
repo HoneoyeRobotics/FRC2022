@@ -58,4 +58,6 @@ public final class Constants {
 
     public static final double MaxCurrent = 10;
     public static final double MaxRaiseCurrent = 15;
+
+    public static final int CounterValue = 50;
 }
