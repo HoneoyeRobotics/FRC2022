@@ -35,15 +35,16 @@ public class LeadScrew extends SubsystemBase {
   }
 
   public boolean armsFullyIn() {
-    SmartDashboard.putBoolean("AtRear", rearLimitSwitch.get());
+    SmartDashboard.putBoolean("AtFront", rearLimitSwitch.get());
     return rearLimitSwitch.get();
     // double leadScrewEncoder = leadScrewMotor.getSelectedSensorPosition();
     // return (leadScrewEncoder + Constants.ArmHorizontalEncoderDeadband <= 0)
     //     || (leadScrewEncoder - Constants.ArmHorizontalEncoderDeadband <= 0);
+    //TODO: make sure front is actually front and visa versa
   }
 
   public boolean armsFullyOut() {
-    SmartDashboard.putBoolean("AtFront", frontLimitSwitch.get());
+    SmartDashboard.putBoolean("AtRear", frontLimitSwitch.get());
     return frontLimitSwitch.get();
     // double leadScrewEncoder = leadScrewMotor.getSelectedSensorPosition();
     // return (Constants.ArmHorizontalEncoderMaxValue <= leadScrewEncoder + Constants.ArmHorizontalEncoderDeadband)
@@ -72,5 +73,7 @@ public class LeadScrew extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("LSMCurrent", leadScrewMotor.getStatorCurrent());
+    armsFullyIn();
+    armsFullyOut();
   }
 }

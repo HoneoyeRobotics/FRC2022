@@ -4,13 +4,14 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.CamerasAndNavX;
+import frc.robot.subsystems.CamerasAndNavX.CameraSource;
 
-public class SwitchCamera extends InstantCommand {
+public class UseRearCamera extends CommandBase {
   /** Creates a new SwitchCamera. */
   private CamerasAndNavX camerasAndNavX;
-  public SwitchCamera(CamerasAndNavX camerasAndNavX) {
+  public UseRearCamera(CamerasAndNavX camerasAndNavX) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(camerasAndNavX);
     this.camerasAndNavX = camerasAndNavX;
@@ -20,8 +21,19 @@ public class SwitchCamera extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    camerasAndNavX.switchCamera();
   }
 
+  @Override
+  public void execute() {
+    camerasAndNavX.useCamera(CameraSource.rear);
+
+  }
+@Override
+public boolean isFinished(){
+  return true;
+}
+@Override
+public void end(boolean interrupted) {
+}
   
 }

@@ -16,6 +16,11 @@ import frc.robot.Constants;
 
 public class InnerClimber extends PIDSubsystem {
   /** Creates a new InnerClimber. */
+  private CANSparkMax climberRightInnerMotor;
+  private CANSparkMax climberLeftInnerMotor;
+  private boolean abortRaise = false;
+
+
   public InnerClimber() {
     super(new PIDController(0.25, 0, 0));
     climberLeftInnerMotor = new CANSparkMax(Constants.CANID_ClimberLeftInnerMotor, MotorType.kBrushless);
@@ -33,8 +38,6 @@ public class InnerClimber extends PIDSubsystem {
     climberRightInnerMotor.getEncoder().setPosition(0);
   }
 
-  private CANSparkMax climberRightInnerMotor;
-  private CANSparkMax climberLeftInnerMotor;
 
   public void setPosition(int position) {
     if (position < 0)
@@ -53,13 +56,15 @@ public class InnerClimber extends PIDSubsystem {
     setSetpoint(setpoint);
   }
 
-  public boolean atTop() {
-    double avgPosition = (climberLeftInnerMotor.getEncoder().getPosition() +
-        climberRightInnerMotor.getEncoder().getPosition()) / 2;
+  //public boolean atTop() {
+    //Preferences.getDouble("InnerMax", 120.0) =< climerleftOuterMotor.getPosition || Preferences.getDouble("InnerMax", 120.0) =< climerOuterMotor.getPosition
 
-    return (avgPosition + Constants.ArmHorizontalEncoderDeadband >= Constants.ArmHorizontalEncoderMaxValue)
-        || (avgPosition - Constants.ArmHorizontalEncoderDeadband >= Constants.ArmHorizontalEncoderMaxValue);
-  }
+    // double avgPosition = (climberLeftInnerMotor.getEncoder().getPosition() +
+    //     climberRightInnerMotor.getEncoder().getPosition()) / 2;
+
+    // return (avgPosition + Constants.ArmHorizontalEncoderDeadband >= Constants.ArmHorizontalEncoderMaxValue)
+    //     || (avgPosition - Constants.ArmHorizontalEncoderDeadband >= Constants.ArmHorizontalEncoderMaxValue);
+  //}
 
   public boolean atBottom() {
     double avgPosition = (climberLeftInnerMotor.getEncoder().getPosition() +
@@ -69,9 +74,19 @@ public class InnerClimber extends PIDSubsystem {
         || (avgPosition - Constants.ArmVerticalEncoderDeadband <= 0);
   }
 
+  public void resetAbortRaise() {
+    abortRaise = false;
+  }
+
+  public boolean raiseCurrentBad() {
+    return ((climberLeftInnerMotor.getOutputCurrent() > Constants.MaxRaiseCurrent) || (climberRightInnerMotor.getOutputCurrent() > Constants.MaxRaiseCurrent));
+  }
+
   @Override
   public void useOutput(double output, double setpoint) {
     // Use the output here
+    if (abortRaise) output = 0;
+
     climberLeftInnerMotor.set(output);
     climberRightInnerMotor.set(output);
     SmartDashboard.putNumber("IC setpoint", output);

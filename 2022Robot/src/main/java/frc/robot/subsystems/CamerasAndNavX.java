@@ -6,54 +6,83 @@ package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.UsbCamera;
-import edu.wpi.first.cscore.VideoSink;
+import edu.wpi.first.cameraserver.*;
+import edu.wpi.first.cscore.*;
 import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CamerasAndNavX extends SubsystemBase {
-  //declare navX
   private AHRS navX;
-  //declare cameras
+
+  
 	public UsbCamera frontCamera;
 	public UsbCamera rearCamera;
+  public UsbCamera climbCamera;
   private VideoSink server;
 	public volatile boolean UseFrontCamera = true;
+
+
   /** Creates a new CamerasAndNavX. */
   public CamerasAndNavX() {
     navX = new AHRS(Port.kUSB);
+
+    
     SmartDashboard.putBoolean("Front Camera", UseFrontCamera);
     
     frontCamera = CameraServer.startAutomaticCapture("front", 0);
     frontCamera.setFPS(15);
+    
 
     rearCamera = new UsbCamera("rear", 1);
     rearCamera.setFPS(15);
-    server = CameraServer.getServer();
 
+    climbCamera = new UsbCamera("ClimbCamera", 2);
+    server = CameraServer.getServer();
+    
     frontCamera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
     rearCamera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-  }
+    climbCamera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
 
-  public void switchCamera(){
-    if(UseFrontCamera){
-      UseFrontCamera = false;
-        server.setSource(rearCamera);
-    }
-    else{
-      UseFrontCamera = true;
-      server.setSource(frontCamera);
-    }
-    SmartDashboard.putBoolean("Front Camera", UseFrontCamera);
+
   }
 
   public void calibrate() {
     navX.calibrate();
   }
 
+  
+  // public void switchCamera(){
+  //   if(UseFrontCamera){
+  //     UseFrontCamera = false;
+  //           server.setSource(rearCamera);
+  //   }
+  //   else{
+  //     UseFrontCamera = true;
+  //     server.setSource(frontCamera);
+  //   }
+  //   SmartDashboard.putBoolean("Front Camera", UseFrontCamera);
+  // }
+
+    public void useCamera(CameraSource source) {
+      switch (source) {
+        case climb:
+          server.setSource(climbCamera);
+          break;
+        case front:
+          server.setSource(frontCamera);
+          break;
+        case rear:
+          server.setSource(rearCamera);
+          break;
+      }
+      SmartDashboard.putString("CameraSource", source.toString());
+    }
+
+    public enum CameraSource{
+      front, rear, climb 
+    }
 
   @Override
   public void periodic() {

@@ -18,10 +18,10 @@ public class FinalClimb extends SequentialCommandGroup {
     addCommands(
       new LowerOuterArms(outerClimber),
       new RaiseInnerArms(innerClimber),
-      new MoveArmsBackward(leadScrew),
+      //new MoveArmsBackward(leadScrew),
       new LowerInnerArms(innerClimber),
-      new RaiseOuterArms(outerClimber),
-      new MoveArmsForward(leadScrew)
+      new RaiseOuterArms(outerClimber)
+      //new MoveArmsForward(leadScrew)
     );
   }
 }

@@ -54,7 +54,8 @@ public final class Constants {
     public static final double InnerRightMax = 109;
     public static final double OuterRightMax = 137;
 
-    public static final double JoystickDeadband = .1;
+    public static final double JoystickDeadband = .08;
 
     public static final double MaxCurrent = 10;
+    public static final double MaxRaiseCurrent = 15;
 }

@@ -4,46 +4,40 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.LeadScrew;
+import frc.robot.subsystems.InnerClimber;
+import frc.robot.subsystems.OuterClimber;
 
-public class MoveArmsCenter extends CommandBase {
-  
-  private LeadScrew leadScrew;
-
-  /** Creates a new MoveArmsCenter. */
-  public MoveArmsCenter(LeadScrew leadScrew) {
+public class DisablePID extends CommandBase {
+  private InnerClimber innerClimber;
+  private OuterClimber outerClimber;
+  /** Creates a new DisablePID. */
+  public DisablePID(InnerClimber innerClimber, OuterClimber outerClimber) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(leadScrew);
-    this.leadScrew = leadScrew;
+    this.innerClimber = innerClimber;
+    this.outerClimber = outerClimber;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    outerClimber.disable();
+    innerClimber.disable();
+    SmartDashboard.putBoolean("PIDsEnabled", false);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    // if(leadScrew.armsCentered() == false) {
-    //   if(leadScrew.armsGreaterThanCenter() == true) {
-    //     leadScrew.moveArms(-.75);
-    //   }
-    //   else {
-    //     leadScrew.moveArms(.75);
-    //   }
-    // }
-  }
+  public void execute() {}
+
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    leadScrew.moveArms(0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return leadScrew.armsCentered();
     return true;
   }
 }
