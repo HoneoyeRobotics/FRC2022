@@ -15,25 +15,22 @@ public class UseRearCamera extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(camerasAndNavX);
     this.camerasAndNavX = camerasAndNavX;
-
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   @Override
   public void execute() {
     camerasAndNavX.useCamera(CameraSource.rear);
-
   }
-@Override
-public boolean isFinished(){
-  return true;
-}
-@Override
-public void end(boolean interrupted) {
-}
+
+  @Override
+  public boolean isFinished(){
+    return true;
+  }
   
+  @Override
+  public void end(boolean interrupted) {}
 }

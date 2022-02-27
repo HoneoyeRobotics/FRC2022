@@ -15,7 +15,6 @@ public class UseFrontCamera extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(camerasAndNavX);
     this.camerasAndNavX = camerasAndNavX;
-
   }
 
   // Called when the command is initially scheduled.
@@ -27,12 +26,12 @@ public class UseFrontCamera extends CommandBase {
   public void execute() {
     camerasAndNavX.useCamera(CameraSource.front);
   }
-@Override
-public boolean isFinished(){
-  return true;
-}
-@Override
-public void end(boolean interrupted) {
-}
+
+  @Override
+  public boolean isFinished(){
+    return true;
+  }
   
+  @Override
+  public void end(boolean interrupted) {}
 }
