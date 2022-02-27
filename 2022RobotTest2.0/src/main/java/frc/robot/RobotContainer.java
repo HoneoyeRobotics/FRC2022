@@ -66,8 +66,8 @@ public class RobotContainer {
         () -> driverJoystick.getRawAxis(Constants.AXIS_LeftStickX)));
 
       tank.setDefaultCommand(new DriveTank(tank, 
-        () -> tankDriveJoystickLeft.getRawAxis(0),
-        () -> tankDriveJoystickRight.getRawAxis(0)));
+        () -> tankDriveJoystickLeft.getRawAxis(1),
+        () -> tankDriveJoystickRight.getRawAxis(1)));
 
       // outerClimber.setDefaultCommand(new DefaultOuterArms(outerClimber, 
       //     () -> coDriverJoystick.getRawAxis(Constants.AXIS_RightStickY) * -1,
