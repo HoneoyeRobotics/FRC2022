@@ -28,22 +28,30 @@ public class RobotContainer {
 
   //declare subsystems
   private DriveTrain driveTrain;
-  private OuterClimber outerClimber;
-  private InnerClimber innerClimber;
+  private DriveTrainTank tank;
+  private OuterRightClimber outerRightClimber;
+  private OuterLeftClimber outerLeftClimber;
+  private InnerLeftClimber innerLeftClimber;
+  private InnerRightClimber innerRightClimber;
   private LeadScrew leadScrew;
   private Ball ball;
   private CamerasAndNavX camerasAndNavX;
   Joystick driverJoystick = new Joystick(0);
   Joystick coDriverJoystick = new Joystick(1);
+  Joystick tankDriveJoystickLeft = new Joystick(2);
+  Joystick tankDriveJoystickRight = new Joystick(3);
   private PowerDistribution pdp;
   private SendableChooser<Command> m_chooser = new SendableChooser<>();
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     //initialize subsystems
+    tank = new DriveTrainTank();
     driveTrain = new DriveTrain();
-    outerClimber = new OuterClimber();
-    innerClimber = new InnerClimber();
+    outerRightClimber = new OuterRightClimber();
+    outerLeftClimber = new OuterLeftClimber();
+    innerRightClimber = new InnerRightClimber();
+    innerLeftClimber = new InnerLeftClimber();
     leadScrew = new LeadScrew();
     ball = new Ball();
     camerasAndNavX = new CamerasAndNavX();
@@ -56,6 +64,10 @@ public class RobotContainer {
         () -> driverJoystick.getRawAxis(Constants.AXIS_RightTrigger),
         () -> driverJoystick.getRawAxis(Constants.AXIS_LeftTrigger),
         () -> driverJoystick.getRawAxis(Constants.AXIS_LeftStickX)));
+
+      tank.setDefaultCommand(new DriveTank(tank, 
+        () -> tankDriveJoystickLeft.getRawAxis(0),
+        () -> tankDriveJoystickRight.getRawAxis(0)));
 
       // outerClimber.setDefaultCommand(new DefaultOuterArms(outerClimber, 
       //     () -> coDriverJoystick.getRawAxis(Constants.AXIS_RightStickY) * -1,
@@ -73,24 +85,19 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     
-    SmartDashboard.putData(new RaiseOuterArms(outerClimber));
-    SmartDashboard.putData(new LowerOuterArms(outerClimber));
-    SmartDashboard.putData(new RaiseInnerArms(innerClimber));
-    SmartDashboard.putData(new LowerInnerArms(innerClimber));
-    SmartDashboard.putData(new EnablePID(innerClimber, outerClimber));
-    SmartDashboard.putData(new DisablePID(innerClimber, outerClimber));
-    SmartDashboard.putData(new FinalClimb(outerClimber, innerClimber, leadScrew));
-    SmartDashboard.putData(new ResetArms(innerClimber, outerClimber));
-    SmartDashboard.putData(new ResetEncoder(outerClimber, innerClimber));
+    SmartDashboard.putData(new RaiseOuterArms(outerRightClimber, outerLeftClimber));
+    SmartDashboard.putData(new LowerOuterArms(outerRightClimber, outerLeftClimber));
+    SmartDashboard.putData(new RaiseInnerArms(innerRightClimber, innerLeftClimber));
+    SmartDashboard.putData(new LowerInnerArms(innerRightClimber, innerLeftClimber));
+    SmartDashboard.putData(new EnablePID(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber));
+    SmartDashboard.putData(new DisablePID(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber));
+    SmartDashboard.putData(new FinalClimb(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber, leadScrew));
+    SmartDashboard.putData(new ResetArms(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber));
+    SmartDashboard.putData(new ResetEncoder(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber));
     SmartDashboard.putData(new UseFrontCamera(camerasAndNavX));
     SmartDashboard.putData(new UseRearCamera(camerasAndNavX));
     SmartDashboard.putData(new UseClimbCamera(camerasAndNavX));
     SmartDashboard.putData(new ResetNavX(camerasAndNavX));
-
-    SmartDashboard.putData(innerClimber);
-    SmartDashboard.putData(outerClimber);
-    SmartDashboard.putData(leadScrew);
-    SmartDashboard.putData(driveTrain);
 
   }
 
@@ -102,12 +109,12 @@ public class RobotContainer {
    */
     private void configureDriverJoystick() {
 
-      JoystickButton buttonA = new JoystickButton(driverJoystick, 1);
-      JoystickButton buttonB = new JoystickButton(driverJoystick, 2);
+      //JoystickButton buttonA = new JoystickButton(driverJoystick, 1);
+      //JoystickButton buttonB = new JoystickButton(driverJoystick, 2);
       //JoystickButton buttonX = new JoystickButton(driverJoystick, 3);
       //JoystickButton buttonY = new JoystickButton(driverJoystick, 4);
-      JoystickButton leftBumper = new JoystickButton(driverJoystick, 5);
-      JoystickButton rightBumper = new JoystickButton(driverJoystick, 6);
+      //JoystickButton leftBumper = new JoystickButton(driverJoystick, 5);
+      //JoystickButton rightBumper = new JoystickButton(driverJoystick, 6);
       
       // buttonA.whileHeld(new ShootBall(ball)); 
       // leftBumper.whileHeld(new FeedBalls(ball));
@@ -115,22 +122,7 @@ public class RobotContainer {
       // buttonB.whenPressed(new FeedAndShootBalls(ball));
     }
 
-//     private void stephenDriverJoystick() {
-
-//       JoystickButton buttonA = new JoystickButton(driverJoystick, 1);
-//       JoystickButton buttonB = new JoystickButton(driverJoystick, 2);
-//       JoystickButton buttonX = new JoystickButton(driverJoystick, 3);
-//       JoystickButton buttonY = new JoystickButton(driverJoystick, 4);
-
-//       JoystickButton leftBumper = new JoystickButton(driverJoystick, 5);
-//       JoystickButton rightBumper = new JoystickButton(driverJoystick, 6);
-      
-//       buttonA.whileHeld(new ShootBall(ball)); 
-//       buttonY.whileHeld(new FeedBalls(ball));
-//       buttonB.whileHeld(new PickUpBalls(ball));
-
-// buttonB.whenPressed(new FeedAndShootBalls(ball));
-//     }
+    private void configureTankDriveJoysticks() {}
 
     private void configureCoDriverJoystick() {
       
@@ -140,10 +132,17 @@ public class RobotContainer {
       JoystickButton buttonY = new JoystickButton(coDriverJoystick, 4);
       JoystickButton leftBumper = new JoystickButton(coDriverJoystick, 5);
       JoystickButton rightBumper = new JoystickButton(coDriverJoystick, 6);
+
       int povAngle = 0;
       int povNumber = 0;
       POVButton POV = new POVButton(coDriverJoystick, povAngle, povNumber);
-      
+
+      buttonA.whileHeld(new ShootBall(ball)); 
+      leftBumper.whileHeld(new FeedBalls(ball));
+      rightBumper.whileHeld(new PickUpBalls(ball));
+      buttonB.whenPressed(new FeedAndShootBalls(ball));
+      POV.whenPressed(new PovCommand(
+        () -> coDriverJoystick.getPOV()));
 
       // buttonX.whenPressed(new RaiseInnerArms(innerClimber));
       // buttonA.whenPressed(new LowerInnerArms(innerClimber));
@@ -151,18 +150,12 @@ public class RobotContainer {
       // buttonB.whenPressed(new LowerOuterArms(outerClimber));
       // leftBumper.whileHeld(new MoveArmsForward(leadScrew));
       // rightBumper.whileHeld(new MoveArmsBackward(leadScrew));
-      buttonA.whileHeld(new ShootBall(ball)); 
-      leftBumper.whileHeld(new FeedBalls(ball));
-      rightBumper.whileHeld(new PickUpBalls(ball));
-      buttonB.whenPressed(new FeedAndShootBalls(ball));
-      POV.whenPressed(new PovCommand(
-        () -> coDriverJoystick.getPOV()));
     }
 
   private void configureButtonBindings() {
     configureDriverJoystick();
     configureCoDriverJoystick();
-    
+    configureTankDriveJoysticks();
   }
 
   /**
