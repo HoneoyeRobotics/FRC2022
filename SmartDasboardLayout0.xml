@@ -1,0 +1,246 @@
+<xml version="1.0">
+<dashboard>
+	<widget field="LeadScrew Mode" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="639" y="297"/>
+	</widget>
+	<widget field="LSMEncoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="176" y="42"/>
+	</widget>
+	<widget field="DriveTrain" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="1219" y="86"/>
+	</widget>
+	<widget field="LeadScrew" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="1217" y="59"/>
+	</widget>
+	<widget field="OuterClimber" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="1207" y="31"/>
+	</widget>
+	<widget field="InnerClimber" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="1206" y="6"/>
+	</widget>
+	<widget field="ResetNavX" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="364" y="215"/>
+	</widget>
+	<widget field="Inner Run Right" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="300" y="284"/>
+	</widget>
+	<widget field="Inner Run Left" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="298"/>
+	</widget>
+	<widget field="Outer Run Right" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="277"/>
+	</widget>
+	<widget field="Outer Run Left" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="149"/>
+	</widget>
+	<widget field="BombOut" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="579" y="324"/>
+	</widget>
+	<widget field="DisablePID" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="656" y="390"/>
+	</widget>
+	<widget field="EnablePID" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="658" y="361"/>
+	</widget>
+	<widget field="angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1081" y="299"/>
+	</widget>
+	<widget field="UseClimbCamera" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="898" y="372"/>
+	</widget>
+	<widget field="UseRearCamera" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="899" y="346"/>
+	</widget>
+	<widget field="CameraSource" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="897" y="300"/>
+	</widget>
+	<widget field="UseFrontCamera" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="896" y="320"/>
+	</widget>
+	<widget field="ResetArms" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="403"/>
+	</widget>
+	<widget field="OC Set to" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="382"/>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="739" y="-1"/>
+		<width>461</width>
+		<height>297</height>
+		<property name="Degrees Rotation" value="180"/>
+		<property name="Camera Choice" value="front"/>
+	</static-widget>
+	<widget field="IC setpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="389" y="379"/>
+	</widget>
+	<widget field="LowerInnerArms" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="364" y="348"/>
+	</widget>
+	<widget field="RaiseInnerArms" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="367" y="317"/>
+	</widget>
+	<widget field="LowerOuterArms" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="199" y="346"/>
+	</widget>
+	<widget field="RaiseOuterArms" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="201" y="317"/>
+	</widget>
+	<widget field="OC setpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="216" y="388"/>
+	</widget>
+	<widget field="OC output" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="221" y="411"/>
+	</widget>
+	<widget field="OC Setter Setpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="361"/>
+	</widget>
+	<widget field="FinalClimb" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="327"/>
+	</widget>
+	<widget field="LeadScrewPower" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="8" y="192"/>
+	</widget>
+	<widget field="AtFront" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="6" y="211"/>
+		<width>65</width>
+		<height>28</height>
+	</widget>
+	<widget field="AtRear" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="78" y="213"/>
+		<width>60</width>
+		<height>28</height>
+	</widget>
+	<widget field="OuterArmsPower" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="7" y="54"/>
+	</widget>
+	<widget field="InnerArmsPower" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="9" y="128"/>
+	</widget>
+	<widget field="NavX Z Yaw" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="496" y="260"/>
+	</widget>
+	<widget field="NavX Y Roll" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="499" y="237"/>
+	</widget>
+	<widget field="NavX X Pitch" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="493" y="214"/>
+	</widget>
+	<widget field="CmdCalibrateNavX" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="330" y="244"/>
+	</widget>
+	<widget field="LSMCurrent" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="9" y="171"/>
+	</widget>
+	<widget field="CRICurrent" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="157" y="104"/>
+	</widget>
+	<widget field="CLICurrent" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="160" y="83"/>
+		<height>20</height>
+	</widget>
+	<widget field="CROCurrent" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="154" y="21"/>
+	</widget>
+	<widget field="CLOCurrent" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="156" y="0"/>
+	</widget>
+	<widget field="ResetEncoder" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="2" y="243"/>
+	</widget>
+	<widget field="CRIEncoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="9" y="105"/>
+	</widget>
+	<widget field="CLIEncoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="11" y="82"/>
+	</widget>
+	<widget field="CROEncoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="6" y="21"/>
+	</widget>
+	<widget field="CLOEncoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="8" y="-1"/>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.RobotPreferences">
+		<location x="354" y="1"/>
+		<width>284</width>
+		<height>212</height>
+	</static-widget>
+</dashboard>
+<live-window>
+	<widget field="SubInnerArms" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="376"/>
+	</widget>
+	<widget field="SubOuterArms" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="353"/>
+	</widget>
+	<widget field="SubLeadScrew" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="330"/>
+	</widget>
+	<widget field="SubFeeder" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="307"/>
+	</widget>
+	<widget field="SubPickup" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="284"/>
+	</widget>
+	<widget field="SubNavX" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="261"/>
+	</widget>
+	<widget field="SubShooter" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="0"/>
+	</widget>
+	<widget field="ExampleSubsystem" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="0" y="240"/>
+	</widget>
+	<widget field="LeadScrew" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="19" y="14"/>
+	</widget>
+	<widget field="CamerasAndNavX" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="13" y="10"/>
+	</widget>
+	<widget field="OuterClimber" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<widget field="PID Controller" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+			<location x="6" y="16"/>
+			<height>155</height>
+			<width>138</width>
+		</widget>
+		<location x="19" y="2"/>
+		<width>150</width>
+		<height>177</height>
+	</widget>
+	<widget field="DriveTrain" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="17" y="29"/>
+	</widget>
+	<widget field="Ball" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="28" y="11"/>
+	</widget>
+	<widget field="InnerClimber" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<widget field="PID Controller" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+			<location x="6" y="16"/>
+			<height>155</height>
+			<width>138</width>
+		</widget>
+		<location x="11" y="26"/>
+		<width>150</width>
+		<height>177</height>
+	</widget>
+	<widget field="Ungrouped" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<widget field="DigitalInput[0]" type="Digital Input" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
+			<location x="6" y="16"/>
+			<height>20</height>
+			<width>250</width>
+		</widget>
+		<widget field="DigitalInput[1]" type="Digital Input" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
+			<location x="6" y="36"/>
+			<height>20</height>
+			<width>250</width>
+		</widget>
+		<widget field="navX-Sensor[2]" type="Gyro" class="edu.wpi.first.smartdashboard.gui.elements.Compass">
+			<location x="6" y="56"/>
+			<height>150</height>
+			<width>250</width>
+		</widget>
+		<location x="4" y="27"/>
+		<width>262</width>
+		<height>212</height>
+	</widget>
+</live-window>
+</xml>

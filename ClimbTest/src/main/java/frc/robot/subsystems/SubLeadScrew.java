@@ -85,10 +85,10 @@ public class SubLeadScrew extends SubsystemBase {
     // This method will be called once per scheduler run
     double tempLocalAxis = localJoystick.getRawAxis(0);
 
-    SmartDashboard.putNumber("LSMEncoder", leadScrewMotor.getSelectedSensorPosition());
-    SmartDashboard.putNumber("LSMCurrent", leadScrewMotor.getStatorCurrent());
-    SmartDashboard.putBoolean("AtFront", atFront.get());
-    SmartDashboard.putBoolean("AtRear", atRear.get());
+    //SmartDashboard.putNumber("LSMEncoder", leadScrewMotor.getSelectedSensorPosition());
+    //SmartDashboard.putNumber("LSMCurrent", leadScrewMotor.getStatorCurrent());
+    //SmartDashboard.putBoolean("AtFront", atFront.get());
+    //SmartDashboard.putBoolean("AtRear", atRear.get());
 
     if (outDeadband(tempLocalAxis, Constants.deadband)) {
       new CmdRunLeadScrew(leadScrew, 

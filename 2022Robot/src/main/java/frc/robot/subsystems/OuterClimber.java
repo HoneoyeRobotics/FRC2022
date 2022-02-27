@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
 
 public class OuterClimber extends PIDSubsystem {
+  private boolean abortRaise = false;
   private CANSparkMax climberLeftOuterMotor;
   private CANSparkMax climberRightOuterMotor;
   /** Creates a new OuterClimber. */
@@ -50,20 +51,35 @@ public class OuterClimber extends PIDSubsystem {
     setSetpoint(setpoint);
   }
 
-  public boolean atTop() {
-    double avgPosition = (climberLeftOuterMotor.getEncoder().getPosition() +
-        climberRightOuterMotor.getEncoder().getPosition()) / 2;
-
-    return (avgPosition + Constants.ArmHorizontalEncoderDeadband >= Constants.ArmHorizontalEncoderMaxValue)
-        || (avgPosition - Constants.ArmHorizontalEncoderDeadband >= Constants.ArmHorizontalEncoderMaxValue);
+  public boolean atSetPoint(boolean movingUp) {
+    String direction = "hello";
+    boolean retVal = false;
+    if(movingUp){
+      direction = "MovingUp";
+      if(getSetpoint() <= getMeasurement()){
+        direction = "AtTop";
+        retVal = true;
+      }
+    }
+    else {
+      direction = "MovingDown";
+      if(getSetpoint() >= getMeasurement()){
+        direction = "AtBottom";
+        retVal = true;
+      }
+    }
+    SmartDashboard.putString("OuterArmsLocation", direction);
+    return retVal;
   }
 
-  public boolean atBottom() {
-    double avgPosition = (climberLeftOuterMotor.getEncoder().getPosition() +
-        climberRightOuterMotor.getEncoder().getPosition()) / 2;
+ 
 
-    return (avgPosition + Constants.ArmVerticalEncoderDeadband <= 0)
-        || (avgPosition - Constants.ArmVerticalEncoderDeadband <= 0);
+  public void resetAbortRaise() {
+    abortRaise = false;
+  }
+
+  public boolean raiseCurrentBad() {
+    return ((climberLeftOuterMotor.getOutputCurrent() > Constants.MaxRaiseCurrent) || (climberRightOuterMotor.getOutputCurrent() > Constants.MaxRaiseCurrent));
   }
 
   // public boolean armsFullyIn() {
@@ -87,9 +103,12 @@ public class OuterClimber extends PIDSubsystem {
 
   @Override
   public void useOutput(double output, double setpoint) {
-    if (output > Constants.MaxClimberOutput)
-      output = Constants.MaxClimberOutput;
+    //TODO see if speed needs to be limited with if statement below
+    //if (output > Constants.MaxClimberOutput)
+    //  output = Constants.MaxClimberOutput;
     // Use the output here
+    if (abortRaise) output = 0;
+    
     climberLeftOuterMotor.set(output);
     climberRightOuterMotor.set(output);
     
@@ -109,6 +128,9 @@ public class OuterClimber extends PIDSubsystem {
     
       SmartDashboard.putNumber("OuterArmsPower", speed);
   }
+
+
+
   @Override
   public double getMeasurement() {
     // Return the process variable measurement here

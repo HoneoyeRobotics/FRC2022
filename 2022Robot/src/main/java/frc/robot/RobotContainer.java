@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 /**
@@ -56,30 +57,41 @@ public class RobotContainer {
         () -> driverJoystick.getRawAxis(Constants.AXIS_LeftTrigger),
         () -> driverJoystick.getRawAxis(Constants.AXIS_LeftStickX)));
 
-      outerClimber.setDefaultCommand(new DefaultOuterArms(outerClimber, 
-          () -> coDriverJoystick.getRawAxis(Constants.AXIS_RightStickY) * -1,
-          () -> coDriverJoystick.getRawButton(7),
-          () -> coDriverJoystick.getRawButton(8)));
+      // outerClimber.setDefaultCommand(new DefaultOuterArms(outerClimber, 
+      //     () -> coDriverJoystick.getRawAxis(Constants.AXIS_RightStickY) * -1,
+      //     () -> coDriverJoystick.getRawButton(7),
+      //     () -> coDriverJoystick.getRawButton(8)));
 
-      innerClimber.setDefaultCommand(new DefaultInnerArms(innerClimber, 
-          () -> coDriverJoystick.getRawAxis(Constants.AXIS_LeftStickY) * -1,
-          () -> coDriverJoystick.getRawButton(7),
-          () -> coDriverJoystick.getRawButton(8)));
+      // innerClimber.setDefaultCommand(new DefaultInnerArms(innerClimber, 
+      //     () -> coDriverJoystick.getRawAxis(Constants.AXIS_LeftStickY) * -1,
+      //     () -> coDriverJoystick.getRawButton(7),
+      //     () -> coDriverJoystick.getRawButton(8)));
 
-      leadScrew.setDefaultCommand(new DefaultLeadScrew(leadScrew, 
-          () -> coDriverJoystick.getRawAxis(Constants.AXIS_LeftStickX)));
+      // leadScrew.setDefaultCommand(new DefaultLeadScrew(leadScrew, 
+      //     () -> coDriverJoystick.getRawAxis(Constants.AXIS_LeftStickX)));
+      
     // Configure the button bindings
     configureButtonBindings();
     
-    SmartDashboard.putData(new SwitchCamera(camerasAndNavX));
+    SmartDashboard.putData(new UseFrontCamera(camerasAndNavX));
     SmartDashboard.putData(new RaiseOuterArms(outerClimber));
     SmartDashboard.putData(new LowerOuterArms(outerClimber));
     SmartDashboard.putData(new RaiseInnerArms(innerClimber));
     SmartDashboard.putData(new LowerInnerArms(innerClimber));
-    SmartDashboard.putData(new TogglePIDs(innerClimber, outerClimber));
+    SmartDashboard.putData(new EnablePID(innerClimber, outerClimber));
+    SmartDashboard.putData(new DisablePID(innerClimber, outerClimber));
     SmartDashboard.putData(new FinalClimb(outerClimber, innerClimber, leadScrew));
     SmartDashboard.putData(new ResetArms(innerClimber, outerClimber));
     SmartDashboard.putData(new ResetEncoder(outerClimber, innerClimber));
+    SmartDashboard.putData(new UseFrontCamera(camerasAndNavX));
+    SmartDashboard.putData(new UseRearCamera(camerasAndNavX));
+    SmartDashboard.putData(new UseClimbCamera(camerasAndNavX));
+    SmartDashboard.putData(new ResetNavX(camerasAndNavX));
+
+    SmartDashboard.putData(innerClimber);
+    SmartDashboard.putData(outerClimber);
+    SmartDashboard.putData(leadScrew);
+    SmartDashboard.putData(driveTrain);
 
   }
 
@@ -95,15 +107,13 @@ public class RobotContainer {
       JoystickButton buttonB = new JoystickButton(driverJoystick, 2);
       //JoystickButton buttonX = new JoystickButton(driverJoystick, 3);
       //JoystickButton buttonY = new JoystickButton(driverJoystick, 4);
-
       JoystickButton leftBumper = new JoystickButton(driverJoystick, 5);
       JoystickButton rightBumper = new JoystickButton(driverJoystick, 6);
       
-      buttonA.whileHeld(new ShootBall(ball)); 
-      leftBumper.whileHeld(new FeedBalls(ball));
-      rightBumper.whileHeld(new PickUpBalls(ball));
-
-      buttonB.whenPressed(new FeedAndShootBalls(ball));
+      // buttonA.whileHeld(new ShootBall(ball)); 
+      // leftBumper.whileHeld(new FeedBalls(ball));
+      // rightBumper.whileHeld(new PickUpBalls(ball));
+      // buttonB.whenPressed(new FeedAndShootBalls(ball));
     }
 
 //     private void stephenDriverJoystick() {
@@ -131,15 +141,23 @@ public class RobotContainer {
       JoystickButton buttonY = new JoystickButton(coDriverJoystick, 4);
       JoystickButton leftBumper = new JoystickButton(coDriverJoystick, 5);
       JoystickButton rightBumper = new JoystickButton(coDriverJoystick, 6);
+      int povAngle = 0;
+      int povNumber = 0;
+      POVButton POV = new POVButton(coDriverJoystick, povAngle, povNumber);
+      
 
-      buttonX.whenPressed(new RaiseInnerArms(innerClimber));
-      buttonA.whenPressed(new LowerInnerArms(innerClimber));
-      buttonY.whenPressed(new RaiseOuterArms(outerClimber));
-      buttonB.whenPressed(new LowerOuterArms(outerClimber));
-
-      leftBumper.whileHeld(new MoveArmsForward(leadScrew));
-      rightBumper.whileHeld(new MoveArmsBackward(leadScrew));
-
+      // buttonX.whenPressed(new RaiseInnerArms(innerClimber));
+      // buttonA.whenPressed(new LowerInnerArms(innerClimber));
+      // buttonY.whenPressed(new RaiseOuterArms(outerClimber));
+      // buttonB.whenPressed(new LowerOuterArms(outerClimber));
+      // leftBumper.whileHeld(new MoveArmsForward(leadScrew));
+      // rightBumper.whileHeld(new MoveArmsBackward(leadScrew));
+      buttonA.whileHeld(new ShootBall(ball)); 
+      leftBumper.whileHeld(new FeedBalls(ball));
+      rightBumper.whileHeld(new PickUpBalls(ball));
+      buttonB.whenPressed(new FeedAndShootBalls(ball));
+      POV.whenPressed(new PovCommand(
+        () -> coDriverJoystick.getPOV()));
     }
 
   private void configureButtonBindings() {

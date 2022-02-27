@@ -1,3 +1,4 @@
+
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
@@ -5,45 +6,33 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.LeadScrew;
+import frc.robot.subsystems.CamerasAndNavX;
 
-public class MoveArmsCenter extends CommandBase {
-  
-  private LeadScrew leadScrew;
-
-  /** Creates a new MoveArmsCenter. */
-  public MoveArmsCenter(LeadScrew leadScrew) {
+public class ResetNavX extends CommandBase {
+  private CamerasAndNavX m_navX;
+  /** Creates a new CalibrateNavX. */
+  public ResetNavX(CamerasAndNavX navX) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(leadScrew);
-    this.leadScrew = leadScrew;
+    m_navX = navX;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_navX.normalizeAxis();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    // if(leadScrew.armsCentered() == false) {
-    //   if(leadScrew.armsGreaterThanCenter() == true) {
-    //     leadScrew.moveArms(-.75);
-    //   }
-    //   else {
-    //     leadScrew.moveArms(.75);
-    //   }
-    // }
-  }
+  public void execute() {}
+
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    leadScrew.moveArms(0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return leadScrew.armsCentered();
     return true;
   }
 }

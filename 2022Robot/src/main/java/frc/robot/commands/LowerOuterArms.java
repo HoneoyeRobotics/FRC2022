@@ -37,6 +37,6 @@ public class LowerOuterArms extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return climber.atBottom();
+    return climber.atSetPoint(false);
   }
 }
