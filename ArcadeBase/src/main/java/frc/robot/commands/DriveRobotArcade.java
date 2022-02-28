@@ -38,13 +38,12 @@ public class DriveRobotArcade extends CommandBase {
 
     double xSpeed = 0;
     double zRotation = 0;
+    double tempZ = turnSupplier.getAsDouble();
 
     xSpeed = forwardSupplier.getAsDouble() - backwardSupplier.getAsDouble();
-
-    zRotation = turnSupplier.getAsDouble() * .5;
-
-
-    //not sure why it needs to be inverted?????
+    zRotation = tempZ * tempZ * ((tempZ < 0) ? -1 : 1);
+    
+    //not sure why it needs to be inverted
     drivetrain.drive(zRotation, xSpeed); 
   }
 
