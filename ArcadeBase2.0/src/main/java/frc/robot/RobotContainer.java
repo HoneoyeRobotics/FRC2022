@@ -25,6 +25,7 @@ public class RobotContainer {
   private InnerLeftClimber innerLeftClimber;
   private OuterRightClimber outerRightClimber;
   private OuterLeftClimber outerLeftClimber;
+  private LeadScrew leadScrew;
   // The robot's subsystems and commands are defined here...
 
   private subDriveTrainArcade m_DriveTrainArcade = new subDriveTrainArcade();
@@ -42,6 +43,7 @@ public class RobotContainer {
     innerLeftClimber = new InnerLeftClimber();
     outerRightClimber = new OuterRightClimber();
     outerLeftClimber = new OuterLeftClimber();
+    leadScrew = new LeadScrew();
     // Configure the button bindings
    
     // Default command for Arcade drivetrain
@@ -101,6 +103,8 @@ public class RobotContainer {
     JoystickButton buttonB = new JoystickButton(driverJoystick, 2);
     JoystickButton buttonX = new JoystickButton(driverJoystick, 3);
     JoystickButton buttonY = new JoystickButton(driverJoystick, 4);
+    JoystickButton buttonBack = new JoystickButton(driverJoystick, 7);
+    JoystickButton buttonStart = new JoystickButton(driverJoystick, 8);
 
     buttonY.whenPressed(new RaiseOuterArms(outerRightClimber, outerLeftClimber));
     buttonB.whenPressed(new LowerOuterArms(outerRightClimber, outerLeftClimber));
@@ -108,15 +112,16 @@ public class RobotContainer {
     buttonX.whenPressed(new RaiseInnerArms(innerRightClimber, innerLeftClimber));
     buttonA.whenPressed(new LowerInnerArms(innerRightClimber, innerLeftClimber));
 
-
+    buttonBack.whenPressed(new Climb1(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber, leadScrew));
+    buttonStart.whenPressed(new Climb2(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber, leadScrew));
   }
 
   private void configureCoDriverJoystick() {
       
     JoystickButton buttonA = new JoystickButton(coDriverJoystick, 1);
     JoystickButton buttonB = new JoystickButton(coDriverJoystick, 2);
-    JoystickButton buttonX = new JoystickButton(coDriverJoystick, 3);
-  // JoystickButton buttonY = new JoystickButton(coDriverJoystick, 4);
+    // JoystickButton buttonX = new JoystickButton(coDriverJoystick, 3);
+    // JoystickButton buttonY = new JoystickButton(coDriverJoystick, 4);
     JoystickButton leftBumper = new JoystickButton(coDriverJoystick, 5);
     JoystickButton rightBumper = new JoystickButton(coDriverJoystick, 6);
 

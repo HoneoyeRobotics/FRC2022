@@ -40,7 +40,6 @@ public class LeadScrew extends SubsystemBase {
     // double leadScrewEncoder = leadScrewMotor.getSelectedSensorPosition();
     // return (leadScrewEncoder + Constants.ArmHorizontalEncoderDeadband <= 0)
     //     || (leadScrewEncoder - Constants.ArmHorizontalEncoderDeadband <= 0);
-    //TODO: make sure front is actually front and visa versa
   }
 
   public boolean armsFullyOut() {

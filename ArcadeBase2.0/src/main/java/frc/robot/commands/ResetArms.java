@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.InnerRightClimber;
+import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
 public class ResetArms extends CommandBase {
@@ -55,19 +56,19 @@ public class ResetArms extends CommandBase {
     outerRightClimber.getMeasurement();
 
     if (counter >= 10) {
-      if (innerRightClimber.atBottomCurrent()) {
+      if (innerRightClimber.velocity() < Constants.ClimberStallVelocity) {
         LISpeed = 0;
       } 
 
-      if (innerLeftClimber.atBottomCurrent()) {
+      if (innerLeftClimber.velocity() < Constants.ClimberStallVelocity) {
         RISpeed = 0;
       } 
 
-      if (outerRightClimber.atBottomCurrent()) {
+      if (outerRightClimber.velocity() < Constants.ClimberStallVelocity) {
         LOSpeed = 0;
       } 
 
-      if (outerLeftClimber.atBottomCurrent()) {
+      if (outerLeftClimber.velocity() < Constants.ClimberStallVelocity) {
         ROSpeed = 0;
       } 
     }
@@ -83,6 +84,23 @@ public class ResetArms extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    if(RISpeed == 0) {
+      innerRightClimber.resetEncoders();
+    }
+    if(LISpeed == 0) {
+      innerLeftClimber.resetEncoders();
+    }
+    if(ROSpeed == 0) {
+      outerRightClimber.resetEncoders();
+    }
+    if(LOSpeed == 0) {
+      outerLeftClimber.resetEncoders();
+    }
+    
+    innerRightClimber.getMeasurement();
+    innerLeftClimber.getMeasurement();
+    outerRightClimber.getMeasurement();
+    outerLeftClimber.getMeasurement();
     // counter is reset to 0 so the next time command is called it will be 0
     counter = 0;
   }
@@ -91,8 +109,7 @@ public class ResetArms extends CommandBase {
   @Override
   public boolean isFinished() {
     return (RISpeed == 0 && LISpeed == 0 && ROSpeed == 0 && LOSpeed == 0);
-    // once counter reaches 10 and temp is true, meaning all the arms have reached
-    // the bottom, the command will end
+    // once all the arms speed have been set to 0, i.e. all the arms have reached bottom, the command ends
   }
 
 }

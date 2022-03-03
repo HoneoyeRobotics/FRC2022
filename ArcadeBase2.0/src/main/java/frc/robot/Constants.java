@@ -45,10 +45,6 @@ public final class Constants {
     public static final double ArmVerticalEncoderDeadband = 0;
     public static final double ArmVerticalJoystickEncoderMovement = 1;
 
-    public static final double ArmHorizontalEncoderMaxValue = 200;
-    public static final double ArmHorizantalEncoderCenter = 100;
-    public static final double ArmHorizontalEncoderDeadband = 10;
-
     public static final double OuterLeftMax = 130;
     public static final double InnerLeftMax = 108;
     public static final double InnerRightMax = 109;
@@ -60,6 +56,17 @@ public final class Constants {
     public static final double MaxRaiseCurrent = 15;
 
     public static final int CounterValue = 50;
+    public static final double ClimberStallVelocity = 10.0;
 
     public static final double kpClimber = 0.2;
+
+    public static final double Max_Differential = 10;
+    
+    //Speed and counter stop for leadscrew during rasing command group(Climb1)
+    public static final double LeadScrewRaiseSpeed = 0.5;
+    public static final int LeadScrewRaiseCounter = 50;
+    //Speed and counter stop for leadscrew during Loweringing command group(Climb2)
+    public static final double LeadScrewLowerSpeed = 0.5;
+    public static final int LeadScrewLowerCounter = 50;
+    //TODO fix the leadScrew values above
 }

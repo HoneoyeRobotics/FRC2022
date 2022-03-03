@@ -89,6 +89,24 @@ public class InnerLeftClimber extends PIDSubsystem {
   public double presentEncoderValue() {
     return climberInnerLeftMotor.getEncoder().getPosition();
   }
+  
+  public double velocity() {
+    //returns RPMs of motor
+    return climberInnerLeftMotor.getEncoder().getVelocity();
+  }
+
+  // NOTE: THIS will handle negative arm positions and adjust Max_Differential if needed
+  // This function takes the current susbystem arm position and compare it to the "Other arm" position that is passed in
+  // It will evaluate if THIS subsystems arm position is within the MAX differential position of the "Other" arm (compare arm).  
+  // It returns TRUE if the value of this subsystems arm is out of bounds and FALSE if compare arm is in expected range.
+    public boolean Arm_Postion_Too_Low(double Other_Arm_Position, double Max_Differential_Count) {
+      // Normalize Max Differential if it is negative
+      double md_count = (Max_Differential_Count < 0.0) ? (Max_Differential_Count * -1) : Max_Differential_Count;
+      if ( (climberInnerLeftMotor.getEncoder().getPosition() + md_count) < Other_Arm_Position )
+        return (true);
+      else
+        return (false);
+    }
 
   @Override
   public void useOutput(double output, double setpoint) {
