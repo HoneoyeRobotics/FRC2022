@@ -4,51 +4,45 @@
 
 package frc.robot.commands;
 
-import java.util.function.DoubleSupplier;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.subsystems.*;
+import frc.robot.subsystems.LeadScrew;
 
-public class DefaultLeadScrew extends CommandBase {
-
-  private LeadScrew leadScrew;
-  private DoubleSupplier movementValue;
-  private double currentMoveValue = 0;
-
-  /** Creates a new DefaultClimb. */
-  public DefaultLeadScrew(LeadScrew leadScrew, DoubleSupplier movementValue) {
-
+public class MoveLeadScrewToFront extends CommandBase {
+  private LeadScrew m_leadScrew;
+  private double speed = 0.0;
+  /** Creates a new MoveLeadScrew. */
+  public MoveLeadScrewToFront(LeadScrew leadScrew, double d) {
+    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(leadScrew);
-    this.leadScrew = leadScrew;
-    this.movementValue = movementValue;
+    m_leadScrew = leadScrew;
+    speed = d;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    SmartDashboard.putString("State", "Move Lead Screw Started");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    currentMoveValue = movementValue.getAsDouble();
-    if((currentMoveValue > (0.12 * -1)) && (currentMoveValue < 0.12)) {
-      currentMoveValue = 0;
-    }
-    leadScrew.moveArms(currentMoveValue);
-   
+    m_leadScrew.moveArms(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    leadScrew.moveArms(0);
+    m_leadScrew.moveArms(0);
+    
+    SmartDashboard.putString("State", "Move Lead Screw Ended");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+//    return (counter >= counterFinish);
+return m_leadScrew.armsFullyOut();
   }
 }

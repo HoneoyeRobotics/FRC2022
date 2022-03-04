@@ -1,8 +1,5 @@
 <xml version="1.0">
 <dashboard>
-	<widget field="LeadScrew Mode" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="639" y="297"/>
-	</widget>
 	<widget field="LSMEncoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="176" y="42"/>
 	</widget>
@@ -22,25 +19,25 @@
 		<location x="364" y="215"/>
 	</widget>
 	<widget field="Inner Run Right" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="300" y="284"/>
+		<location x="12" y="382"/>
 	</widget>
 	<widget field="Inner Run Left" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="298"/>
+		<location x="18" y="405"/>
 	</widget>
 	<widget field="Outer Run Right" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="277"/>
+		<location x="9" y="335"/>
 	</widget>
 	<widget field="Outer Run Left" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="149"/>
+		<location x="15" y="359"/>
 	</widget>
 	<widget field="BombOut" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="579" y="324"/>
+		<location x="549" y="323"/>
 	</widget>
 	<widget field="DisablePID" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="656" y="390"/>
+		<location x="555" y="369"/>
 	</widget>
 	<widget field="EnablePID" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="658" y="361"/>
+		<location x="557" y="343"/>
 	</widget>
 	<widget field="angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="1081" y="299"/>
@@ -52,16 +49,13 @@
 		<location x="899" y="346"/>
 	</widget>
 	<widget field="CameraSource" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="897" y="300"/>
+		<location x="898" y="300"/>
 	</widget>
 	<widget field="UseFrontCamera" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
 		<location x="896" y="320"/>
 	</widget>
 	<widget field="ResetArms" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="0" y="403"/>
-	</widget>
-	<widget field="OC Set to" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="382"/>
+		<location x="17" y="267"/>
 	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
 		<location x="739" y="-1"/>
@@ -86,16 +80,13 @@
 		<location x="201" y="317"/>
 	</widget>
 	<widget field="OC setpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="216" y="388"/>
+		<location x="217" y="378"/>
 	</widget>
 	<widget field="OC output" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="221" y="411"/>
-	</widget>
-	<widget field="OC Setter Setpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="361"/>
+		<location x="223" y="403"/>
 	</widget>
 	<widget field="FinalClimb" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="0" y="327"/>
+		<location x="1211" y="112"/>
 	</widget>
 	<widget field="LeadScrewPower" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="8" y="192"/>
@@ -164,57 +155,20 @@
 		<width>284</width>
 		<height>212</height>
 	</static-widget>
-	<widget field="ExampleSubsystem" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
-		<location x="0" y="240"/>
-	</widget>
 </dashboard>
 <live-window>
-	<widget field="Ball" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<location x="0" y="286"/>
-	</widget>
-	<widget field="LeadScrew" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<location x="0" y="263"/>
-	</widget>
-	<widget field="ExampleSubsystem" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+	<widget field="DriveTrain" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
 		<location x="0" y="240"/>
 	</widget>
-	<widget field="DriveTrainTank" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<location x="0" y="0"/>
+	<widget field="Ball" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="32" y="0"/>
 	</widget>
-	<widget field="Ungrouped" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<widget field="DigitalInput[0]" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
-			<location x="0" y="0"/>
-			<height>0</height>
-			<width>0</width>
-		</widget>
-		<widget field="DigitalInput[0]" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
-			<location x="0" y="0"/>
-			<height>0</height>
-			<width>0</width>
-		</widget>
-		<widget field="DigitalInput[1]" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
-			<location x="0" y="0"/>
-			<height>0</height>
-			<width>0</width>
-		</widget>
-		<widget field="DigitalInput[1]" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
-			<location x="0" y="0"/>
-			<height>0</height>
-			<width>0</width>
-		</widget>
-		<widget field="navX-Sensor[2]" type="Table" class="edu.wpi.first.smartdashboard.gui.elements.Compass">
-			<location x="0" y="0"/>
-			<height>0</height>
-			<width>0</width>
-		</widget>
-		<widget field="navX-Sensor[2]" type="Table" class="edu.wpi.first.smartdashboard.gui.elements.Compass">
-			<location x="0" y="0"/>
-			<height>0</height>
-			<width>0</width>
-		</widget>
-		<location x="4" y="27"/>
-		<width>262</width>
-		<height>212</height>
+	<widget field="LeadScrew" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="19" y="0"/>
 	</widget>
 </live-window>
+	<hidden field="LeadScrew Mode"/>
+	<hidden field="ExampleSubsystem"/>
+	<hidden field="OC Setter Setpoint"/>
+	<hidden field="OC Set to"/>
 </xml>

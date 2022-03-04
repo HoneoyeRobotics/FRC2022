@@ -13,7 +13,7 @@ import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
-/**
+/*
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
@@ -30,8 +30,6 @@ public class RobotContainer {
 
   private subDriveTrainArcade m_DriveTrainArcade = new subDriveTrainArcade();
   Joystick driverJoystick = new Joystick(1);
-
-  private LeadScrew m_leadScrew = new LeadScrew();
   Joystick coDriverJoystick = new Joystick(0);
 
   private Ball m_ball = new Ball();
@@ -52,7 +50,7 @@ public class RobotContainer {
     () -> driverJoystick.getRawAxis(Constants.AXIS_LeftTrigger),
     () -> driverJoystick.getRawAxis(Constants.AXIS_LeftStickX)));
 
-    m_leadScrew.setDefaultCommand(new DefaultLeadScrew(m_leadScrew, 
+    leadScrew.setDefaultCommand(new DefaultLeadScrew(leadScrew, 
     () -> coDriverJoystick.getRawAxis(4)));
 
     outerLeftClimber.setDefaultCommand(new DefaultOuterArms(outerRightClimber, outerLeftClimber,
@@ -85,7 +83,12 @@ public class RobotContainer {
     SmartDashboard.putData(new ResetArms(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber));
 
     SmartDashboard.putData(m_ball);
+    SmartDashboard.putData(leadScrew);
+    SmartDashboard.putData(innerLeftClimber);
+    SmartDashboard.putData(innerRightClimber);
+    SmartDashboard.putData(outerLeftClimber);
     
+    SmartDashboard.putData(outerRightClimber);
 
     configureButtonBindings();
   }
@@ -120,8 +123,8 @@ public class RobotContainer {
       
     JoystickButton buttonA = new JoystickButton(coDriverJoystick, 1);
     JoystickButton buttonB = new JoystickButton(coDriverJoystick, 2);
-    // JoystickButton buttonX = new JoystickButton(coDriverJoystick, 3);
-    // JoystickButton buttonY = new JoystickButton(coDriverJoystick, 4);
+     JoystickButton buttonX = new JoystickButton(coDriverJoystick, 3);
+     JoystickButton buttonY = new JoystickButton(coDriverJoystick, 4);
     JoystickButton leftBumper = new JoystickButton(coDriverJoystick, 5);
     JoystickButton rightBumper = new JoystickButton(coDriverJoystick, 6);
 
@@ -129,6 +132,9 @@ public class RobotContainer {
     leftBumper.whileHeld(new FeedBalls(m_ball));
     rightBumper.whileHeld(new PickUpBalls(m_ball));
     buttonB.whenPressed(new FeedAndShootBalls(m_ball));
+    
+    buttonX.whenPressed(new Climb1(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber, leadScrew));
+    buttonY.whenPressed(new Climb2(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber, leadScrew));
   }
   private void configureButtonBindings() {
     configureCoDriverJoystick();

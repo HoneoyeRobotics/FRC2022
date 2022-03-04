@@ -7,17 +7,17 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.subDriveTrainArcade;
+import frc.robot.subsystems.DriveTrain;
 
-public class DriveRobotArcade extends CommandBase {
+public class DriveRobot extends CommandBase {
 
-  private subDriveTrainArcade drivetrain;
+  private DriveTrain drivetrain;
   private DoubleSupplier forwardSupplier;
   private DoubleSupplier backwardSupplier;
   private DoubleSupplier turnSupplier;
 
   /** Creates a new DriveRobot. */
-  public DriveRobotArcade(subDriveTrainArcade drivetrain, DoubleSupplier forwardSupplier, DoubleSupplier backwardSupplier,
+  public DriveRobot(DriveTrain drivetrain, DoubleSupplier forwardSupplier, DoubleSupplier backwardSupplier,
       DoubleSupplier turnSupplier) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
@@ -38,14 +38,12 @@ public class DriveRobotArcade extends CommandBase {
 
     double xSpeed = 0;
     double zRotation = 0;
-    double tempZ = turnSupplier.getAsDouble();
 
     xSpeed = forwardSupplier.getAsDouble() - backwardSupplier.getAsDouble();
-    tempZ = tempZ * .8;
-    zRotation = tempZ * tempZ * ((tempZ < 0) ? -1 : 1);
-    
-    //not sure why it needs to be inverted
-    drivetrain.drive(zRotation, xSpeed); 
+    double turnRate = turnSupplier.getAsDouble();
+    zRotation = turnRate * turnRate * (turnRate < 0 ? -1 : 1);
+    //TODO see if squaring value is useful
+    drivetrain.drive(xSpeed, zRotation); 
   }
 
   // Called once the command ends or is interrupted.

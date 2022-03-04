@@ -5,13 +5,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class Climb1 extends ParallelCommandGroup {
+public class Climb1 extends SequentialCommandGroup {
   /** Creates a new Climber1. */
   public Climb1(InnerLeftClimber innerLeftClimber, InnerRightClimber innerRightClimber, 
                 OuterLeftClimber outerLeftClimber, OuterRightClimber outerRightClimber, LeadScrew leadScrew) {
@@ -22,9 +23,11 @@ public class Climb1 extends ParallelCommandGroup {
       as well as move the leadScrew to climb position all at once
       */
     addCommands(
+      new EnablePID(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber),
+      new ParallelCommandGroup(
       new RaiseOuterArms(outerRightClimber, outerLeftClimber),
       new RaiseInnerArms(innerRightClimber, innerLeftClimber),
-      new MoveLeadScrew(leadScrew, Constants.LeadScrewRaiseSpeed, Constants.LeadScrewRaiseCounter)
-      );
+      new MoveLeadScrew(leadScrew, Constants.LeadScrewRaiseSpeed, Constants.LeadScrewRaiseCounter).withTimeout(1.5)
+    ));
   }
 }

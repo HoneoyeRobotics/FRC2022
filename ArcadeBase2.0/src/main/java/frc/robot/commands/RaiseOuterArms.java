@@ -36,6 +36,7 @@ public class RaiseOuterArms extends CommandBase {
     rightClimber.setPosition(1);
     leftClimber.setPosition(1);
 
+    SmartDashboard.putString("State", "Raise Outer Arms Started");
     counter = 0;
   }
 
@@ -60,6 +61,7 @@ public class RaiseOuterArms extends CommandBase {
       leftClimber.runMotor(0, true);
     }
     counter = 0;
+    SmartDashboard.putString("State", "Raise Outer Arms Ended");
   }
 
   // Returns true when the command should end.

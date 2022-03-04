@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class DriveTrainTank extends SubsystemBase {
+public class DriveTrain extends SubsystemBase {
   private WPI_VictorSPX driveLeftFrontMotor;
   private WPI_TalonSRX driveLeftRearMotor;
   private WPI_VictorSPX driveRightFrontMotor;
@@ -22,7 +22,7 @@ public class DriveTrainTank extends SubsystemBase {
   private MotorControllerGroup driveRightMotorGroup;
   private DifferentialDrive driveMotors;
   /** Creates a new DriveTrainTank. */
-  public DriveTrainTank() {
+  public DriveTrain() {
     driveLeftFrontMotor = new WPI_VictorSPX(Constants.CANID_DriveLeftFrontMotor);
     driveLeftRearMotor = new WPI_TalonSRX(Constants.CANID_DriveLeftRearMotor);
     driveRightFrontMotor = new WPI_VictorSPX(Constants.CANID_DriveRightFrontMotor);
@@ -36,8 +36,8 @@ public class DriveTrainTank extends SubsystemBase {
     driveMotors = new DifferentialDrive(driveLeftMotorGroup, driveRightMotorGroup);
   }
 
-  public void driveTank(double leftPower, double rightPower) {
-    driveMotors.tankDrive(leftPower, rightPower);
+  public void drive(double xSpeed, double zRotation) {
+    driveMotors.arcadeDrive( xSpeed, zRotation);
   }
 
   @Override

@@ -17,7 +17,7 @@ public class FeedAndShootBalls extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SpinUpShooter(ball).withTimeout(2),
+      new SpinUpShooter(ball).withTimeout(2.5),
       new FeedBalls(ball).withTimeout(1.5),
       //new SpinUpShooter(ball).withTimeout(2),     
       //new FeedBalls(ball).withTimeout(1.5),

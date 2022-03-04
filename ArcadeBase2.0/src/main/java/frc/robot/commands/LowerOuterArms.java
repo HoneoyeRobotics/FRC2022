@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.OuterLeftClimber;
@@ -24,7 +25,7 @@ public class LowerOuterArms extends CommandBase {
     addRequirements(leftClimber);
     this.rightClimber = rightClimber;
     this.leftClimber = leftClimber;
-
+    
   }
 
   // Called when the command is initially scheduled.
@@ -35,6 +36,9 @@ public class LowerOuterArms extends CommandBase {
 
     rightClimber.setPosition(0);
     leftClimber.setPosition(0);
+    tickCountLeft   = 0;
+    tickCountRight = 0;
+    SmartDashboard.putString("State", "Lower Outer Started");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -44,9 +48,10 @@ public class LowerOuterArms extends CommandBase {
 // It returns TRUE if the value of the compare arm is out of bounds and FALSE if compare arm is in expected range.
   @Override
   public void execute() {
-    // initialize tick values so first crack at lowering arms doesn't cause current comparison
-      tickCountRight=11;
-      tickCountLeft=11;
+    //these are resetting every time the loop executes, moved to initializer --kjr
+    // // initialize tick values so first crack at lowering arms doesn't cause current comparison
+    //   tickCountRight=11;
+    //   tickCountLeft=11;
     
     // RIGHT ARM lower logic
     // Check is right arm is too much lower than left arm.
@@ -71,7 +76,8 @@ public class LowerOuterArms extends CommandBase {
           ++tickCountRight;  // this will stop this code from running more than once
           //      If they are similiar, reset the setpoint
           if ( leftClimber.outputCurrent() >= rightClimber.outputCurrent() - 5 )
-            rightClimber.setSetpoint(0);   // this releases the PID to start tracking to setpoint again
+            rightClimber.setSetpoint(rightClimber.getSetpoint());   // this releases the PID to start tracking to setpoint again
+            //updated above to get setpoint rather than 0.. -kjr
         }
       }
     } // RIGHT arm lower logic
@@ -99,7 +105,8 @@ public class LowerOuterArms extends CommandBase {
           ++tickCountLeft;  // this will stop this code from running more than once
           //      If they are similiar, reset the setpoint
           if ( rightClimber.outputCurrent() >= leftClimber.outputCurrent() - 5 )  // you need to write a function or do logic for this
-            leftClimber.setSetpoint(0);   // this releases the PID to start tracking to setpoint again
+            leftClimber.setSetpoint(leftClimber.getSetpoint());   // this releases the PID to start tracking to setpoint again
+            //updated above to get setpoint rather than 0.. -kjr
         }
       }
     }  // LEFT arm lower logic
@@ -114,8 +121,10 @@ public class LowerOuterArms extends CommandBase {
     // This will keep robot stationary if the PIDs get enabled again without resetting postion
     rightClimber.setSetpoint(rightClimber.presentEncoderValue());
     leftClimber.setSetpoint(leftClimber.presentEncoderValue());
-    rightClimber.disable();
-    leftClimber.disable();
+    // rightClimber.disable();
+    // leftClimber.disable();
+    
+    SmartDashboard.putString("State", "Lower Outer ENded");
   }
 
   // Returns true when the command should end.

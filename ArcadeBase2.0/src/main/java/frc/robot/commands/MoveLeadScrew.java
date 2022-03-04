@@ -43,6 +43,7 @@ public class MoveLeadScrew extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (counter >= counterFinish);
+//    return (counter >= counterFinish);
+return false;
   }
 }
