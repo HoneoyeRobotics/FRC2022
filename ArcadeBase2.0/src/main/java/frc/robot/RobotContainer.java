@@ -26,6 +26,7 @@ public class RobotContainer {
   private OuterRightClimber outerRightClimber;
   private OuterLeftClimber outerLeftClimber;
   private LeadScrew leadScrew;
+  public static Boolean climbContinue = false;
   // The robot's subsystems and commands are defined here...
 
   private subDriveTrainArcade m_DriveTrainArcade = new subDriveTrainArcade();
@@ -81,6 +82,7 @@ public class RobotContainer {
     SmartDashboard.putData(new EnablePID(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber));
     SmartDashboard.putData(new DisablePID(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber));
     SmartDashboard.putData(new ResetArms(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber));
+    SmartDashboard.putData(new  GetMeasurement(innerRightClimber, innerLeftClimber, outerRightClimber, outerLeftClimber));
 
     SmartDashboard.putData(m_ball);
     SmartDashboard.putData(leadScrew);

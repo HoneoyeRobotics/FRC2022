@@ -5,6 +5,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.InnerRightClimber;
 import frc.robot.Constants;
@@ -30,6 +32,8 @@ public class ResetArms extends CommandBase {
     addRequirements(outerRightClimber);
     addRequirements(outerLeftClimber);
 
+    Shuffleboard.getTab("Debug").addNumber("LISpeed", () -> LISpeed);
+
     this.innerRightClimber = innerRightClimber;
     this.innerLeftClimber = innerLeftClimber;
     this.outerRightClimber = outerRightClimber;
@@ -39,11 +43,16 @@ public class ResetArms extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    double speed = Preferences.getDouble("ResetSpeed", -.1);
+    double speed = Preferences.getDouble("ResetSpeed", -.2);
     RISpeed = speed;
     LISpeed = speed;
     ROSpeed = speed;
     LOSpeed = speed;
+    counter = 0;
+    innerLeftClimber.disable();
+    innerRightClimber.disable();
+    outerLeftClimber.disable();
+    outerRightClimber.disable();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -56,20 +65,20 @@ public class ResetArms extends CommandBase {
     outerRightClimber.getMeasurement();
 
     if (counter >= 10) {
-      if (innerRightClimber.velocity() < Constants.ClimberStallVelocity) {
-        LISpeed = 0;
-      } 
-
-      if (innerLeftClimber.velocity() < Constants.ClimberStallVelocity) {
+      if (innerRightClimber.velocity() > Constants.ClimberStallVelocity) {
         RISpeed = 0;
       } 
 
-      if (outerRightClimber.velocity() < Constants.ClimberStallVelocity) {
-        LOSpeed = 0;
+      if (innerLeftClimber.velocity() > Constants.ClimberStallVelocity) {
+        LISpeed = 0;
       } 
 
-      if (outerLeftClimber.velocity() < Constants.ClimberStallVelocity) {
+      if (outerRightClimber.velocity() > Constants.ClimberStallVelocity) {
         ROSpeed = 0;
+      } 
+
+      if (outerLeftClimber.velocity() > Constants.ClimberStallVelocity) {
+        LOSpeed = 0;
       } 
     }
     outerRightClimber.runMotor(ROSpeed, true);
@@ -78,7 +87,7 @@ public class ResetArms extends CommandBase {
     innerLeftClimber.runMotor(LISpeed, true);
 
     // counter is increased by 1 every time execute is called i.e. every 20ms
-    counter += counter;
+    counter++;
   }
 
   // Called once the command ends or is interrupted.
@@ -86,15 +95,19 @@ public class ResetArms extends CommandBase {
   public void end(boolean interrupted) {
     if(RISpeed == 0) {
       innerRightClimber.resetEncoders();
+      innerRightClimber.setSetpoint(0);
     }
     if(LISpeed == 0) {
       innerLeftClimber.resetEncoders();
+      innerLeftClimber.setSetpoint(0);
     }
     if(ROSpeed == 0) {
       outerRightClimber.resetEncoders();
+      outerRightClimber.setSetpoint(0);
     }
     if(LOSpeed == 0) {
       outerLeftClimber.resetEncoders();
+      outerLeftClimber.setSetpoint(0);
     }
     
     innerRightClimber.getMeasurement();

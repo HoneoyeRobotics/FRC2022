@@ -40,7 +40,7 @@ public class DriveRobotArcade extends CommandBase {
     double zRotation = 0;
     double tempZ = turnSupplier.getAsDouble();
 
-    xSpeed = forwardSupplier.getAsDouble() - backwardSupplier.getAsDouble();
+    xSpeed = backwardSupplier.getAsDouble() - forwardSupplier.getAsDouble();
     tempZ = tempZ * .8;
     zRotation = tempZ * tempZ * ((tempZ < 0) ? -1 : 1);
     

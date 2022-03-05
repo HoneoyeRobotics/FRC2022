@@ -42,11 +42,11 @@ public class OuterLeftClimber extends PIDSubsystem {
     double setpoint = 0;
   
     switch(position){
-      case start:setpoint = Preferences.getDouble("OuterHooked?", 100);
+      case start:setpoint = Preferences.getDouble("OuterHooked?", Constants.OuterClimberStart);
         break;
-      case top: setpoint = Preferences.getDouble("OuterMax", 108);
+      case top: setpoint = Preferences.getDouble("OuterMax", Constants.OuterClimberTop);
         break;
-      case bottom:setpoint = Preferences.getDouble("OuterMin", 0);
+      case bottom:setpoint = Preferences.getDouble("OuterMin", Constants.OuterClimberBottom);
         break;
     }
       

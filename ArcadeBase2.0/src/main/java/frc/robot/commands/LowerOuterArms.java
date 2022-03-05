@@ -7,19 +7,19 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.ClimberPosition;
 import frc.robot.subsystems.OuterLeftClimber;
 import frc.robot.subsystems.OuterRightClimber;
-import frc.robot.Constants;
 
 public class LowerOuterArms extends CommandBase {
 
   private OuterRightClimber rightClimber;
   private OuterLeftClimber leftClimber;
   private boolean resetCommand = false;
-  private static int tickCountRight = 11;
-  private static int tickCountLeft = 11;
-  private static int counter = 11;
+  private boolean finishCommand = false;
+  private static int tickCountRight = 0;
+  private static int tickCountLeft = 0;
 
   /** Creates a new RaiseRearArm. */
   public LowerOuterArms(OuterRightClimber rightClimber, OuterLeftClimber leftClimber) {
@@ -37,59 +37,55 @@ public class LowerOuterArms extends CommandBase {
     rightClimber.enable();
     leftClimber.enable();
     resetCommand = false;
+    finishCommand = false;
 
-    rightClimber.setPosition(ClimberPosition.start);;
-    leftClimber.setPosition(ClimberPosition.start);
+    rightClimber.setPosition(ClimberPosition.bottom);
+    leftClimber.setPosition(ClimberPosition.bottom);
+
     tickCountLeft   = 0;
     tickCountRight = 0;
     SmartDashboard.putString("State", "Lower Outer Started");
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
-    // NOTE: be sure to account for negative arm positions
-// This function takes two arm positions and compares them to make sure the "compare" arm is within the MAX
-// differential position of the "other" arm.  This funtion will normalize the positions to account for negative values.
-// It returns TRUE if the value of the compare arm is out of bounds and FALSE if compare arm is in expected range.
   @Override
   public void execute() {
-    if (counter > 10) {
-      if (rightClimber.outputCurrent() > Constants.atStartValue) {
-        tickCountRight++;
-        if (tickCountRight > 5) 
-          rightClimber.setSetpoint(rightClimber.presentEncoderValue());
-      }
-      else tickCountRight = 0;
-      if (leftClimber.outputCurrent() > Constants.atStartValue) {
-        tickCountLeft++;
-        if (tickCountLeft > 5) 
-          leftClimber.setSetpoint(leftClimber.presentEncoderValue());
-      }
-      else tickCountLeft = 0;
-    }
+    //   // checks to see if the arm is on the bar based on current
+    //   if (rightClimber.outputCurrent() > Constants.atStartValue) {
+    //     // this counter is used to avoid current spikes
+    //     tickCountRight++;
+    //     if (tickCountRight > 25) 
+    //       // if the current is high for 5 ticks we assume we have hooked the bar and set the setpoint to the present position
+    //       rightClimber.setSetpoint(rightClimber.presentEncoderValue());
+    //   }
+    //   else tickCountRight = 0; // this resets the tick counter if we had a current spike
+    //   if (leftClimber.outputCurrent() > Constants.atStartValue) {
+    //     tickCountLeft++;
+    //     if (tickCountLeft > 25) 
+    //       leftClimber.setSetpoint(leftClimber.presentEncoderValue());
+    //   }
+    //   else tickCountLeft = 0;
 
-    counter++;
+    // if (rightClimber.atPosition() && leftClimber.atPosition()) {
+    //   double differential = rightClimber.outputCurrent() - leftClimber.outputCurrent();
 
-    if (rightClimber.atPosition() && leftClimber.atPosition()) {
-      double differential = rightClimber.outputCurrent() - leftClimber.outputCurrent();
-
-      if (((leftClimber.outputCurrent() + rightClimber.outputCurrent()) /2) < 1) {
-          rightClimber.setPosition(ClimberPosition.top);
-          leftClimber.setPosition(ClimberPosition.top);
-          resetCommand = true;
-      }
-      else {
-        if (differential < Constants.Max_Differential && differential > -1 * Constants.Max_Differential) {
-          rightClimber.setPosition(ClimberPosition.bottom);
-          leftClimber.setPosition(ClimberPosition.bottom);
-          resetCommand = true;
-        }
-        else {
-          rightClimber.setPosition(ClimberPosition.top);
-          leftClimber.setPosition(ClimberPosition.top);
-          resetCommand = true;
-        }
-      }
-    }
+      // if (((leftClimber.outputCurrent() + rightClimber.outputCurrent()) /2) < 5) {
+      //     rightClimber.setPosition(ClimberPosition.top);
+      //     leftClimber.setPosition(ClimberPosition.top);
+      //     resetCommand = true;
+      // }
+      // else {
+        // if (differential < Constants.Max_Differential && differential > -1 * Constants.Max_Differential) {
+        //   rightClimber.setPosition(ClimberPosition.bottom);
+        //   leftClimber.setPosition(ClimberPosition.bottom);
+        //   finishCommand = true;
+        // }
+        // else {
+        //   rightClimber.setPosition(ClimberPosition.top);
+        //   leftClimber.setPosition(ClimberPosition.top);
+        //   resetCommand = true;
+        //   SmartDashboard.putBoolean("thing", true);
+        // }
+    //}
   }
 
 
@@ -103,6 +99,10 @@ public class LowerOuterArms extends CommandBase {
       rightClimber.setSetpoint(rightClimber.presentEncoderValue());
       leftClimber.setSetpoint(leftClimber.presentEncoderValue());
     }
+
+    if (resetCommand) {
+      //RobotContainer.climbContinue = false;
+    }
     // rightClimber.disable();
     // leftClimber.disable();
     
@@ -112,6 +112,6 @@ public class LowerOuterArms extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return resetCommand;
+    return resetCommand || finishCommand;
   }
 }

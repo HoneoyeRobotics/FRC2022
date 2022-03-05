@@ -41,11 +41,11 @@ public class InnerLeftClimber extends PIDSubsystem {
     double setpoint = 0;
 
     switch(position){
-      case start:setpoint = Preferences.getDouble("InnerHooked?", 100);
+      case start:setpoint = Preferences.getDouble("InnerHooked?", Constants.InnerClimberStart);
       break;
-      case top:setpoint = Preferences.getDouble("InnerMax", 108);
+      case top:setpoint = Preferences.getDouble("InnerMax", Constants.InnerClimberTop);
         break;
-      case bottom:setpoint = Preferences.getDouble("InnerMin", 0);
+      case bottom:setpoint = Preferences.getDouble("InnerMin", Constants.InnerClimberBottom);
         break;
     }
       

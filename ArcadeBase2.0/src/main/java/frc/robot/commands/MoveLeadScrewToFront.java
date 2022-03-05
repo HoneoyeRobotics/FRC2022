@@ -6,6 +6,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.LeadScrew;
 
 public class MoveLeadScrewToFront extends CommandBase {
@@ -23,12 +25,16 @@ public class MoveLeadScrewToFront extends CommandBase {
   @Override
   public void initialize() {
     SmartDashboard.putString("State", "Move Lead Screw Started");
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_leadScrew.moveArms(speed);
+    //if (RobotContainer.climbContinue) {
+      m_leadScrew.moveArms(speed);
+    //}
+
   }
 
   // Called once the command ends or is interrupted.
@@ -43,6 +49,9 @@ public class MoveLeadScrewToFront extends CommandBase {
   @Override
   public boolean isFinished() {
 //    return (counter >= counterFinish);
-return m_leadScrew.armsFullyOut();
+    if (RobotContainer.climbContinue == false)
+      return true;
+    else
+      return m_leadScrew.armsFullyOut();
   }
 }

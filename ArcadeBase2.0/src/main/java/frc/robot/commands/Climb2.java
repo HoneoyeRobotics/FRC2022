@@ -23,8 +23,9 @@ public class Climb2 extends SequentialCommandGroup {
       Second it waits 2 seconds for robot to stabilize before lowering inner arms  for the final step of the climb
       */
     addCommands(
+      new ClimbContinue(),
       new EnablePID(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber),
-      new LowerOuterArms(outerRightClimber, outerLeftClimber),
+      new LowerOuterArms(outerRightClimber, outerLeftClimber).withTimeout(4),
       new MoveLeadScrewToFront(leadScrew, Constants.LeadScrewLowerSpeed).withTimeout(2),      
       new WaitCommand(2),
       new LowerInnerArms(innerRightClimber, innerLeftClimber)

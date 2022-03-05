@@ -56,11 +56,11 @@ public final class Constants {
     public static final double MaxRaiseCurrent = 15;
 
     public static final int CounterValue = 50;
-    public static final double ClimberStallVelocity = 10.0;
+    public static final double ClimberStallVelocity = -15.0;
 
     public static final double kpClimber = 0.2;
 
-    public static final double Max_Differential = 2;
+    public static final double Max_Differential = 8;
     public static final double CurrentDifferential = 5;
     public static final double atStartValue = 5;
     
@@ -73,4 +73,13 @@ public final class Constants {
     //TODO fix the leadScrew values above
 
     public enum ClimberPosition{top, bottom, start}
+    public static final double OuterClimberTop = 120;
+    public static final double OuterClimberBottom = 0;
+    public static final double OuterClimberStart = 80;
+    
+    public static final double InnerClimberTop = 115;
+    public static final double InnerClimberBottom = 0;
+    public static final double InnerClimberStart = 100;
+
+
 }
