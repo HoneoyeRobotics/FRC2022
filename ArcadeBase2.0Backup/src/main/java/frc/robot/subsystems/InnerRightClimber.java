@@ -30,22 +30,18 @@ public class InnerRightClimber extends PIDSubsystem {
     climberInnerRightMotor.getEncoder().setPosition(0);
   }
 
-  
-  public boolean atPosition() {
-    if((getSetpoint() <= (getMeasurement() + 1)) && (getSetpoint() >= (getMeasurement() - 1))) 
-      return true;
-    return false;
-  }
+  public void setPosition(int position) {
+    if (position < 0)
+      position = 0;
+    else if (position > 1)
+      position = 1;
 
-  public void setPosition(Constants.ClimberPosition position) {
     double setpoint = 0;
 
     switch(position){
-      case start:setpoint = Preferences.getDouble("InnerHooked?", 100);
-      break;
-      case top:setpoint = Preferences.getDouble("InnerMax", 108);
+      case 1:setpoint = Preferences.getDouble("InnerMax", 108);
         break;
-      case bottom:setpoint = Preferences.getDouble("InnerMin", 0);
+      case 0:setpoint = Preferences.getDouble("InnerMin", 0);
         break;
     }
       

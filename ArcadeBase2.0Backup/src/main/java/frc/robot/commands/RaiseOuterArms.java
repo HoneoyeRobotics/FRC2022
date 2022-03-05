@@ -7,7 +7,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.Constants.ClimberPosition;
 import frc.robot.subsystems.OuterLeftClimber;
 import frc.robot.subsystems.OuterRightClimber;
 
@@ -34,10 +33,9 @@ public class RaiseOuterArms extends CommandBase {
     rightClimber.enable();
     leftClimber.enable();
 
-    rightClimber.setPosition(ClimberPosition.top);
-    leftClimber.setPosition(ClimberPosition.top);
+    rightClimber.setPosition(1);
+    leftClimber.setPosition(1);
 
-    SmartDashboard.putString("State", "Raise Outer Arms Started");
     counter = 0;
   }
 
@@ -62,7 +60,6 @@ public class RaiseOuterArms extends CommandBase {
       leftClimber.runMotor(0, true);
     }
     counter = 0;
-    SmartDashboard.putString("State", "Raise Outer Arms Ended");
   }
 
   // Returns true when the command should end.

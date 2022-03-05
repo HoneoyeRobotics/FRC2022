@@ -7,19 +7,18 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.Constants.ClimberPosition;
-import frc.robot.subsystems.OuterLeftClimber;
-import frc.robot.subsystems.OuterRightClimber;
+import frc.robot.subsystems.InnerLeftClimber;
+import frc.robot.subsystems.InnerRightClimber;
 
-public class RaiseOuterArms extends CommandBase {
+public class RaiseInnerArms extends CommandBase {
 
-  private OuterRightClimber rightClimber;
-  private OuterLeftClimber leftClimber;
+  private InnerRightClimber rightClimber;
+  private InnerLeftClimber leftClimber;
   private boolean bombout = false;
   private int counter = 0;
 
   /** Creates a new RaiseRearArm. */
-  public RaiseOuterArms(OuterRightClimber rightClimber, OuterLeftClimber leftClimber) {
+  public RaiseInnerArms(InnerRightClimber rightClimber, InnerLeftClimber leftClimber) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(rightClimber);
     addRequirements(leftClimber);
@@ -34,10 +33,9 @@ public class RaiseOuterArms extends CommandBase {
     rightClimber.enable();
     leftClimber.enable();
 
-    rightClimber.setPosition(ClimberPosition.top);
-    leftClimber.setPosition(ClimberPosition.top);
+    rightClimber.setPosition(1);
+    leftClimber.setPosition(1);
 
-    SmartDashboard.putString("State", "Raise Outer Arms Started");
     counter = 0;
   }
 
@@ -49,7 +47,7 @@ public class RaiseOuterArms extends CommandBase {
        bombout = true;
       }
     }
-    SmartDashboard.putBoolean("BomboutOuter", bombout);
+    SmartDashboard.putBoolean("BomboutInner", bombout);
   }
 
   // Called once the command ends or is interrupted.
@@ -62,7 +60,6 @@ public class RaiseOuterArms extends CommandBase {
       leftClimber.runMotor(0, true);
     }
     counter = 0;
-    SmartDashboard.putString("State", "Raise Outer Arms Ended");
   }
 
   // Returns true when the command should end.

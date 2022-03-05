@@ -14,38 +14,35 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
 
-public class InnerRightClimber extends PIDSubsystem {
+public class OuterRightClimber extends PIDSubsystem {
   private boolean abortRaise = false;
-  private CANSparkMax climberInnerRightMotor;
-  /** Creates a new InnerRightClimber. */
-  public InnerRightClimber() {
+  private CANSparkMax climberOuterRightMotor;
+  /** Creates a new OuterRightClimber. */
+  public OuterRightClimber() {
     super(new PIDController(Constants.kpClimber, 0, 0));
-    climberInnerRightMotor = new CANSparkMax(Constants.CANID_ClimberRightInnerMotor, MotorType.kBrushless);
-    climberInnerRightMotor.setInverted(true);
-    climberInnerRightMotor.setIdleMode(IdleMode.kBrake);
+    climberOuterRightMotor = new CANSparkMax(Constants.CANID_ClimberRightOuterMotor, MotorType.kBrushless);
+    climberOuterRightMotor.setInverted(true);
+    climberOuterRightMotor.setIdleMode(IdleMode.kBrake);
     resetEncoders();
   }
 
   public void resetEncoders() {
-    climberInnerRightMotor.getEncoder().setPosition(0);
+    climberOuterRightMotor.getEncoder().setPosition(0);
   }
 
-  
-  public boolean atPosition() {
-    if((getSetpoint() <= (getMeasurement() + 1)) && (getSetpoint() >= (getMeasurement() - 1))) 
-      return true;
-    return false;
-  }
-
-  public void setPosition(Constants.ClimberPosition position) {
+  public void setPosition(int position) {
     double setpoint = 0;
+    
+    if (position < 0)
+      position = 0;
+    else if (position > 1)
+      position = 1;
+
 
     switch(position){
-      case start:setpoint = Preferences.getDouble("InnerHooked?", 100);
-      break;
-      case top:setpoint = Preferences.getDouble("InnerMax", 108);
+      case 1:setpoint = Preferences.getDouble("OuterMax", 108);
         break;
-      case bottom:setpoint = Preferences.getDouble("InnerMin", 0);
+      case 0:setpoint = Preferences.getDouble("OuterMin", 0);
         break;
     }
       
@@ -69,7 +66,7 @@ public class InnerRightClimber extends PIDSubsystem {
         retVal = true;
       }
     }
-    SmartDashboard.putString("InnerArmsLocation", direction);
+    SmartDashboard.putString("OuterArmsLocation", direction);
     return retVal;
   }
   
@@ -78,34 +75,34 @@ public class InnerRightClimber extends PIDSubsystem {
   }
 
   public boolean raiseCurrentBad() {
-    return (climberInnerRightMotor.getOutputCurrent() > Constants.MaxRaiseCurrent);
+    return (climberOuterRightMotor.getOutputCurrent() > Constants.MaxRaiseCurrent);
   }
 
   public boolean atBottomCurrent() {
-    return (climberInnerRightMotor.getOutputCurrent() > Constants.MaxCurrent);
+    return (climberOuterRightMotor.getOutputCurrent() > Constants.MaxCurrent);
   }
 
   public double outputCurrent() {
-    return climberInnerRightMotor.getOutputCurrent();
+    return climberOuterRightMotor.getOutputCurrent();
   }
 
   public double presentEncoderValue() {
-    return climberInnerRightMotor.getEncoder().getPosition();
+    return climberOuterRightMotor.getEncoder().getPosition();
   }
 
   public double velocity() {
     //returns RPMs of motor
-    return climberInnerRightMotor.getEncoder().getVelocity();
+    return climberOuterRightMotor.getEncoder().getVelocity();
   }
 
-  // NOTE: THIS will handle negative arm positions and adjust Max_Differential if needed
-  // This function takes the current susbystem arm position and compare it to the "Other arm" position that is passed in
-  // It will evaluate if THIS subsystems arm position is within the MAX differential position of the "Other" arm (compare arm).  
-  // It returns TRUE if the value of this subsystems arm is out of bounds and FALSE if compare arm is in expected range.
+// NOTE: THIS will handle negative arm positions and adjust Max_Differential if needed
+// This function takes the current susbystem arm position and compare it to the "Other arm" position that is passed in
+// It will evaluate if THIS subsystems arm position is within the MAX differential position of the "Other" arm (compare arm).  
+// It returns TRUE if the value of this subsystems arm is out of bounds and FALSE if compare arm is in expected range.
   public boolean Arm_Postion_Too_Low(double Other_Arm_Position, double Max_Differential_Count) {
     // Normalize Max Differential if it is negative
     double md_count = (Max_Differential_Count < 0.0) ? (Max_Differential_Count * -1) : Max_Differential_Count;
-    if ( (climberInnerRightMotor.getEncoder().getPosition() + md_count) < Other_Arm_Position )
+    if ( (climberOuterRightMotor.getEncoder().getPosition() + md_count) < Other_Arm_Position )
       return (true);
     else
       return (false);
@@ -116,21 +113,21 @@ public class InnerRightClimber extends PIDSubsystem {
     // Use the output here
     if(abortRaise) output = 0;
 
-    climberInnerRightMotor.set(output);
+    climberOuterRightMotor.set(output);
   }
 
   @Override
   public double getMeasurement() {
     // Return the process variable measurement here
-    SmartDashboard.putNumber("CRICurrent", climberInnerRightMotor.getOutputCurrent());
-    SmartDashboard.putNumber("CRIEncoder", climberInnerRightMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("CROEncoder", climberOuterRightMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("CROCurrent", climberOuterRightMotor.getOutputCurrent());
 
-    return climberInnerRightMotor.getEncoder().getPosition();
+    return climberOuterRightMotor.getEncoder().getPosition();
   }
 
   public void runMotor(double speed, boolean run){
     if(run == true)
-      climberInnerRightMotor.set(speed);
+      climberOuterRightMotor.set(speed);
       SmartDashboard.putNumber("OuterArmsPower", speed);
   }
 }

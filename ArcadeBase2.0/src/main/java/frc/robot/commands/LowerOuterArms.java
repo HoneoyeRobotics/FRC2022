@@ -7,16 +7,18 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ClimberPosition;
 import frc.robot.subsystems.OuterLeftClimber;
 import frc.robot.subsystems.OuterRightClimber;
+import frc.robot.Constants;
 
 public class LowerOuterArms extends CommandBase {
 
   private OuterRightClimber rightClimber;
   private OuterLeftClimber leftClimber;
-  //private boolean bombout = false;
-  private int tickCountRight=11;
-  private int tickCountLeft=11;
+  private boolean resetCommand = false;
+  private static int tickCountRight = 11;
+  private static int tickCountLeft = 11;
 
   /** Creates a new RaiseRearArm. */
   public LowerOuterArms(OuterRightClimber rightClimber, OuterLeftClimber leftClimber) {
@@ -33,9 +35,10 @@ public class LowerOuterArms extends CommandBase {
   public void initialize() {
     rightClimber.enable();
     leftClimber.enable();
+    resetCommand = false;
 
-    rightClimber.setPosition(0);
-    leftClimber.setPosition(0);
+    rightClimber.setPosition(ClimberPosition.start);;
+    leftClimber.setPosition(ClimberPosition.start);
     tickCountLeft   = 0;
     tickCountRight = 0;
     SmartDashboard.putString("State", "Lower Outer Started");
@@ -48,69 +51,20 @@ public class LowerOuterArms extends CommandBase {
 // It returns TRUE if the value of the compare arm is out of bounds and FALSE if compare arm is in expected range.
   @Override
   public void execute() {
-    //these are resetting every time the loop executes, moved to initializer --kjr
-    // // initialize tick values so first crack at lowering arms doesn't cause current comparison
-    //   tickCountRight=11;
-    //   tickCountLeft=11;
-    
-    // RIGHT ARM lower logic
-    // Check is right arm is too much lower than left arm.
-    if ( rightClimber.Arm_Postion_Too_Low(leftClimber.presentEncoderValue(), Constants.Max_Differential) ) {
-      // pause PID for RIGHT arm at the current position
-      rightClimber.setSetpoint(rightClimber.presentEncoderValue());
-      tickCountRight = 0;
-    }
-    else {
-      // ONCE tickCount expires, evaluate the motor currents
-      // if they are within a sane range, then resume PID for RIGHT arm to the original setpoint for climb (0)
-                      // if they are not in a sane range, then keep the PID setpoint where it is and stop evaluting motor currents
-      // (basically, freeze the arm where it is until some other command changes PID setpoint)
-      if ( tickCountRight < 10 )
-        ++tickCountRight;
-      else {
-        // Once tickCount is reached, evaluate current on left and right arms to make sure they are both loaded
-        // if left arm is not under loadloaded, DO NOT change setpoint for RIGHT arm
-        // if left arm is under load, then it is OK to reinitialize RIGHT arm setpoint
-        // use tickCount to only do this evaluation one time
-        if ( tickCountRight == 10 ) {
-          ++tickCountRight;  // this will stop this code from running more than once
-          //      If they are similiar, reset the setpoint
-          if ( leftClimber.outputCurrent() >= rightClimber.outputCurrent() - 5 )
-            rightClimber.setSetpoint(rightClimber.getSetpoint());   // this releases the PID to start tracking to setpoint again
-            //updated above to get setpoint rather than 0.. -kjr
-        }
+    if (rightClimber.atPosition() && leftClimber.atPosition()) {
+      double differential = rightClimber.outputCurrent() - leftClimber.outputCurrent();
+      if (differential < Constants.Max_Differential && differential > -1 * Constants.Max_Differential) {
+        rightClimber.setPosition(ClimberPosition.bottom);
+        leftClimber.setPosition(ClimberPosition.bottom);
+        resetCommand = true;
       }
-    } // RIGHT arm lower logic
-    
-    // LEFT ARM lower logic
-    // Check is Left arm is too much lower than Right arm.
-    if ( leftClimber.Arm_Postion_Too_Low(rightClimber.presentEncoderValue(), Constants.Max_Differential) ) {
-      // pause PID for LEFT arm at the current position
-      leftClimber.setSetpoint(leftClimber.presentEncoderValue());
-      tickCountLeft = 0;
-    }
-    else {
-      // ONCE tickCount expires, evaluate the motor currents
-      // if they are within a sane range, then resume PID for LEFT arm to the original setpoint for climb (0)
-      // if they are not in a sane range, then keep the PID setpoint where it is and stop evaluting motor currents
-      // (basically, freeze the arm where it is until some other command changes PID setpoint)
-      if ( tickCountLeft < 10 )
-        ++tickCountLeft;
       else {
-        // Once tickCount is reached, evaluate current on left and right arms to make sure they are both loaded
-        // if right arm is not under load, DO NOT change setpoint for LEFT arm
-        // if rigth arm is under load, then it is OK to reinitialize LEFT arm setpoint
-        // use tickCount to only do this evaluation one time
-        if ( tickCountLeft == 10 ) {
-          ++tickCountLeft;  // this will stop this code from running more than once
-          //      If they are similiar, reset the setpoint
-          if ( rightClimber.outputCurrent() >= leftClimber.outputCurrent() - 5 )  // you need to write a function or do logic for this
-            leftClimber.setSetpoint(leftClimber.getSetpoint());   // this releases the PID to start tracking to setpoint again
-            //updated above to get setpoint rather than 0.. -kjr
-        }
+        rightClimber.setPosition(ClimberPosition.top);
+        leftClimber.setPosition(ClimberPosition.top);
+        resetCommand = true;
       }
-    }  // LEFT arm lower logic
-  }  // execute (for Lower Arms command)
+    }
+  }
 
 
 
@@ -119,17 +73,19 @@ public class LowerOuterArms extends CommandBase {
   public void end(boolean interrupted) {
     // Set PID setpoint to current position, then disable PIDs
     // This will keep robot stationary if the PIDs get enabled again without resetting postion
-    rightClimber.setSetpoint(rightClimber.presentEncoderValue());
-    leftClimber.setSetpoint(leftClimber.presentEncoderValue());
+    if (interrupted) {
+      rightClimber.setSetpoint(rightClimber.presentEncoderValue());
+      leftClimber.setSetpoint(leftClimber.presentEncoderValue());
+    }
     // rightClimber.disable();
     // leftClimber.disable();
     
-    SmartDashboard.putString("State", "Lower Outer ENded");
+    SmartDashboard.putString("State", "Lower Outer Ended");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return leftClimber.atSetPoint(false) && rightClimber.atSetPoint(false);
+    return resetCommand;
   }
 }

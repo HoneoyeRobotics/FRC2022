@@ -60,16 +60,13 @@ public final class Constants {
 
     public static final double kpClimber = 0.2;
 
-    public static final double Max_Differential = 2;
-    public static final double CurrentDifferential = 5;
+    public static final double Max_Differential = 10;
     
     //Speed and counter stop for leadscrew during rasing command group(Climb1)
-    public static final double LeadScrewRaiseSpeed = -0.5;
+    public static final double LeadScrewRaiseSpeed = 0.5;
     public static final int LeadScrewRaiseCounter = 50;
     //Speed and counter stop for leadscrew during Loweringing command group(Climb2)
-    public static final double LeadScrewLowerSpeed = -1.0;
+    public static final double LeadScrewLowerSpeed = 0.5;
     public static final int LeadScrewLowerCounter = 50;
     //TODO fix the leadScrew values above
-
-    public enum ClimberPosition{top, bottom, start}
 }

@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ClimberPosition;
 import frc.robot.subsystems.InnerLeftClimber;
 import frc.robot.subsystems.InnerRightClimber;
 
@@ -33,8 +34,8 @@ public class RaiseInnerArms extends CommandBase {
     rightClimber.enable();
     leftClimber.enable();
 
-    rightClimber.setPosition(1);
-    leftClimber.setPosition(1);
+    rightClimber.setPosition(ClimberPosition.top);
+    leftClimber.setPosition(ClimberPosition.top);
 
     counter = 0;
   }

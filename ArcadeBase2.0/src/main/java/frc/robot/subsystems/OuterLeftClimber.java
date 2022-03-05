@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
 
+
 public class OuterLeftClimber extends PIDSubsystem {
   private boolean abortRaise = false;
   private CANSparkMax climberOuterLeftMotor;
@@ -26,22 +27,26 @@ public class OuterLeftClimber extends PIDSubsystem {
     resetEncoders();
   }
 
+
   public void resetEncoders() {
     climberOuterLeftMotor.getEncoder().setPosition(0);
   }
 
-  public void setPosition(int position) {
-    if (position < 0)
-      position = 0;
-    else if (position > 1)
-      position = 1;
+  public boolean atPosition() {
+    if((getSetpoint() <= (getMeasurement() + 1)) && (getSetpoint() >= (getMeasurement() - 1))) 
+      return true;
+    return false;
+  }
 
+  public void setPosition(Constants.ClimberPosition position) {
     double setpoint = 0;
-
+  
     switch(position){
-      case 1:setpoint = Preferences.getDouble("OuterMax", 108);
+      case start:setpoint = Preferences.getDouble("OuterHooked?", 100);
         break;
-      case 0:setpoint = Preferences.getDouble("OuterMin", 0);
+      case top: setpoint = Preferences.getDouble("OuterMax", 108);
+        break;
+      case bottom:setpoint = Preferences.getDouble("OuterMin", 0);
         break;
     }
       
