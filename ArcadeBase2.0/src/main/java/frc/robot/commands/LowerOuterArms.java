@@ -19,6 +19,7 @@ public class LowerOuterArms extends CommandBase {
   private boolean resetCommand = false;
   private static int tickCountRight = 11;
   private static int tickCountLeft = 11;
+  private static int counter = 11;
 
   /** Creates a new RaiseRearArm. */
   public LowerOuterArms(OuterRightClimber rightClimber, OuterLeftClimber leftClimber) {
@@ -51,17 +52,42 @@ public class LowerOuterArms extends CommandBase {
 // It returns TRUE if the value of the compare arm is out of bounds and FALSE if compare arm is in expected range.
   @Override
   public void execute() {
+    if (counter > 10) {
+      if (rightClimber.outputCurrent() > Constants.atStartValue) {
+        tickCountRight++;
+        if (tickCountRight > 5) 
+          rightClimber.setSetpoint(rightClimber.presentEncoderValue());
+      }
+      else tickCountRight = 0;
+      if (leftClimber.outputCurrent() > Constants.atStartValue) {
+        tickCountLeft++;
+        if (tickCountLeft > 5) 
+          leftClimber.setSetpoint(leftClimber.presentEncoderValue());
+      }
+      else tickCountLeft = 0;
+    }
+
+    counter++;
+
     if (rightClimber.atPosition() && leftClimber.atPosition()) {
       double differential = rightClimber.outputCurrent() - leftClimber.outputCurrent();
-      if (differential < Constants.Max_Differential && differential > -1 * Constants.Max_Differential) {
-        rightClimber.setPosition(ClimberPosition.bottom);
-        leftClimber.setPosition(ClimberPosition.bottom);
-        resetCommand = true;
+
+      if (((leftClimber.outputCurrent() + rightClimber.outputCurrent()) /2) < 1) {
+          rightClimber.setPosition(ClimberPosition.top);
+          leftClimber.setPosition(ClimberPosition.top);
+          resetCommand = true;
       }
       else {
-        rightClimber.setPosition(ClimberPosition.top);
-        leftClimber.setPosition(ClimberPosition.top);
-        resetCommand = true;
+        if (differential < Constants.Max_Differential && differential > -1 * Constants.Max_Differential) {
+          rightClimber.setPosition(ClimberPosition.bottom);
+          leftClimber.setPosition(ClimberPosition.bottom);
+          resetCommand = true;
+        }
+        else {
+          rightClimber.setPosition(ClimberPosition.top);
+          leftClimber.setPosition(ClimberPosition.top);
+          resetCommand = true;
+        }
       }
     }
   }

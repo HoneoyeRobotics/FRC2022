@@ -62,6 +62,7 @@ public final class Constants {
 
     public static final double Max_Differential = 2;
     public static final double CurrentDifferential = 5;
+    public static final double atStartValue = 5;
     
     //Speed and counter stop for leadscrew during rasing command group(Climb1)
     public static final double LeadScrewRaiseSpeed = -0.5;
