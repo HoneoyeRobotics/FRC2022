@@ -25,9 +25,9 @@ public class Climb2 extends SequentialCommandGroup {
     addCommands(
       new ClimbContinue(),
       new EnablePID(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber),
-      new LowerOuterArms(outerRightClimber, outerLeftClimber).withTimeout(4),
-      new MoveLeadScrewToFront(leadScrew, Constants.LeadScrewLowerSpeed).withTimeout(2),      
-      new WaitCommand(2),
+      new LowerOuterArms(outerRightClimber, outerLeftClimber).withTimeout(3),
+      new MoveLeadScrewToFront(leadScrew, Constants.LeadScrewLowerSpeed).withTimeout(6.5),      
+      new WaitCommand(1.5),
       new LowerInnerArms(innerRightClimber, innerLeftClimber)
     );
   }

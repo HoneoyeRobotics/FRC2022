@@ -52,6 +52,6 @@ public class MoveLeadScrewToFront extends CommandBase {
     if (RobotContainer.climbContinue == false)
       return true;
     else
-      return m_leadScrew.armsFullyOut();
+      return m_leadScrew.armsAtFront();
   }
 }

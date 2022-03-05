@@ -27,7 +27,7 @@ public class Climb1 extends SequentialCommandGroup {
       new ParallelCommandGroup(
       new RaiseOuterArms(outerRightClimber, outerLeftClimber),
       new RaiseInnerArms(innerRightClimber, innerLeftClimber),
-      new MoveLeadScrew(leadScrew, Constants.LeadScrewRaiseSpeed, Constants.LeadScrewRaiseCounter).withTimeout(1.5)
+      new MoveLeadScrew(leadScrew, Constants.LeadScrewRaiseSpeed, Constants.LeadScrewRaiseCounter).withTimeout(3)
     ));
   }
 }

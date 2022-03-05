@@ -24,8 +24,8 @@ public class LeadScrew extends SubsystemBase {
   public LeadScrew() { 
 
     leadScrewMotor = new TalonSRX(Constants.CANID_LeadScrewMotor);
-    frontLimitSwitch = new DigitalInput(Constants.DIO_RearLimitSwitch);
-    rearLimitSwitch = new DigitalInput(Constants.DIO_FrontLimitSwitch);
+    frontLimitSwitch = new DigitalInput(Constants.DIO_FrontLimitSwitch);
+    rearLimitSwitch = new DigitalInput(Constants.DIO_RearLimitSwitch);
 
   }
 
@@ -34,16 +34,16 @@ public class LeadScrew extends SubsystemBase {
     leadScrewMotor.setSelectedSensorPosition(0);
   }
 
-  public boolean armsFullyIn() {
-    SmartDashboard.putBoolean("AtFront", rearLimitSwitch.get());
+  public boolean armsAtBack() {
+    //SmartDashboard.putBoolean("AtFront", rearLimitSwitch.get());
     return rearLimitSwitch.get();
     // double leadScrewEncoder = leadScrewMotor.getSelectedSensorPosition();
     // return (leadScrewEncoder + Constants.ArmHorizontalEncoderDeadband <= 0)
     //     || (leadScrewEncoder - Constants.ArmHorizontalEncoderDeadband <= 0);
   }
 
-  public boolean armsFullyOut() {
-    SmartDashboard.putBoolean("AtRear", frontLimitSwitch.get());
+  public boolean armsAtFront() {
+    //SmartDashboard.putBoolean("FrontTripped", frontLimitSwitch.get());
     return frontLimitSwitch.get();
     // double leadScrewEncoder = leadScrewMotor.getSelectedSensorPosition();
     // return (Constants.ArmHorizontalEncoderMaxValue <= leadScrewEncoder + Constants.ArmHorizontalEncoderDeadband)
@@ -61,7 +61,7 @@ public class LeadScrew extends SubsystemBase {
   // }
 
   public void moveArms(double speed) {
-    if (speed > 0 && armsFullyOut() || (speed < 0 && armsFullyIn())) {
+    if ((speed < 0 && armsAtFront()) || (speed > 0 && armsAtBack())) {
       speed = 0;
     }
     leadScrewMotor.set(ControlMode.PercentOutput, speed);
@@ -72,7 +72,9 @@ public class LeadScrew extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     // SmartDashboard.putNumber("LSMCurrent", leadScrewMotor.getStatorCurrent());
-    // armsFullyIn();
-    // armsFullyOut();
+    // armsAtBack();
+    // armsAtFront();
+    // SmartDashboard.putBoolean("FrontTripped", frontLimitSwitch.get());
+    // SmartDashboard.putBoolean("RearTripped", rearLimitSwitch.get());
   }
 }

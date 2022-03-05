@@ -14,8 +14,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 // import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.commands.SwapDriving;
 
 public class subDriveTrainArcade extends SubsystemBase {
   // declare motors for drivetrain
@@ -26,6 +28,7 @@ public class subDriveTrainArcade extends SubsystemBase {
   private MotorControllerGroup driveRightMotorGroup;
   private MotorControllerGroup driveLeftMotorGroup;
 
+  private boolean driveReverse = false;
   private DifferentialDrive driveMotors;
 	// public UsbCamera frontCamera;
 	// public UsbCamera rearCamera;
@@ -59,6 +62,16 @@ public class subDriveTrainArcade extends SubsystemBase {
     // rearCamera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
   }
 
+  public void setReverse(boolean reverse){
+    driveReverse = reverse;
+    SmartDashboard.putBoolean("driveReverse", driveReverse);
+  }
+
+  
+  public boolean getReverse(){
+    SmartDashboard.putBoolean("driveReverse", driveReverse);
+    return driveReverse;
+  }
   // public void switchCamera(){
   //   if(UseFrontCamera){
   //     UseFrontCamera = false;

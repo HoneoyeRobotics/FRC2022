@@ -44,6 +44,8 @@ public class DriveRobotArcade extends CommandBase {
     tempZ = tempZ * .8;
     zRotation = tempZ * tempZ * ((tempZ < 0) ? -1 : 1);
     
+    if(drivetrain.getReverse() == true)
+    xSpeed = xSpeed * -1;
     //not sure why it needs to be inverted
     drivetrain.drive(zRotation, xSpeed); 
   }
