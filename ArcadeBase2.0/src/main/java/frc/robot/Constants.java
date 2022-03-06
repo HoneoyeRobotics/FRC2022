@@ -42,6 +42,8 @@ public final class Constants {
     public static final int AXIS_RightStickY =  5;
 
     public static final double MaxClimberOutput = 0.75;
+    
+    public static final double MaxClimberCurrent = 20;
     public static final double ArmVerticalEncoderDeadband = 0;
     public static final double ArmVerticalJoystickEncoderMovement = 1;
 
@@ -72,7 +74,7 @@ public final class Constants {
     public static final int LeadScrewLowerCounter = 50;
     //TODO fix the leadScrew values above
 
-    public enum ClimberPosition{top, bottom, start}
+    public enum ClimberPosition{top, bottom, start, last}
     public static final double OuterClimberTop = 120;
     public static final double OuterClimberBottom = 0;
     public static final double OuterClimberStart = 80;

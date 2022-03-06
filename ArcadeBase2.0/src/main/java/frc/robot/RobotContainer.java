@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -21,10 +22,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   
-  private InnerRightClimber innerRightClimber;
-  private InnerLeftClimber innerLeftClimber;
-  private OuterRightClimber outerRightClimber;
-  private OuterLeftClimber outerLeftClimber;
+  public InnerRightClimber innerRightClimber;
+  public InnerLeftClimber innerLeftClimber;
+  public OuterRightClimber outerRightClimber;
+  public OuterLeftClimber outerLeftClimber;
   private LeadScrew leadScrew;
   public static Boolean climbContinue = false;
   public CamerasAndNavX camerasAndNavX;
@@ -52,37 +53,29 @@ public class RobotContainer {
     () -> driverJoystick.getRawAxis(Constants.AXIS_LeftTrigger),
     () -> driverJoystick.getRawAxis(Constants.AXIS_LeftStickX)));
 
-    leadScrew.setDefaultCommand(new DefaultLeadScrew(leadScrew, 
-    () -> coDriverJoystick.getRawAxis(4)));
+    Shuffleboard.getTab("Pit").add(new DefaultLeadScrew(leadScrew, 
+      () -> coDriverJoystick.getRawAxis(4)));
 
-    outerLeftClimber.setDefaultCommand(new DefaultOuterArms(outerRightClimber, outerLeftClimber,
-      () -> coDriverJoystick.getRawAxis(Constants.AXIS_RightStickY) * -1,
-      () -> coDriverJoystick.getRawButton(7),
-      () -> coDriverJoystick.getRawButton(8)));
-          
-    outerRightClimber.setDefaultCommand(new DefaultOuterArms(outerRightClimber, outerLeftClimber,
+    Shuffleboard.getTab("Pit").add(new DefaultOuterArms(outerRightClimber, outerLeftClimber,
       () -> coDriverJoystick.getRawAxis(Constants.AXIS_RightStickY) * -1,
       () -> coDriverJoystick.getRawButton(7),
       () -> coDriverJoystick.getRawButton(8)));
 
-    innerLeftClimber.setDefaultCommand(new DefaultInnerArms(innerRightClimber, innerLeftClimber,
-      () -> coDriverJoystick.getRawAxis(Constants.AXIS_LeftStickY) * -1,
-      () -> coDriverJoystick.getRawButton(7),
-      () -> coDriverJoystick.getRawButton(8)));
-      
-    innerRightClimber.setDefaultCommand(new DefaultInnerArms(innerRightClimber, innerLeftClimber,
+    Shuffleboard.getTab("Pit").add(new DefaultInnerArms(innerRightClimber, innerLeftClimber,
       () -> coDriverJoystick.getRawAxis(Constants.AXIS_LeftStickY) * -1,
       () -> coDriverJoystick.getRawButton(7),
       () -> coDriverJoystick.getRawButton(8)));
     
     //SmartDashboard.putData(new ResetEncoders(innerRightClimber, innerLeftClimber, outerRightClimber, outerLeftClimber));
-    SmartDashboard.putData(new RaiseOuterArms(outerRightClimber, outerLeftClimber));
-    SmartDashboard.putData(new LowerOuterArms(outerRightClimber, outerLeftClimber));
-    SmartDashboard.putData(new RaiseInnerArms(innerRightClimber, innerLeftClimber));
-    SmartDashboard.putData(new LowerInnerArms(innerRightClimber, innerLeftClimber));
-    SmartDashboard.putData(new EnablePID(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber));
-    SmartDashboard.putData(new DisablePID(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber));
-    SmartDashboard.putData(new ResetArms(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber));
+    Shuffleboard.getTab("Pit").add(new RaiseOuterArms(outerRightClimber, outerLeftClimber));
+    Shuffleboard.getTab("Pit").add(new LowerOuterArms(outerRightClimber, outerLeftClimber));
+    Shuffleboard.getTab("Pit").add(new RaiseInnerArms(innerRightClimber, innerLeftClimber));
+    Shuffleboard.getTab("Pit").add(new LowerInnerArms(innerRightClimber, innerLeftClimber));
+    Shuffleboard.getTab("Pit").add(new EnablePID(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber));
+    Shuffleboard.getTab("Pit").add(new DisablePID(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber));
+    Shuffleboard.getTab("Pit").add(new ResetArms(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber));
+    
+    Shuffleboard.getTab("Pit").add(new Auto1(m_DriveTrainArcade, m_ball));
     //SmartDashboard.putData(new  GetMeasurement(innerRightClimber, innerLeftClimber, outerRightClimber, outerLeftClimber));
 
     // SmartDashboard.putData(m_ball);
@@ -106,18 +99,13 @@ public class RobotContainer {
     
   private void configureDriverJoystick() {
     // JoystickButton buttonA = new JoystickButton(driverJoystick, 1);
-    JoystickButton buttonB = new JoystickButton(driverJoystick, 2);
     // JoystickButton buttonX = new JoystickButton(driverJoystick, 3);
     // JoystickButton buttonY = new JoystickButton(driverJoystick, 4);
+    JoystickButton buttonB = new JoystickButton(driverJoystick, 2);
     JoystickButton buttonBack = new JoystickButton(driverJoystick, 7);
     JoystickButton buttonStart = new JoystickButton(driverJoystick, 8);
-buttonB.whenPressed(new SwapDriving(m_DriveTrainArcade, camerasAndNavX));
-    // buttonY.whenPressed(new RaiseOuterArms(outerRightClimber, outerLeftClimber));
-    // buttonB.whenPressed(new LowerOuterArms(outerRightClimber, outerLeftClimber));
 
-    // buttonX.whenPressed(new RaiseInnerArms(innerRightClimber, innerLeftClimber));
-    // buttonA.whenPressed(new LowerInnerArms(innerRightClimber, innerLeftClimber));
-
+    buttonB.whenPressed(new SwapDriving(m_DriveTrainArcade, camerasAndNavX));
     buttonBack.whenPressed(new UseFrontCamera(camerasAndNavX));
     buttonStart.whenPressed(new UseClimbCamera(camerasAndNavX));
   }
@@ -130,6 +118,8 @@ buttonB.whenPressed(new SwapDriving(m_DriveTrainArcade, camerasAndNavX));
     JoystickButton buttonY = new JoystickButton(coDriverJoystick, 4);
     JoystickButton leftBumper = new JoystickButton(coDriverJoystick, 5);
     JoystickButton rightBumper = new JoystickButton(coDriverJoystick, 6);
+    JoystickButton buttonBack = new JoystickButton(coDriverJoystick, 7);
+    JoystickButton buttonStart = new JoystickButton(coDriverJoystick, 8);
 
     buttonA.whileHeld(new ShootBall(m_ball)); 
     leftBumper.whileHeld(new FeedBalls(m_ball));
@@ -138,6 +128,9 @@ buttonB.whenPressed(new SwapDriving(m_DriveTrainArcade, camerasAndNavX));
     
     buttonX.whenPressed(new Climb1(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber, leadScrew));
     buttonY.whenPressed(new Climb2(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber, leadScrew));
+
+    buttonBack.whenPressed(new Climb3(outerLeftClimber, outerRightClimber, leadScrew));
+    buttonStart.whenPressed(new Climb4(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber));
   }
   private void configureButtonBindings() {
     configureCoDriverJoystick();
@@ -151,6 +144,6 @@ buttonB.whenPressed(new SwapDriving(m_DriveTrainArcade, camerasAndNavX));
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new FeedAndShootBalls(m_ball);
+    return new Auto1(m_DriveTrainArcade, m_ball);
   }
 }

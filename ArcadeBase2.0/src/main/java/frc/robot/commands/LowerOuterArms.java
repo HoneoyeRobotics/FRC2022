@@ -49,6 +49,16 @@ public class LowerOuterArms extends CommandBase {
 
   @Override
   public void execute() {
+
+    // if (rightClimber.presentEncoderValue() < 10) {
+    //   if (rightClimber.outputCurrent() > Constants.MaxClimberCurrent) 
+    //     rightClimber.setSetpoint(rightClimber.presentEncoderValue() + 1);
+    // }   
+    // if (leftClimber.presentEncoderValue() < 10) {
+    //   if (leftClimber.outputCurrent() > Constants.MaxClimberCurrent) 
+    //     leftClimber.setSetpoint(leftClimber.presentEncoderValue() + 1);
+    // }
+
     //   // checks to see if the arm is on the bar based on current
     //   if (rightClimber.outputCurrent() > Constants.atStartValue) {
     //     // this counter is used to avoid current spikes
@@ -112,6 +122,6 @@ public class LowerOuterArms extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return resetCommand || finishCommand;
+    return false;
   }
 }

@@ -48,6 +48,8 @@ public class OuterLeftClimber extends PIDSubsystem {
         break;
       case bottom:setpoint = Preferences.getDouble("OuterMin", Constants.OuterClimberBottom);
         break;
+      case last:setpoint = Preferences.getDouble("OuterLast", 30);
+        break;
     }
       
     setSetpoint(setpoint);

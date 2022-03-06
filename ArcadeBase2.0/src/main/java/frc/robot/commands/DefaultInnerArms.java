@@ -37,7 +37,8 @@ private BooleanSupplier rightOnly;
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //innerPosition = innerClimber.getSetpoint();
+    innerRightClimber.disable();
+    innerLeftClimber.disable();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -62,6 +63,9 @@ private BooleanSupplier rightOnly;
     if(innerRightClimber.isEnabled() == false && innerLeftClimber.isEnabled() == false)
       innerRightClimber.runMotor(0, true);
       innerLeftClimber.runMotor(0, true);
+
+    innerRightClimber.setSetpoint(innerRightClimber.presentEncoderValue());
+    innerLeftClimber.setSetpoint(innerLeftClimber.presentEncoderValue());
   }
 
   // Returns true when the command should end.

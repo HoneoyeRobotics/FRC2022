@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
@@ -25,10 +26,17 @@ public class Climb2 extends SequentialCommandGroup {
     addCommands(
       new ClimbContinue(),
       new EnablePID(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber),
-      new LowerOuterArms(outerRightClimber, outerLeftClimber).withTimeout(3),
-      new MoveLeadScrewToFront(leadScrew, Constants.LeadScrewLowerSpeed).withTimeout(6.5),      
-      new WaitCommand(1.5),
-      new LowerInnerArms(innerRightClimber, innerLeftClimber)
+      new LowerOuterArms(outerRightClimber, outerLeftClimber).withTimeout(3.5),
+      new LockSetpoints(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber),
+      new MoveLeadScrewToFront(leadScrew, Constants.LeadScrewLowerSpeed).withTimeout(8),      
+      new WaitCommand(2),
+      new ParallelCommandGroup(
+        new LowerInnerArms(innerRightClimber, innerLeftClimber).withTimeout(6),
+        new SequentialCommandGroup(
+          new WaitCommand(.75),
+          new LastOuterArms(outerRightClimber, outerLeftClimber).withTimeout(4) 
+      )),
+      new LockSetpoints(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber)
     );
   }
 }

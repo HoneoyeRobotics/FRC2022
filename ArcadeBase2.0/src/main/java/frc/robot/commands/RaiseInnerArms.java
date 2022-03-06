@@ -43,12 +43,12 @@ public class RaiseInnerArms extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(counter++ >= Constants.CounterValue) {
-      if(rightClimber.raiseCurrentBad() || leftClimber.raiseCurrentBad()) {
-       bombout = true;
-      }
-    }
-    SmartDashboard.putBoolean("BomboutInner", bombout);
+    // if(counter++ >= Constants.CounterValue) {
+    //   if(rightClimber.raiseCurrentBad() || leftClimber.raiseCurrentBad()) {
+    //    bombout = true;
+    //   }
+    // }
+    // SmartDashboard.putBoolean("BomboutInner", bombout);
   }
 
   // Called once the command ends or is interrupted.

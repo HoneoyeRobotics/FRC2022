@@ -50,19 +50,14 @@ public class LowerInnerArms extends CommandBase {
 
   @Override
   public void execute() {
-    // if (rightClimber.atPosition() && leftClimber.atPosition()) {
-    //   double differential = rightClimber.outputCurrent() - leftClimber.outputCurrent();
-    //   if (differential < Constants.Max_Differential && differential > -1 * Constants.Max_Differential) {
-    //     rightClimber.setPosition(ClimberPosition.bottom);
-    //     leftClimber.setPosition(ClimberPosition.bottom);
-    //     resetCommand = true;
-    //   }
-    //   else {
-    //     rightClimber.setPosition(ClimberPosition.top);
-    //     leftClimber.setPosition(ClimberPosition.top);
-    //     resetCommand = true;
-    //   }
-    // }
+    if (rightClimber.presentEncoderValue() < 10) {
+      if (rightClimber.outputCurrent() > Constants.MaxClimberCurrent) 
+        rightClimber.setSetpoint(rightClimber.presentEncoderValue() + 1);
+    }   
+    if (leftClimber.presentEncoderValue() < 10) {
+      if (leftClimber.outputCurrent() > Constants.MaxClimberCurrent) 
+        leftClimber.setSetpoint(leftClimber.presentEncoderValue() + 1);
+    }
   }
   // Called once the command ends or is interrupted.
   @Override
@@ -78,6 +73,6 @@ public class LowerInnerArms extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

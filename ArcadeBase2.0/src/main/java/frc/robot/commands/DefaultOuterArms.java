@@ -38,6 +38,8 @@ private BooleanSupplier rightOnly;
   @Override
   public void initialize() {
     //outerPosition = outerClimber.getSetpoint();
+    outerRightClimber.disable();
+    outerLeftClimber.disable();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -62,6 +64,9 @@ private BooleanSupplier rightOnly;
     if(outerRightClimber.isEnabled() == false && outerLeftClimber.isEnabled() == false)
       outerRightClimber.runMotor(0, true);
       outerLeftClimber.runMotor(0, true);
+
+    outerLeftClimber.setSetpoint(outerLeftClimber.presentEncoderValue());
+    outerRightClimber.setSetpoint(outerRightClimber.presentEncoderValue());
   }
 
   // Returns true when the command should end.
