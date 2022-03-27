@@ -13,9 +13,9 @@ import frc.robot.subsystems.*;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class Climb2 extends SequentialCommandGroup {
+public class Climb2a extends SequentialCommandGroup {
   /** Creates a new Climb2. */
-  public Climb2(InnerLeftClimber innerLeftClimber, InnerRightClimber innerRightClimber, 
+  public Climb2a(InnerLeftClimber innerLeftClimber, InnerRightClimber innerRightClimber, 
                 OuterLeftClimber outerLeftClimber, OuterRightClimber outerRightClimber, LeadScrew leadScrew) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -28,15 +28,7 @@ public class Climb2 extends SequentialCommandGroup {
       new EnablePID(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber),
       new LowerOuterArms(outerRightClimber, outerLeftClimber).withTimeout(3.5),
       new LockSetpoints(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber),
-      new MoveLeadScrewToFront(leadScrew, Constants.LeadScrewLowerSpeed).withTimeout(8),      
-      new WaitCommand(2),
-      new ParallelCommandGroup(
-        new LowerInnerArms(innerRightClimber, innerLeftClimber).withTimeout(6),
-        new SequentialCommandGroup(
-          new WaitCommand(.75),
-          new LastOuterArms(outerRightClimber, outerLeftClimber).withTimeout(4) 
-      )),
-      new LockSetpoints(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber)
+      new MoveLeadScrewToFront(leadScrew, Constants.LeadScrewLowerSpeed).withTimeout(12)    
     );
   }
 }

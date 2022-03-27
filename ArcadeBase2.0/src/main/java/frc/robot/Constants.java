@@ -47,10 +47,10 @@ public final class Constants {
     public static final double ArmVerticalEncoderDeadband = 0;
     public static final double ArmVerticalJoystickEncoderMovement = 1;
 
-    public static final double OuterLeftMax = 130;
-    public static final double InnerLeftMax = 108;
-    public static final double InnerRightMax = 109;
-    public static final double OuterRightMax = 137;
+    public static final double OuterLeftMax = 155;
+    public static final double InnerLeftMax = 132;
+    public static final double InnerRightMax = 132;
+    public static final double OuterRightMax = 155;
 
     public static final double JoystickDeadband = .08;
 
@@ -58,7 +58,7 @@ public final class Constants {
     public static final double MaxRaiseCurrent = 15;
 
     public static final int CounterValue = 50;
-    public static final double ClimberStallVelocity = -15.0;
+    public static final double ClimberStallVelocity = -600.0;
 
     public static final double kpClimber = 0.2;
 
@@ -75,11 +75,11 @@ public final class Constants {
     //TODO fix the leadScrew values above
 
     public enum ClimberPosition{top, bottom, start, last}
-    public static final double OuterClimberTop = 120;
+    public static final double OuterClimberTop = 155;
     public static final double OuterClimberBottom = 0;
     public static final double OuterClimberStart = 80;
     
-    public static final double InnerClimberTop = 115;
+    public static final double InnerClimberTop = 132;
     public static final double InnerClimberBottom = 0;
     public static final double InnerClimberStart = 100;
 

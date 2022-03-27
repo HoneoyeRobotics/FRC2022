@@ -40,8 +40,8 @@ public class Ball extends SubsystemBase {
   }
 
   public void runShooter() {
-    double motorSpeed = Preferences.getDouble("ShooterMotorSpeed", 0);
-    double motor1Speed = Preferences.getDouble("ShooterMotor1Speed", 0);
+    double motorSpeed = Preferences.getDouble("ShooterMotorSpeed", 0.57);
+    double motor1Speed = Preferences.getDouble("ShooterMotor1Speed", 0.57);
     shooterMotor.set(ControlMode.PercentOutput, motorSpeed);
     shooter1Motor.set(ControlMode.PercentOutput, motor1Speed);
   }

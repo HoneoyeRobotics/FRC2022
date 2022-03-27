@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
@@ -24,6 +25,8 @@ public class OuterRightClimber extends PIDSubsystem {
     climberOuterRightMotor.setInverted(true);
     climberOuterRightMotor.setIdleMode(IdleMode.kBrake);
     resetEncoders();
+    
+    Shuffleboard.getTab("Pit").addNumber("ORV", () -> velocity());
   }
 
   public void resetEncoders() {
@@ -36,11 +39,11 @@ public class OuterRightClimber extends PIDSubsystem {
     switch(position){
       case start:setpoint = Preferences.getDouble("OuterHooked?", Constants.OuterClimberStart);
         break;
-      case top: setpoint = Preferences.getDouble("OuterMax", Constants.OuterClimberTop);
+      case top: setpoint = Preferences.getDouble("OuterMax", Constants.OuterClimberTop );
         break;
       case bottom:setpoint = Preferences.getDouble("OuterMin", Constants.OuterClimberBottom);
         break;
-      case last:setpoint = Preferences.getDouble("OuterLast", 30);
+      case last:setpoint = Preferences.getDouble("OuterLast", 50);
         break;
     }
       

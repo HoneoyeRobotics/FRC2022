@@ -17,7 +17,9 @@ public class Auto1 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new FeedAndShootBalls(ball).withTimeout(6),
+      new SpinUpShooter(ball).withTimeout(3),
+      new FeedBalls(ball).withTimeout(1.5),
+      new ShootBall(ball).withTimeout(2),
       new MoveRobot(drivetrain, .6).withTimeout(3)
     );
   }

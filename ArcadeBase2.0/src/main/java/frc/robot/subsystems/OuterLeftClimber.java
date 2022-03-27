@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
@@ -25,6 +26,8 @@ public class OuterLeftClimber extends PIDSubsystem {
     climberOuterLeftMotor.setInverted(false);
     climberOuterLeftMotor.setIdleMode(IdleMode.kBrake);
     resetEncoders();
+    
+    Shuffleboard.getTab("Pit").addNumber("OLV", () -> velocity());
   }
 
 
@@ -48,7 +51,7 @@ public class OuterLeftClimber extends PIDSubsystem {
         break;
       case bottom:setpoint = Preferences.getDouble("OuterMin", Constants.OuterClimberBottom);
         break;
-      case last:setpoint = Preferences.getDouble("OuterLast", 30);
+      case last:setpoint = Preferences.getDouble("OuterLast", 50);
         break;
     }
       

@@ -71,6 +71,7 @@ public class RobotContainer {
     Shuffleboard.getTab("Pit").add(new LowerOuterArms(outerRightClimber, outerLeftClimber));
     Shuffleboard.getTab("Pit").add(new RaiseInnerArms(innerRightClimber, innerLeftClimber));
     Shuffleboard.getTab("Pit").add(new LowerInnerArms(innerRightClimber, innerLeftClimber));
+    Shuffleboard.getTab("Pit").add(new MoveLeadScrewToFront(leadScrew, Constants.LeadScrewLowerSpeed).withTimeout(20));
     Shuffleboard.getTab("Pit").add(new EnablePID(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber));
     Shuffleboard.getTab("Pit").add(new DisablePID(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber));
     Shuffleboard.getTab("Pit").add(new ResetArms(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber));
@@ -127,8 +128,11 @@ public class RobotContainer {
     buttonB.whenPressed(new FeedAndShootBalls(m_ball));
     
     buttonX.whenPressed(new Climb1(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber, leadScrew));
-    buttonY.whenPressed(new Climb2(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber, leadScrew));
+    buttonY.whenPressed(new Climb2a(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber, leadScrew));
+    buttonY.whenReleased(new Climb2b(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber, leadScrew));
 
+    // buttonBack.whenPressed(new RaiseInnerArms(innerRightClimber, innerLeftClimber));
+    // buttonStart.whenPressed(new LowerInnerArms(innerRightClimber, innerLeftClimber));
     buttonBack.whenPressed(new Climb3(outerLeftClimber, outerRightClimber, leadScrew));
     buttonStart.whenPressed(new Climb4(innerLeftClimber, innerRightClimber, outerLeftClimber, outerRightClimber));
   }
