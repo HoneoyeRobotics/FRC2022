@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveRobotArcade;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.ToggleTurret;
 import frc.robot.commands.FollowLimeLight;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Turret;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -23,10 +23,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final Turret turret = new Turret();
   Joystick driverJoystick = new Joystick(0);
   
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  
   private final DriveTrain driveTrain = new DriveTrain();
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -36,8 +36,11 @@ public class RobotContainer {
     () -> driverJoystick.getRawAxis(Constants.AXIS_RightTrigger),
     () -> driverJoystick.getRawAxis(Constants.AXIS_LeftTrigger),
     () -> driverJoystick.getRawAxis(Constants.AXIS_LeftStickX)));
+
+
     JoystickButton button = new JoystickButton(driverJoystick, 1);
-    button.whileHeld(new FollowLimeLight(driveTrain));
+    button.whileHeld(new ToggleTurret(turret));
+
   }
 
   /**
@@ -55,6 +58,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return null;
   }
 }

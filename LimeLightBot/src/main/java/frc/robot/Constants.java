@@ -21,5 +21,5 @@ public final class Constants {
     public static final int AXIS_RightTrigger = 3;
     public static final int AXIS_RightStickX = 4;
     public static final int AXIS_RightStickY =  5;
-    
+    public static final int TurretMotorPID = 20;
 }
