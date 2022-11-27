@@ -4,6 +4,9 @@
 
 package frc.robot.commands;
 
+import javax.tools.ForwardingFileObject;
+
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -19,9 +22,15 @@ public class FollowLimeLight extends CommandBase {
     this.driveTrain = driveTrain;
   }
 
+  PIDController sideController;
+  PIDController forwaController;
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    sideController = new PIDController(0.2, 0, 0);
+    forwaController = new PIDController(0.7, 0, 0);
+    // sideController.setIntegratorRange(-0.4, 0.4);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -36,11 +45,39 @@ public class FollowLimeLight extends CommandBase {
   SmartDashboard.putNumber("LL X", tx.getDouble(0.0));
   double zRotation = 0;
   double place = tx.getDouble(0.0);
-    if(place >  3)
-      zRotation = 0.5;
-    else if (place < -3)
-      zRotation = -0.5;
-    driveTrain.drive( zRotation,0);
+
+  if(place != 0){
+   zRotation =  sideController.calculate(place, 0) * -1;
+   if(zRotation > 0.5)
+   zRotation = 0.5;
+   else if (zRotation < -0.5)
+   zRotation = -0.5;
+    if(place < 3 && place > 0.3)
+    zRotation = 0;
+   SmartDashboard.putNumber("zRotation", zRotation);
+  }
+  // if(place <  3 && place )
+  //   zRotation = 0.5;
+  // else if (place < -3)
+  //   zRotation = -0.5;
+  
+
+  double xspeed = 0;
+  double area = ta.getDouble(0.5);
+
+  if(area > 0.3 && area < 2.5)
+    xspeed = 0;
+  else if (area > 2.5)
+    xspeed = -0.5;
+  else if (area == 0)
+    xspeed = 0;
+    else{
+      xspeed = forwaController.calculate(area, 2.5);
+      if(xspeed > 0.66)
+      xspeed = 0.66;
+      SmartDashboard.putNumber("xspeed", xspeed);
+    }  
+    driveTrain.drive( zRotation,xspeed);
 SmartDashboard.putNumber("moving",zRotation);
     SmartDashboard.putNumber("LL Y", ty.getDouble(0.0));
     SmartDashboard.putNumber("LL A", ta.getDouble(0.0));

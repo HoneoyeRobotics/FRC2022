@@ -5,7 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.*;
@@ -17,21 +17,55 @@ import frc.robot.Constants;
 public class Turret extends PIDSubsystem {
 
   private boolean enabled = false;
-  private VictorSPX turretMotor;
+  private TalonSRX turretMotor;
   /** Creates a new Turret. */
   public Turret() {
     super(
         // The PIDController used by the subsystem
-        new PIDController(0, 0, 0));
+        new PIDController(0.2, 0, 0));
 
-    turretMotor = new VictorSPX(Constants.TurretMotorPID);
+      turretMotor = new TalonSRX(Constants.TurretMotorPID);
+  }
+
+  @Override
+  public void periodic() {
+    SmartDashboard.putBoolean("enabled", isEnabled());
+    SmartDashboard.putNumber("Encoder", turretMotor.getSelectedSensorPosition() );
+  
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-suits");
+    NetworkTableEntry tx = table.getEntry("tx");
+    NetworkTableEntry ty = table.getEntry("ty");
+    NetworkTableEntry ta = table.getEntry("ta");
+    
+    SmartDashboard.putNumber("LL X", tx.getDouble(0.0));
+    SmartDashboard.putNumber("LL Y", ty.getDouble(0.0));
+    SmartDashboard.putNumber("LL A", ta.getDouble(0.0));
+  }
+
+  public void move(double speed){
+    if(enabled == false)
+      turretMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public boolean getEnabled(){
     return enabled;
   }
   public void toggleEnabled(){
-    enabled = !enabled;
+    
+    if(enabled == false){ 
+      enable();
+      enabled = true;
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(0);
+
+    }
+    else{
+    disable();
+    enabled = false;
+    
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+    NetworkTableInstance.getDefault().getTable("limelight-suits").getEntry("ledMode").setNumber(1);
+    }
+    
   }
   @Override
   public void useOutput(double output, double setpoint) {

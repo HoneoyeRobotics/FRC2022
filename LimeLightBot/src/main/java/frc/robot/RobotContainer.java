@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveRobotArcade;
 import frc.robot.commands.ToggleTurret;
 import frc.robot.commands.FollowLimeLight;
+import frc.robot.commands.RunTurret;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Turret;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -38,8 +39,18 @@ public class RobotContainer {
     () -> driverJoystick.getRawAxis(Constants.AXIS_LeftStickX)));
 
 
-    JoystickButton button = new JoystickButton(driverJoystick, 1);
-    button.whileHeld(new ToggleTurret(turret));
+    JoystickButton buttonA = new JoystickButton(driverJoystick, 1);
+    buttonA.whenPressed(new ToggleTurret(turret));
+  
+
+    JoystickButton buttonB = new JoystickButton(driverJoystick, 2);
+    buttonB.whileHeld(new RunTurret(turret, () -> driverJoystick.getRawAxis(Constants.AXIS_RightStickX)));
+
+
+    
+    JoystickButton buttony = new JoystickButton(driverJoystick, 3);
+    buttony.whileHeld(new FollowLimeLight(driveTrain));
+  
 
   }
 
