@@ -99,14 +99,23 @@ public class RobotContainer {
 
     
   private void configureDriverJoystick() {
-    // JoystickButton buttonA = new JoystickButton(driverJoystick, 1);
+    JoystickButton buttonA = new JoystickButton(driverJoystick, 1);
     // JoystickButton buttonX = new JoystickButton(driverJoystick, 3);
     // JoystickButton buttonY = new JoystickButton(driverJoystick, 4);
     JoystickButton buttonB = new JoystickButton(driverJoystick, 2);
     JoystickButton buttonBack = new JoystickButton(driverJoystick, 7);
     JoystickButton buttonStart = new JoystickButton(driverJoystick, 8);
 
-    buttonB.whenPressed(new SwapDriving(m_DriveTrainArcade, camerasAndNavX));
+    JoystickButton leftBumper = new JoystickButton(driverJoystick, 5);
+    JoystickButton rightBumper = new JoystickButton(driverJoystick, 6);
+    //buttonB.whenPressed(new SwapDriving(m_DriveTrainArcade, camerasAndNavX));
+
+    buttonA.whileHeld(new ShootBall(m_ball)); 
+    leftBumper.whileHeld(new FeedBalls(m_ball));
+    rightBumper.whileHeld(new PickUpBalls(m_ball));
+    buttonB.whenPressed(new FeedAndShootBalls(m_ball));
+
+
     buttonBack.whenPressed(new UseFrontCamera(camerasAndNavX));
     buttonStart.whenPressed(new UseClimbCamera(camerasAndNavX));
   }
