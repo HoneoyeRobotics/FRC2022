@@ -28,7 +28,7 @@ public class FollowLimeLight extends CommandBase {
   @Override
   public void initialize() {
     sideController = new PIDController(0.2, 0, 0);
-    forwaController = new PIDController(0.7, 0, 0);
+    forwaController = new PIDController(1.2, 0, 0);
     // sideController.setIntegratorRange(-0.4, 0.4);
   }
 
@@ -65,14 +65,16 @@ public class FollowLimeLight extends CommandBase {
   double xspeed = 0;
   double area = ta.getDouble(0.5);
 
-  if(area > 0.3 && area < 2.5)
+  double reversespot = 0.1;
+  double forwardspot = 0.6;
+  if(area > reversespot && area < forwardspot)
     xspeed = 0;
-  else if (area > 2.5)
+  else if (area > forwardspot)
     xspeed = -0.5;
   else if (area == 0)
     xspeed = 0;
     else{
-      xspeed = forwaController.calculate(area, 2.5);
+      xspeed = forwaController.calculate(area, forwardspot);
       if(xspeed > 0.66)
       xspeed = 0.66;
       SmartDashboard.putNumber("xspeed", xspeed);
